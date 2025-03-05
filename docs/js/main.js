@@ -3,6 +3,7 @@ import { VoucherRenderer } from "../class/VoucherRenderer.js";
 import { TarotAndPlanetRenderer } from "../class/TarotAndPlanetRenderer.js";
 import { JokerRenderer } from "../class/JokerRenderer.js";
 import { StandardCardRenderer } from "../class/StandardCardRenderer.js";
+import { TagRenderer } from "../class/TagRenderer.js";
 const autoComplete = window.autoComplete;
 
 const BUFFOON = "Buffoon";
@@ -12,6 +13,7 @@ const STANDARD = "Standard";
 const SPECTRAL = "Spectral";
 const LEGENDARY = "Legendary";
 const THE_SOUL = "The Soul";
+const TAGS = "Tag";
 
 const searchField = document.getElementById('autoComplete');
 const tagsContainer = document.getElementById('tags');
@@ -163,6 +165,7 @@ async function analyzeSeed(seed) {
 		[SPECTRAL]: tarotAndPlanetRenderer,
 		[LEGENDARY]: tarotAndPlanetRenderer,
 		[STANDARD]: new StandardCardRenderer(),
+		[TAGS]: new TagRenderer(),
 	}
 
 	runContainer.innerHTML = 'Seed: ' + seed + '<br>';
@@ -170,6 +173,19 @@ async function analyzeSeed(seed) {
 	data.antes.forEach((ante, i) => {
 		const anteElement = document.createElement('div');
 		anteElement.className = 'ante';
+
+		const firstRow = document.createElement('div');
+		firstRow.className = 'first-row';
+		//Render Tags
+		const tags = ante.tags;
+		const tagsElement = document.createElement('div');
+		tagsElement.className = 'run-tags';
+		tags.forEach(tag => {
+			const tagCard = renderers.Tag.createCard(tag);
+			tagsElement.appendChild(tagCard);
+		});
+		firstRow.appendChild(tagsElement);
+
 		//Render Shop Queue
 		const shopItems = ante.shopQueue;
 		const shopQueue = document.createElement('div');
@@ -180,7 +196,9 @@ async function analyzeSeed(seed) {
 			const card = renderer.createCard(shopItem.item);
 			shopQueue.appendChild(card);
 		});
-		anteElement.appendChild(shopQueue);
+		firstRow.appendChild(shopQueue);
+
+		anteElement.appendChild(firstRow);
 
 		//Render Vouchers
 		const voucherElement = document.createElement('div');
@@ -219,9 +237,4 @@ async function analyzeSeed(seed) {
 		runContainer.appendChild(anteElement);
 	});
 
-}
-
-function createShopItem(shopItem) {
-	//validate if has some tag or hologram
-	const hasTag = [].shopItem
 }
