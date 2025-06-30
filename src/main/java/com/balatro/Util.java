@@ -7,7 +7,6 @@ public class Util {
         return n - Math.floor(n);
     }
 
-
     static double pseudohash(byte[] a, byte[] b) {
         byte[] c = new byte[a.length + b.length];
 

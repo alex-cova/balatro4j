@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public final class BalatroImpl implements Balatro {
+public final class BalatroImpl extends Configuration implements Balatro {
 
     public static final List<? extends Item> options = Arrays.asList(
             CommonJoker.Golden_Ticket,
@@ -80,7 +80,8 @@ public final class BalatroImpl implements Balatro {
             Voucher.Tarot_Tycoon
     );
 
-    static final char[] CHARACTERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    static final char[] CHARACTERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+            'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
     public static byte[] generateRandomSeed() {
         byte[] chars = new byte[8];
@@ -97,19 +98,6 @@ public final class BalatroImpl implements Balatro {
     private Deck deck;
     private Stake stake;
     private Version version;
-    private boolean analyzeStandardPacks;
-    private boolean analyzeCelestialPacks;
-    private boolean analyzeTags;
-    private boolean analyzeBoss;
-    private boolean analyzeVoucher;
-    private boolean analyzeShopQueue;
-    private boolean analyzeJokers;
-    private boolean analyzeArcana;
-    private boolean analyzeSpectral;
-    private boolean freshProfile;
-    private boolean freshRun = true;
-    private boolean showman;
-
 
     public BalatroImpl(byte[] seed, int maxAnte, List<Integer> cardsPerAnte, Deck deck, Stake stake, Version version,
                        @NotNull Set<PackKind> enabledPacks, boolean analyzeTags, boolean analyzeBoss, boolean analyzeShopQueue) {
@@ -135,12 +123,14 @@ public final class BalatroImpl implements Balatro {
     }
 
     @Contract("_, _, _, _, _, _ -> new")
-    private @NotNull RunImpl performAnalysis(byte[] seed, int maxAnte, @NotNull List<Integer> cardsPerAnte, Deck deck, Stake stake, @NotNull Version version) {
+    private @NotNull RunImpl performAnalysis(byte[] seed, int maxAnte, @NotNull List<Integer> cardsPerAnte, Deck deck,
+                                             Stake stake, @NotNull Version version) {
         if (cardsPerAnte.size() != maxAnte) {
-            throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s-%s)".formatted(maxAnte, cardsPerAnte.size()));
+            throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s-%s)"
+                    .formatted(maxAnte, cardsPerAnte.size()));
         }
 
-        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version.getVersion()));
+        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version));
         functions.initLocks(1, freshProfile, freshRun);
         functions.firstLock();
         functions.setDeck(deck);
@@ -148,7 +138,7 @@ public final class BalatroImpl implements Balatro {
 
         for (int a = 1; a <= maxAnte; a++) {
             functions.initUnlocks(a, freshProfile);
-            var play = new AnteImpl(a);
+            var play = new AnteImpl(a, this);
             antes.add(play);
 
             if (analyzeBoss) {
@@ -176,7 +166,6 @@ public final class BalatroImpl implements Balatro {
             if (analyzeShopQueue) {
                 for (int q = 1; q <= cardsPerAnte.get(a - 1); q++) {
                     Edition sticker = Edition.NoEdition;
-
                     ShopItem item = functions.nextShopItem(a);
 
                     if (item.getType() == Type.Joker) {

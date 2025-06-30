@@ -51,6 +51,10 @@ public interface Balatro {
         return new SeedFinderImpl(parallelism, seedsPerThread);
     }
 
+    static @NotNull SeedFinder search(int seedsPerThread) {
+        return new SeedFinderImpl(Runtime.getRuntime().availableProcessors(), seedsPerThread);
+    }
+
     Run analyze();
 
     Run analyzeAll();

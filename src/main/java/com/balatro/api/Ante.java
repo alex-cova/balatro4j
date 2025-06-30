@@ -4,7 +4,6 @@ import com.balatro.enums.*;
 import com.balatro.structs.EditionItem;
 import com.balatro.structs.JokerData;
 import com.balatro.structs.PackInfo;
-import com.balatro.structs.ShopQueue;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +26,7 @@ public interface Ante extends CommonQueries {
 
     int getAnte();
 
-    ShopQueue getShopQueue();
+    Shop getShopQueue();
 
     Set<Tag> getTags();
 

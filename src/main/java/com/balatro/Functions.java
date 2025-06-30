@@ -175,8 +175,13 @@ public final class Functions implements Lock {
         return edition;
     }
 
-    static Set<String> setA = Set.of("Gros Michel", "Ice Cream", "Cavendish", "Luchador", "Turtle Bean", "Diet Cola", "Popcorn", "Ramen", "Seltzer", "Mr. Bones", "Invisible Joker");
-    static Set<String> setB = Set.of("Ceremonial Dagger", "Ride the Bus", "Runner", "Constellation", "Green Joker", "Red Card", "Madness", "Square Joker", "Vampire", "Rocket", "Obelisk", "Lucky Cat", "Flash Card", "Spare Trousers", "Castle", "Wee Joker");
+
+    static final Set<String> setA = Set.of("Gros Michel", "Ice Cream", "Cavendish", "Luchador", "Turtle Bean", "Diet Cola",
+            "Popcorn", "Ramen", "Seltzer", "Mr. Bones", "Invisible Joker");
+
+    static final Set<String> setB = Set.of("Ceremonial Dagger", "Ride the Bus", "Runner", "Constellation", "Green Joker",
+            "Red Card", "Madness", "Square Joker", "Vampire", "Rocket", "Obelisk", "Lucky Cat", "Flash Card",
+            "Spare Trousers", "Castle", "Wee Joker");
 
     public JokerData nextJoker(@NotNull String source,
                                Coordinate[] joker1Arr, Coordinate[] joker2Arr, Coordinate[] joker3Arr, Coordinate[] joker4Arr,
@@ -249,10 +254,10 @@ public final class Functions implements Lock {
         if (hasStickers) {
             if (params.version > 10103) {
                 boolean searchForSticker = (params.getStake() == Stake.Black_Stake ||
-                                            params.getStake() == Stake.Blue_Stake ||
-                                            params.getStake() == Stake.Purple_Stake ||
-                                            params.getStake() == Stake.Orange_Stake ||
-                                            params.getStake() == Stake.Gold_Stake);
+                        params.getStake() == Stake.Blue_Stake ||
+                        params.getStake() == Stake.Purple_Stake ||
+                        params.getStake() == Stake.Orange_Stake ||
+                        params.getStake() == Stake.Gold_Stake);
 
                 double stickerPoll = 0.0;
 
@@ -286,7 +291,8 @@ public final class Functions implements Lock {
 
             } else {
                 if (params.getStake() == Stake.Black_Stake || params.getStake() == Stake.Blue_Stake ||
-                    params.getStake() == Stake.Purple_Stake || params.getStake() == Stake.Orange_Stake || params.getStake() == Stake.Gold_Stake) {
+                        params.getStake() == Stake.Purple_Stake || params.getStake() == Stake.Orange_Stake ||
+                        params.getStake() == Stake.Gold_Stake) {
                     if (!setA.contains(joker.getName())) {
                         stickers.setEternal(random(stake_shop_joker_eternalArr[ante]) > 0.7);
                     }

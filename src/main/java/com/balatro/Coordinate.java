@@ -17,7 +17,7 @@ public record Coordinate(String value, byte[] data, int ante, int y) {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return value;
     }
 }

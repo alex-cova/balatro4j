@@ -3,6 +3,7 @@ package com.balatro;
 import com.balatro.api.Ante;
 import com.balatro.api.Item;
 import com.balatro.api.Joker;
+import com.balatro.api.Shop;
 import com.balatro.enums.*;
 import com.balatro.structs.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,9 +18,7 @@ import java.util.stream.Collectors;
 final class AnteImpl implements Ante {
 
     private final int ante;
-    private final ShopQueue shopQueue;
-    @JsonIgnore
-    private final Map<String, Edition> shop;
+    private final Shop shopQueue;
     private final Set<Tag> tags;
     private Voucher voucher;
     private Boss boss;
@@ -28,12 +27,26 @@ final class AnteImpl implements Ante {
     @JsonIgnore
     private Map<String, JokerData> legendaryJokers;
 
-    AnteImpl(int ante) {
+    AnteImpl(int ante, @NotNull Configuration configuration) {
         this.ante = ante;
-        this.tags = new HashSet<>(2);
-        this.shopQueue = new ShopQueue();
-        this.shop = new HashMap<>(20);
-        this.packInfos = new ArrayList<>(10);
+
+        if (configuration.analyzeTags) {
+            this.tags = new HashSet<>(2);
+        } else {
+            this.tags = Collections.emptySet();
+        }
+
+        if (configuration.analyzeShopQueue) {
+            this.shopQueue = new ShopQueue();
+        } else {
+            this.shopQueue = ShopQueue.EMPTY;
+        }
+
+        if (configuration.isAnalyzePacks()) {
+            this.packInfos = new ArrayList<>(10);
+        } else {
+            this.packInfos = Collections.emptyList();
+        }
     }
 
     @Override
@@ -48,13 +61,7 @@ final class AnteImpl implements Ante {
 
     @Override
     public boolean hasInShop(@NotNull Item item, Edition edition) {
-        var i = shop.get(item.getName());
-
-        if (i != null) {
-            return i == edition;
-        }
-
-        return false;
+        return getShopQueue().contains(item, edition);
     }
 
     @Override
@@ -83,8 +90,7 @@ final class AnteImpl implements Ante {
     }
 
     void addToQueue(@NotNull ShopItem value, Edition edition) {
-        shop.put(value.getItem().getName(), edition);
-        shopQueue.add(new EditionItem(value.getItem(), edition));
+        shopQueue.add(value, edition);
     }
 
     void setBoss(Boss boss) {
@@ -130,21 +136,11 @@ final class AnteImpl implements Ante {
         legendaryJokers = new HashMap<>();
 
         for (PackInfo packInfo : packInfos) {
-            if (packInfo.getKind() == PackKind.Buffoon) {
-                continue;
-            }
-
-            if (packInfo.getKind() == PackKind.Standard) {
-                continue;
-            }
-
-            if (packInfo.getKind() == PackKind.Celestial) {
-                continue;
-            }
-
-            for (EditionItem option : packInfo.getOptions()) {
-                if (option.isLegendary()) {
-                    legendaryJokers.put(option.item().getName(), option.jokerData());
+            if (packInfo.getKind().isLegendaryEnabled()) {
+                for (EditionItem option : packInfo.getOptions()) {
+                    if (option.isLegendary()) {
+                        legendaryJokers.put(option.item().getName(), option.jokerData());
+                    }
                 }
             }
         }
@@ -251,18 +247,15 @@ final class AnteImpl implements Ante {
         return ante;
     }
 
-    @JsonIgnore
-    public Set<String> getShop() {
-        return shop.keySet();
+    @Contract(" -> new")
+    @Override
+    public @NotNull Shop getShopQueue() {
+        return shopQueue.copy();
     }
 
+    @Contract(value = " -> new", pure = true)
     @Override
-    public ShopQueue getShopQueue() {
-        return new ShopQueue(shopQueue);
-    }
-
-    @Override
-    public Set<Tag> getTags() {
+    public @NotNull Set<Tag> getTags() {
         return new HashSet<>(tags);
     }
 
@@ -276,13 +269,14 @@ final class AnteImpl implements Ante {
         return boss;
     }
 
+    @Contract(value = " -> new", pure = true)
     @Override
-    public List<PackInfo> getPacks() {
+    public @NotNull List<PackInfo> getPacks() {
         return new ArrayList<>(packInfos);
     }
 
     @Override
-    public Set<EditionItem> getJokers() {
+    public @NotNull Set<EditionItem> getJokers() {
         var a = shopQueue.stream()
                 .filter(EditionItem::isJoker)
                 .collect(Collectors.toSet());

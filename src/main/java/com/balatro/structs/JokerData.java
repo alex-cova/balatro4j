@@ -1,7 +1,6 @@
 package com.balatro.structs;
 
 import com.balatro.api.Item;
-import com.balatro.enums.CommonJoker;
 import com.balatro.enums.Edition;
 
 public class JokerData implements Item {

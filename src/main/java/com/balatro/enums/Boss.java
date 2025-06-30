@@ -1,10 +1,12 @@
 package com.balatro.enums;
 
-import com.balatro.api.filter.BossFilter;
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.filter.BossFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 @JsonSerialize(using = ItemSerializer.class)
 public enum Boss implements Item {
@@ -36,7 +38,7 @@ public enum Boss implements Item {
     The_Wall("The Wall"),
     The_Water("The Water"),
     The_Wheel("The Wheel"),
-    The_Windo("The Window");
+    The_Window("The Window");
 
     private final String name;
 
@@ -69,11 +71,13 @@ public enum Boss implements Item {
                this == Violet_Vessel;
     }
 
-    public Filter isPresent() {
+    @Contract(" -> new")
+    public @NotNull Filter isPresent() {
         return new BossFilter(this, false);
     }
 
-    public Filter isNotPresent() {
+    @Contract(" -> new")
+    public @NotNull Filter isNotPresent() {
         return new BossFilter(this, true);
     }
 

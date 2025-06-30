@@ -2,6 +2,7 @@ package com.balatro.structs;
 
 import com.balatro.enums.Deck;
 import com.balatro.enums.Stake;
+import com.balatro.enums.Version;
 import com.balatro.enums.Voucher;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,12 +15,12 @@ public class InstanceParams {
     public long version;
     public int vouchers;
 
-    public InstanceParams(Deck deck, Stake stake, boolean showman, long version) {
+    public InstanceParams(Deck deck, Stake stake, boolean showman, @NotNull Version version) {
         this.deck = deck;
         this.stake = stake;
         this.showman = showman;
         this.sixesFactor = 1;
-        this.version = version;
+        this.version = version.getVersion();
         this.vouchers = 0;
     }
 
