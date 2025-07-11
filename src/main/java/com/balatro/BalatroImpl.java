@@ -140,7 +140,7 @@ public final class BalatroImpl implements Balatro {
             throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s - %s)".formatted(maxAnte, cardsPerAnte.size()));
         }
 
-        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version.getVersion()));
+        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version));
         functions.initLocks(1, freshProfile, freshRun);
         functions.firstLock();
         functions.setDeck(deck);

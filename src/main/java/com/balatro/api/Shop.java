@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
-public interface Shop {
+public interface Shop extends Iterable<EditionItem> {
 
     Shop copy();
 

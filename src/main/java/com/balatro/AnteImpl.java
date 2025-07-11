@@ -84,7 +84,7 @@ final class AnteImpl implements Ante {
 
     void addToQueue(@NotNull ShopItem value) {
         shop.put(value.getItem().getName(), value.getEdition());
-        shopQueue.add(new EditionItem(value.getItem(), value.getEdition()));
+        shopQueue.add(value, value.getEdition());
     }
 
     void setBoss(Boss boss) {
@@ -258,7 +258,7 @@ final class AnteImpl implements Ante {
 
     @Override
     public ShopQueue getShopQueue() {
-        return new ShopQueue(shopQueue);
+        return shopQueue;
     }
 
     @Override

@@ -30,6 +30,11 @@ public final class ShopQueue implements Shop {
         this.queue = queue;
     }
 
+    @Override
+    public @NotNull Iterator<EditionItem> iterator() {
+        return queue.iterator();
+    }
+
     @Contract(" -> new")
     @Override
     public @NotNull Shop copy() {
