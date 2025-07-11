@@ -125,5 +125,4 @@ public enum CommonJoker implements Joker {
         return JokerType.COMMON;
     }
 
-
 }

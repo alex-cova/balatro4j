@@ -202,46 +202,56 @@ public final class Functions implements Lock {
         final var edition = getEdition(ante, editionArr);
 
         // Get next joker
-        Item joker;
+        Coordinate coordinate;
+        Item[] items;
 
         switch (rarity) {
             case 4 -> {
+                items = LEGENDARY_JOKERS;
                 if (params.version > 10099) {
-                    joker = randchoice(Joker4, LEGENDARY_JOKERS);
+                    coordinate = Joker4;
                 } else {
-                    joker = randchoice(joker4Arr[ante], LEGENDARY_JOKERS);
+                    coordinate = joker4Arr[ante];
                 }
             }
             case 3 -> {
+                coordinate = joker3Arr[ante];
+
                 if (params.version > 10103) {
-                    joker = randchoice(joker3Arr[ante], RARE_JOKERS);
+                    items = RARE_JOKERS;
                 } else {
                     if (params.version > 10099) {
-                        joker = randchoice(joker3Arr[ante], RARE_JOKERS_101C);
+                        items = RARE_JOKERS_101C;
                     } else {
-                        joker = randchoice(joker3Arr[ante], RARE_JOKERS_100);
+                        items = RARE_JOKERS_100;
                     }
                 }
             }
             case 2 -> {
+                coordinate = joker2Arr[ante];
+
                 if (params.version > 10103) {
-                    joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS);
+                    items = UNCOMMON_JOKERS;
                 } else {
                     if (params.version > 10099) {
-                        joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS_101C);
+                        items = UNCOMMON_JOKERS_101C;
                     } else {
-                        joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS_100);
+                        items = UNCOMMON_JOKERS_100;
                     }
                 }
             }
             default -> {
+                coordinate = joker1Arr[ante];
+
                 if (params.version > 10099) {
-                    joker = randchoice(joker1Arr[ante], COMMON_JOKERS);
+                    items = COMMON_JOKERS;
                 } else {
-                    joker = randchoice(joker1Arr[ante], COMMON_JOKERS_100);
+                    items = COMMON_JOKERS_100;
                 }
             }
         }
+
+        final var joker = randchoice(coordinate, items);
 
         // Get next joker stickers
         var stickers = new JokerStickers();
@@ -302,7 +312,8 @@ public final class Functions implements Lock {
             }
         }
 
-        return new JokerData(joker, rarity, edition, stickers);
+        return new JokerData(joker, rarity, edition, stickers)
+                .setResampleInfo(coordinate, items);
     }
 
     // Shop Logic
@@ -786,19 +797,12 @@ public final class Functions implements Lock {
         return chosenBoss;
     }
 
-    @SuppressWarnings("SameParameterValue")
+    @SuppressWarnings({"SameParameterValue", "unchecked"})
     private <T extends Item> T _randchoice(Coordinate id, @NotNull List<T> items) {
         T item = items.get(randint(id, items.size() - 1));
 
         if (isLocked(item)) {
-            int resample = 2;
-            while (true) {
-                item = items.get(randintResample(id.resample(resample), items.size() - 1));
-                resample++;
-                if (!isLocked(item) || resample > 1000) {
-                    return item;
-                }
-            }
+            return resample(id, (T[]) items.toArray());
         }
 
         return item;
@@ -810,16 +814,26 @@ public final class Functions implements Lock {
         if (params.isShowman()) return item;
 
         if (isLocked(item)) {
-            int resample = 2;
-            while (true) {
-                item = items[randintResample(id.resample(resample), items.length - 1)];
-                resample++;
-                if (!isLocked(item) || resample > 1000) {
-                    return item;
-                }
-            }
+            return resample(id, items);
         }
         return item;
+    }
+
+    public Item resample(@NotNull JokerData jokerData) {
+        return resample(jokerData.getCoordinate(), jokerData.getItems());
+    }
+
+    private <T extends Item> T resample(@NotNull Coordinate id, @NotNull T @NotNull [] items) {
+        T item;
+
+        int resample = 2;
+        while (true) {
+            item = items[randintResample(id.resample(resample), items.length - 1)];
+            resample++;
+            if (!isLocked(item) || resample > 1000) {
+                return item;
+            }
+        }
     }
 
     @Override
@@ -850,6 +864,20 @@ public final class Functions implements Lock {
     @Override
     public void firstLock() {
         lock.firstLock();
+    }
+
+    public int getShopWindow() {
+        int size = 2;
+
+        if (lock.isLocked(Voucher.Overstock)) {
+            size++;
+        }
+
+        if (lock.isLocked(Voucher.Overstock_Plus)) {
+            size++;
+        }
+
+        return size;
     }
 }
 

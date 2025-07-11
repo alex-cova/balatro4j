@@ -75,4 +75,8 @@ public interface Item {
     default EditionItem asEditionItem() {
         return new EditionItem(this);
     }
+
+    default Filter auto(int ante, Edition edition) {
+        return null;
+    }
 }

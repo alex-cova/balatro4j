@@ -1,5 +1,6 @@
 package com.balatro.enums;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -35,5 +36,8 @@ public enum Planet implements Item {
         return 3;
     }
 
-
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return inPack(ante);
+    }
 }

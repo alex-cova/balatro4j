@@ -82,9 +82,9 @@ final class AnteImpl implements Ante {
         tags.add(tag);
     }
 
-    void addToQueue(@NotNull ShopItem value, Edition edition) {
-        shop.put(value.getItem().getName(), edition);
-        shopQueue.add(new EditionItem(value.getItem(), edition));
+    void addToQueue(@NotNull ShopItem value) {
+        shop.put(value.getItem().getName(), value.getEdition());
+        shopQueue.add(new EditionItem(value.getItem(), value.getEdition()));
     }
 
     void setBoss(Boss boss) {

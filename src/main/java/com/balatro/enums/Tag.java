@@ -1,6 +1,8 @@
 package com.balatro.enums;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.filter.TagFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -46,4 +48,8 @@ public enum Tag implements Item {
         return 8;
     }
 
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return new TagFilter(this, ante);
+    }
 }

@@ -1,5 +1,6 @@
 package com.balatro.api.filter;
 
+import com.balatro.api.Balatro;
 import com.balatro.api.Filter;
 import com.balatro.api.Run;
 
@@ -11,6 +12,12 @@ public class AndFilter implements Filter {
     public AndFilter(Filter a, Filter b) {
         this.a = a;
         this.b = b;
+    }
+
+    @Override
+    public void configure(Balatro balatro) {
+        a.configure(balatro);
+        b.configure(balatro);
     }
 
     @Override

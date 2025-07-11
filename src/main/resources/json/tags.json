@@ -1,0 +1,170 @@
+[
+    {
+        "name": "Uncommon Tag",
+        "pos": {
+            "x": 0,
+            "y": 0
+        }
+    },
+    {
+        "name": "Rare Tag",
+        "pos": {
+            "x": 1,
+            "y": 0
+        }
+    },
+    {
+        "name": "Negative Tag",
+        "pos": {
+            "x": 2,
+            "y": 0
+        }
+    },
+    {
+        "name": "Foil Tag",
+        "pos": {
+            "x": 3,
+            "y": 0
+        }
+    },
+    {
+        "name": "Holographic Tag",
+        "pos": {
+            "x": 0,
+            "y": 1
+        }
+    },
+    {
+        "name": "Polychrome Tag",
+        "pos": {
+            "x": 1,
+            "y": 1
+        }
+    },
+    {
+        "name": "Investment Tag",
+        "pos": {
+            "x": 2,
+            "y": 1
+        }
+    },
+    {
+        "name": "Voucher Tag",
+        "pos": {
+            "x": 3,
+            "y": 1
+        }
+    },
+    {
+        "name": "Boss Tag",
+        "pos": {
+            "x": 0,
+            "y": 2
+        }
+    },
+    {
+        "name": "Standard Tag",
+        "pos": {
+            "x": 1,
+            "y": 2
+        }
+    },
+    {
+        "name": "Charm Tag",
+        "pos": {
+            "x": 2,
+            "y": 2
+        }
+    },
+    {
+        "name": "Meteor Tag",
+        "pos": {
+            "x": 3,
+            "y": 2
+        }
+    },
+    {
+        "name": "Buffoon Tag",
+        "pos": {
+            "x": 4,
+            "y": 2
+        }
+    },
+    {
+        "name": "Handy Tag",
+        "pos": {
+            "x": 1,
+            "y": 3
+        }
+    },
+    {
+        "name": "Garbage Tag",
+        "pos": {
+            "x": 2,
+            "y": 3
+        }
+    },
+    {
+        "name": "Ethereal Tag",
+        "pos": {
+            "x": 3,
+            "y": 3
+        }
+    },
+    {
+        "name": "Coupon Tag",
+        "pos": {
+            "x": 4,
+            "y": 0
+        }
+    },
+    {
+        "name": "Double Tag",
+        "pos": {
+            "x": 5,
+            "y": 0
+        }
+    },
+    {
+        "name": "Juggle Tag",
+        "pos": {
+            "x": 5,
+            "y": 1
+        }
+    },
+    {
+        "name": "D6 Tag",
+        "pos": {
+            "x": 5,
+            "y": 3
+        }
+    },
+    {
+        "name": "Top-up Tag",
+        "pos": {
+            "x": 4,
+            "y": 1
+        }
+    },
+    {
+        "name": "Speed Tag",
+        "pos": {
+            "x": 0,
+            "y": 3
+        }
+    },
+    {
+        "name": "Orbital Tag",
+        "pos": {
+            "x": 5,
+            "y": 2
+        }
+    },
+    {
+        "name": "Economy Tag",
+        "pos": {
+            "x": 4,
+            "y": 3
+        }
+    }
+]

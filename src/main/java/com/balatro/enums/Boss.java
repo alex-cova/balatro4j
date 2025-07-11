@@ -1,8 +1,8 @@
 package com.balatro.enums;
 
-import com.balatro.api.filter.BossFilter;
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.filter.BossFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -77,4 +77,8 @@ public enum Boss implements Item {
         return new BossFilter(this, true);
     }
 
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return isPresent();
+    }
 }

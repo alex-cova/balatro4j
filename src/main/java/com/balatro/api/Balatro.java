@@ -55,6 +55,10 @@ public interface Balatro {
 
     Run analyzeAll();
 
+    Balatro disableAll();
+
+    Balatro enableBoss();
+
     Balatro enableAll();
 
     Balatro maxAnte(int ante);
@@ -74,4 +78,20 @@ public interface Balatro {
     Balatro freshRun(boolean freshRun);
 
     Balatro showman(boolean showman);
+
+    Balatro enableShop();
+
+    Balatro enableSpectralPack();
+
+    Balatro enableVouchers();
+
+    Balatro enableJokerPack();
+
+    Balatro enableCelestialPack();
+
+    Balatro enableArcanaPack();
+
+    Balatro enableTags();
+
+    void printConfigurations();
 }

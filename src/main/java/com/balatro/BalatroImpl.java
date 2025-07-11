@@ -137,7 +137,7 @@ public final class BalatroImpl implements Balatro {
     @Contract("_, _, _, _, _, _ -> new")
     private @NotNull RunImpl performAnalysis(byte[] seed, int maxAnte, @NotNull List<Integer> cardsPerAnte, Deck deck, Stake stake, @NotNull Version version) {
         if (cardsPerAnte.size() != maxAnte) {
-            throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s-%s)".formatted(maxAnte, cardsPerAnte.size()));
+            throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s - %s)".formatted(maxAnte, cardsPerAnte.size()));
         }
 
         Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version.getVersion()));
@@ -175,26 +175,7 @@ public final class BalatroImpl implements Balatro {
 
             if (analyzeShopQueue) {
                 for (int q = 1; q <= cardsPerAnte.get(a - 1); q++) {
-                    Edition sticker = Edition.NoEdition;
-
-                    ShopItem item = functions.nextShopItem(a);
-
-                    if (item.getType() == Type.Joker) {
-                        if (item.getJokerData().getStickers().isEternal()) {
-                            sticker = Edition.Eternal;
-                        }
-                        if (item.getJokerData().getStickers().isPerishable()) {
-                            sticker = Edition.Perishable;
-                        }
-                        if (item.getJokerData().getStickers().isRental()) {
-                            sticker = Edition.Rental;
-                        }
-                        if (item.getJokerData().getEdition() != Edition.NoEdition) {
-                            sticker = item.getJokerData().getEdition();
-                        }
-                    }
-
-                    play.addToQueue(item, sticker);
+                    play.addToQueue(functions.nextShopItem(a));
                 }
             }
 
@@ -265,7 +246,7 @@ public final class BalatroImpl implements Balatro {
                             output.append(rank.getName());
                             output.append(" of ")
                                     .append(card.base().getSuit().getName());
-                            options.add(new EditionItem(new AbstractCard(output.toString())));
+                            options.add(new EditionItem(new AbstractCard(output.toString(), card)));
                         }
                     }
                 }
@@ -299,6 +280,83 @@ public final class BalatroImpl implements Balatro {
     public @NotNull @Unmodifiable Run analyzeAll() {
         enableAll();
         return analyze();
+    }
+
+    @Override
+    public Balatro enableBoss() {
+        analyzeBoss = true;
+        return null;
+    }
+
+    @Override
+    public Balatro enableShop() {
+        analyzeShopQueue = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableSpectralPack() {
+        analyzeSpectral = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableVouchers() {
+        analyzeVoucher = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableJokerPack() {
+        analyzeJokers = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableCelestialPack() {
+        analyzeCelestialPacks = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableArcanaPack() {
+        analyzeArcana = true;
+        return this;
+    }
+
+    @Override
+    public Balatro enableTags() {
+        analyzeTags = true;
+        return this;
+    }
+
+    @Override
+    public void printConfigurations() {
+        System.out.println("----------------------- CONFIGURATION -----------------------");
+        System.out.println("Standard: " + analyzeStandardPacks);
+        System.out.println("Celestial: " + analyzeCelestialPacks);
+        System.out.println("Arcana: " + analyzeArcana);
+        System.out.println("Spectral: " + analyzeSpectral);
+        System.out.println("Jokers: " + analyzeJokers);
+        System.out.println("Tags: " + analyzeTags);
+        System.out.println("Boss: " + analyzeBoss);
+        System.out.println("Shop: " + analyzeShopQueue);
+        System.out.println("Vouchers: " + analyzeVoucher);
+        System.out.println("----------------------- CONFIGURATION -----------------------");
+    }
+
+    @Override
+    public Balatro disableAll() {
+        analyzeStandardPacks = false;
+        analyzeCelestialPacks = false;
+        analyzeArcana = false;
+        analyzeSpectral = false;
+        analyzeJokers = false;
+        analyzeTags = false;
+        analyzeBoss = false;
+        analyzeShopQueue = false;
+        analyzeVoucher = false;
+        return this;
     }
 
     @Override

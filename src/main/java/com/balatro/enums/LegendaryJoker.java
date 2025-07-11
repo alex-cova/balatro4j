@@ -1,5 +1,6 @@
 package com.balatro.enums;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -25,5 +26,10 @@ public enum LegendaryJoker implements Item {
     @Override
     public int getYIndex() {
         return 10;
+    }
+
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return inSpectral(ante, edition).or(inPack(ante, edition));
     }
 }

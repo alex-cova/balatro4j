@@ -11,6 +11,7 @@ import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PackInfo {
+
     private final PackType type;
     private Set<EditionItem> options;
 
