@@ -67,16 +67,21 @@ public enum PackType implements Item {
             case Standard_Pack, Jumbo_Standard_Pack, Mega_Standard_Pack -> PackKind.Standard;
             case Buffoon_Pack, Jumbo_Buffoon_Pack, Mega_Buffoon_Pack -> PackKind.Buffoon;
             case Spectral_Pack, Jumbo_Spectral_Pack, Mega_Spectral_Pack -> PackKind.Spectral;
-            default -> throw new IllegalArgumentException("Invalid pack type: " + this);
         };
     }
 
+    public boolean isLegendaryEnabled() {
+        return getKind().isLegendaryEnabled();
+    }
+
     public boolean isMega() {
-        return this == Mega_Arcana_Pack || this == Mega_Celestial_Pack || this == Mega_Standard_Pack || this == Mega_Buffoon_Pack || this == Mega_Spectral_Pack;
+        return this == Mega_Arcana_Pack || this == Mega_Celestial_Pack || this == Mega_Standard_Pack ||
+                this == Mega_Buffoon_Pack || this == Mega_Spectral_Pack;
     }
 
     public boolean isJumbo() {
-        return this == Jumbo_Arcana_Pack || this == Jumbo_Celestial_Pack || this == Jumbo_Standard_Pack || this == Jumbo_Buffoon_Pack || this == Jumbo_Spectral_Pack;
+        return this == Jumbo_Arcana_Pack || this == Jumbo_Celestial_Pack || this == Jumbo_Standard_Pack ||
+                this == Jumbo_Buffoon_Pack || this == Jumbo_Spectral_Pack;
     }
 
     public boolean isBuffon() {

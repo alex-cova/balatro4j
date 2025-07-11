@@ -9,8 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.balatro.enums.LegendaryJoker.Perkeo;
-import static com.balatro.enums.LegendaryJoker.Triboulet;
+import static com.balatro.enums.LegendaryJoker.*;
 
 
 public class Performance {
@@ -24,17 +23,20 @@ public class Performance {
             System.out.println("-------------------------------------------------");
         }
 
-        var seeds = Balatro.search(10, 100_000_000)
+        var df = new DecimalFormat("#,##0");
+
+        var seeds = Balatro.search(100_000_000)
                 .configuration(config -> config.maxAnte(1)
-                        .disableShopQueue()
                         .disablePack(PackKind.Standard)
                         .disablePack(PackKind.Buffoon)
                         .disablePack(PackKind.Celestial)
                 )
-                .filter(Perkeo.inPack(Edition.Negative).or(Triboulet.inPack(Edition.Negative)))
+                .filter(Perkeo.inPack(Edition.Negative).or(Triboulet.inPack(Edition.Negative))
+                        .or(Canio.inPack(Edition.Negative)).or(Yorick.inPack(Edition.Negative))
+                        .or(Chicot.inPack(Edition.Negative)))
                 .find();
 
-        System.out.println("Seeds found: " + seeds.size());
+        System.out.println("Seeds found: " + df.format(seeds.size()));
 
         var decimalFormat = new DecimalFormat("0.0");
 

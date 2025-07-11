@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(using = ItemSerializer.class)
 public interface Joker extends Item {
 
+    JokerType getType();
+
     default Filter inBuffonPack() {
         return new InBuffonPackFilter(this);
     }
@@ -20,8 +22,6 @@ public interface Joker extends Item {
     default Filter inBuffonPack(int ante, Edition edition) {
         return new InBuffonPackFilter(ante, this, edition);
     }
-
-    JokerType getType();
 
     default boolean isRare() {
         return getType() == JokerType.RARE;

@@ -1,0 +1,27 @@
+{
+  "name": "immolate2",
+  "version": "1.0.0",
+  "description": "v2 for immolate in Javascript",
+  "main": "index.js",
+  "type": "module",
+  "jest": {
+    "transform": {},
+    "extensionsToTreatAsEsm": [
+      ".test.js"
+    ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^3.2.2"
+  }
+}

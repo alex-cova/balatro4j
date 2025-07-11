@@ -17,7 +17,7 @@ public class LockTests {
 
     @Test
     void testLegendaryLock() {
-        var functions = new Functions("IGSPUNF", 1, new InstanceParams(Deck.PLASMA_DECK, Stake.White_Stake, false, Version.v_101f.getVersion()));
+        var functions = new Functions("IGSPUNF", 1, new InstanceParams(Deck.PLASMA_DECK, Stake.White_Stake, false, Version.v_101f));
         functions.lock(LegendaryJoker.Triboulet);
         var data = functions.nextJoker("sou", joker1SouArr, joker2SouArr, joker3SouArr, joker4SouArr, raritySouArr, editionSouArr, 1, true);
         System.out.println(data.joker.getName());

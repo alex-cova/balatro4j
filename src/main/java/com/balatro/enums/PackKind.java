@@ -17,4 +17,8 @@ public enum PackKind {
     public String getName() {
         return name;
     }
+
+    public boolean isLegendaryEnabled() {
+        return this == Spectral || this == Arcana;
+    }
 }

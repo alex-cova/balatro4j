@@ -1,25 +1,4 @@
-const Specials = Object.freeze({
-    BLACKHOLE: {
-        name: "Black Hole",
-        getName() {
-            return this.name;
-        },
-        getYIndex() {
-            return 9;
-        }
-    },
-    THE_SOUL: {
-        name: "The Soul",
-        getName() {
-            return this.name;
-        },
-        getYIndex() {
-            return 9;
-        }
-    }
-});
-
-class LuaRandom {
+export class LuaRandom {
     static MAX_UINT64 = 9223372036854775807n; // Long.MAX_VALUE
 
     static main() {

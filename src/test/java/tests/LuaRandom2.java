@@ -4,6 +4,10 @@ import com.balatro.DoubleLong;
 
 public final class LuaRandom2 {
 
+    public static void main(String[] args) {
+        System.out.println(random(0.0));
+    }
+
     public static final long MAX_UINT64 = Long.MAX_VALUE;
 
     private static long _randInt(double seed) {

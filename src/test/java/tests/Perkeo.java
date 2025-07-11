@@ -27,7 +27,6 @@ public class Perkeo {
         items.addAll(Arrays.asList(Voucher.values()));
 
         items.stream()
-                .filter(item -> item instanceof Item)
                 .map(Item::getName)
                 .sorted()
                 .distinct()

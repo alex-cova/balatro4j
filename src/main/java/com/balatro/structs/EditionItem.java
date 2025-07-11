@@ -151,7 +151,7 @@ public record EditionItem(Item item, @NotNull Edition edition) implements Item {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return item.getName();
     }
 }

@@ -6,6 +6,7 @@ import { StandardCardRenderer } from "../class/StandardCardRenderer.js";
 import { BlindRenderer } from "../class/BlindRenderer.js";
 import { TagRenderer } from "../class/TagRenderer.js";
 const autoComplete = window.autoComplete;
+const addedTags = new Set();
 
 const BUFFOON = "Buffoon";
 const CELESTIAL = "Celestial";
@@ -95,6 +96,10 @@ function createTag(text) {
 	if (!isValid(text) || text === '') {
 		return;
 	}
+	if (addedTags.has(text.toLowerCase())) {
+		return; // Prevent duplicate tags
+	}
+	addedTags.add(text.toLowerCase());
 
 	const tag = document.createElement('div');
 	tag.className = 'tag';
@@ -105,6 +110,7 @@ function createTag(text) {
 	close.innerText = 'X';
 	close.addEventListener('click', () => {
 		tagsContainer.removeChild(tag);
+		addedTags.delete(text.toLowerCase());
 	});
 
 	tag.appendChild(close);

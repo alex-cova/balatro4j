@@ -1,5 +1,6 @@
 package tests;
 
+import com.balatro.LuaRandom;
 import com.balatro.cache.Query;
 import com.balatro.enums.Edition;
 import com.balatro.enums.LegendaryJoker;
@@ -24,5 +25,10 @@ public class GeneralTests {
 
         Assertions.assertEquals(query.getItem(), deserializedQuery.getItem());
         Assertions.assertEquals(query.getEdition(), deserializedQuery.getEdition());
+    }
+
+    @Test
+    void testRandom() {
+        Assertions.assertEquals(0.794206292431241, LuaRandom.random(0.0));
     }
 }

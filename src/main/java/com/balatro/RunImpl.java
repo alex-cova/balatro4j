@@ -79,7 +79,7 @@ record RunImpl(String seed, List<Ante> antes) implements Run {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return seed;
     }
 

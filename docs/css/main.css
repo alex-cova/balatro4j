@@ -57,7 +57,7 @@ section#run {
 	section#run {
 		max-width: 100%;
 	}
-	
+
 }
 
 .run-container,
@@ -101,7 +101,7 @@ section#run {
 
 .copy-button:hover {
 	background-color: #e7ad55;
-	transform: scale(1.1);
+	/* transform: scale(1.1); */
 }
 
 
@@ -226,4 +226,44 @@ footer {
 
 .scrolled {
 	background-color: #182325;
+}
+
+.legendary-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.show-legendary-button {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	/* Position at 50% from the left edge */
+	transform: translateX(-50%) translateY(8px);
+	/* Center horizontally and keep your original Y translation */
+	border-radius: 0px 0px 8px 8px;
+	padding: 4px 8px;
+	cursor: pointer;
+	transition: opacity 0.3s, transform 0.3s;
+	opacity: 0;
+	display: none;
+	z-index: 99;
+	padding: 8px 16px;
+}
+
+.legendary {
+	position: absolute;
+	transition: transform 0.3s;
+	
+}
+
+.show-legendary-button.active {
+	opacity: 1;
+	display: inline-flex;
+	/* Keep horizontal centering while moving down */
+}
+
+.legendary.active {
+	transform: translateY(-15px) !important;
 }
