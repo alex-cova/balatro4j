@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public final class BalatroImpl implements Balatro {
+public final class BalatroImpl extends Configuration implements Balatro {
 
     public static final List<? extends Item> options = Arrays.asList(
             CommonJoker.Golden_Ticket,
@@ -82,7 +82,7 @@ public final class BalatroImpl implements Balatro {
 
     static final char[] CHARACTERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
-    public static byte[] generateRandomSeed() {
+    public static byte @NotNull [] generateRandomSeed() {
         byte[] chars = new byte[8];
         for (int i = 0; i < 8; i++) {
             int index = ThreadLocalRandom.current().nextInt(CHARACTERS.length);
@@ -97,18 +97,6 @@ public final class BalatroImpl implements Balatro {
     private Deck deck;
     private Stake stake;
     private Version version;
-    private boolean analyzeStandardPacks;
-    private boolean analyzeCelestialPacks;
-    private boolean analyzeTags;
-    private boolean analyzeBoss;
-    private boolean analyzeVoucher;
-    private boolean analyzeShopQueue;
-    private boolean analyzeJokers;
-    private boolean analyzeArcana;
-    private boolean analyzeSpectral;
-    private boolean freshProfile;
-    private boolean freshRun = true;
-    private boolean showman;
 
 
     public BalatroImpl(byte[] seed, int maxAnte, List<Integer> cardsPerAnte, Deck deck, Stake stake, Version version,
@@ -129,8 +117,9 @@ public final class BalatroImpl implements Balatro {
         this.analyzeShopQueue = analyzeShopQueue;
     }
 
+    @Contract(" -> new")
     @Override
-    public Run analyze() {
+    public @NotNull @Unmodifiable Run analyze() {
         return performAnalysis(seed, maxAnte, cardsPerAnte, deck, stake, version);
     }
 
@@ -148,7 +137,7 @@ public final class BalatroImpl implements Balatro {
 
         for (int a = 1; a <= maxAnte; a++) {
             functions.initUnlocks(a, freshProfile);
-            var play = new AnteImpl(a);
+            var play = new AnteImpl(a, this);
             antes.add(play);
 
             if (analyzeBoss) {
@@ -183,7 +172,7 @@ public final class BalatroImpl implements Balatro {
 
             for (int p = 1; p <= numPacks; p++) {
                 var pack = functions.nextPack(a);
-                var packInfo = new PackInfo(pack);
+                var packInfo = new Pack(pack);
                 Set<EditionItem> options = new HashSet<>();
 
                 switch (packInfo.getKind()) {

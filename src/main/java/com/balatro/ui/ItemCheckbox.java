@@ -5,6 +5,7 @@ import com.balatro.api.Item;
 import com.balatro.api.Joker;
 import com.balatro.enums.Edition;
 import com.balatro.enums.LegendaryJoker;
+import com.balatro.structs.EditionItem;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -16,15 +17,28 @@ public class ItemCheckbox extends JPanel {
     private final Item item;
     private final JSpinner spinner;
     private final JCheckBox checkBox;
-    private final BufferedImage image;
-    private JComboBox<Edition> comboBox;
+    private BufferedImage image;
+    private final JComboBox<Edition> comboBox;
 
     public ItemCheckbox(@NotNull Item item) {
         this.item = item;
 
         checkBox = new JCheckBox(item.getName());
         spinner = new JSpinner();
-        image = SpriteUtil.getSprite(item);
+        comboBox = new JComboBox<>();
+
+        for (Edition value : Edition.values()) {
+            comboBox.addItem(value);
+        }
+
+        comboBox.addActionListener(event -> {
+            image = SpriteUtil.getSprite(new EditionItem(item, (Edition) comboBox.getSelectedItem()));
+            repaint();
+        });
+
+        comboBox.setSelectedItem(Edition.NoEdition);
+
+        image = SpriteUtil.getSprite(new EditionItem(item, (Edition) comboBox.getSelectedItem()));
 
         setLayout(new Layout());
 
@@ -39,28 +53,17 @@ public class ItemCheckbox extends JPanel {
 
         add(checkBox);
 
-        if (item instanceof Joker || item instanceof LegendaryJoker) {
-            comboBox = new JComboBox<>();
-            for (Edition value : Edition.values()) {
-                comboBox.addItem(value);
-            }
-
-            comboBox.setSelectedItem(Edition.NoEdition);
-        }
-
         checkBox.addItemListener(event -> {
             if (checkBox.isSelected()) {
                 add(spinnerPanel);
 
-                if (comboBox != null) {
+                if (item instanceof Joker || item instanceof LegendaryJoker) {
                     add(comboBox);
                 }
 
             } else {
                 remove(spinnerPanel);
-                if (comboBox != null) {
-                    remove(comboBox);
-                }
+                remove(comboBox);
             }
 
             updateUI();
@@ -68,6 +71,15 @@ public class ItemCheckbox extends JPanel {
         });
 
         setPreferredSize(new Dimension(220, 110));
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        checkBox.setEnabled(enabled);
+        spinner.setEnabled(enabled);
+        if (comboBox != null) {
+            comboBox.setEnabled(enabled);
+        }
     }
 
     static class Layout implements LayoutManager {
@@ -118,7 +130,13 @@ public class ItemCheckbox extends JPanel {
             ante = -1;
         }
 
+        System.out.println("Filtering: " + item + " " + edition);
+
         return item.auto(ante, edition);
+    }
+
+    public EditionItem getEditionItem() {
+        return new EditionItem(item, (Edition) comboBox.getSelectedItem());
     }
 
     @Override

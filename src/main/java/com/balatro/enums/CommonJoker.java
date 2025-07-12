@@ -103,7 +103,7 @@ public enum CommonJoker implements Joker {
 
     Hanging_Chad("Hanging Chad"),
 
-    Shoot_the_Moo("Shoot the Moo");
+    Shoot_the_Moo("Shoot the Moon");
 
     private final String name;
 

@@ -31,7 +31,7 @@ public record EditionItem(Item item, @NotNull Edition edition) implements Item {
     @JsonIgnore
     @Override
     public Filter auto(int ante, Edition edition) {
-        return item.auto(1, Edition.NoEdition);
+        return item.auto(ante, edition);
     }
 
     @JsonIgnore

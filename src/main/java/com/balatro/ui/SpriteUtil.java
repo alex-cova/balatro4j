@@ -4,7 +4,9 @@ import com.balatro.api.AbstractCard;
 import com.balatro.api.Item;
 import com.balatro.api.Joker;
 import com.balatro.enums.*;
+import com.balatro.structs.EditionItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +26,7 @@ public class SpriteUtil {
     private static BufferedImage vouchers;
     private static BufferedImage deck;
     private static BufferedImage enhancers;
+    private static BufferedImage editions;
     private static Map<String, Coordinate> jokerSprites;
     private static Map<String, Coordinate> tarotSprites;
     private static Map<String, Coordinate> voucherSprites;
@@ -53,6 +56,7 @@ public class SpriteUtil {
             tags = ImageIO.read(Objects.requireNonNull(SpriteUtil.class.getResourceAsStream("/images/Tags.png")));
             deck = ImageIO.read(Objects.requireNonNull(SpriteUtil.class.getResourceAsStream("/images/8BitDeck.png")));
             enhancers = ImageIO.read(Objects.requireNonNull(SpriteUtil.class.getResourceAsStream("/images/Enhancers.png")));
+            editions = ImageIO.read(Objects.requireNonNull(SpriteUtil.class.getResourceAsStream("/images/Editions.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -71,8 +75,60 @@ public class SpriteUtil {
         }
     }
 
+    public static @Nullable BufferedImage getSprite(@NotNull EditionItem item) {
+        var base = getSprite(item.item());
 
-    public static @Nullable BufferedImage getSprite(Item item) {
+        if (base == null) {
+            return null;
+        }
+
+        if (item.edition() == Edition.NoEdition) {
+            return base;
+        }
+
+        if (item.edition() == Edition.Negative) {
+            return convertToNegative(base);
+        }
+
+        var enhancement = getEdition(item.edition());
+
+        if (enhancement == null) {
+            return base;
+        }
+
+        return merge(base, enhancement);
+    }
+
+    private static @NotNull BufferedImage convertToNegative(@NotNull BufferedImage original) {
+        int width = original.getWidth();
+        int height = original.getHeight();
+
+        BufferedImage negative = new BufferedImage(width, height, original.getType());
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgba = original.getRGB(x, y);
+                int a = (rgba >> 24) & 0xff;
+                int r = (rgba >> 16) & 0xff;
+                int g = (rgba >> 8) & 0xff;
+                int b = rgba & 0xff;
+
+                // Invert colors
+                r = 255 - r;
+                g = 255 - g;
+                b = 255 - b;
+
+                // Reconstruct pixel and set it
+                int negativeRGBA = (a << 24) | (r << 16) | (g << 8) | b;
+                negative.setRGB(x, y, negativeRGBA);
+            }
+        }
+
+        return negative;
+    }
+
+
+    private static @Nullable BufferedImage getSprite(Item item) {
         initialize();
 
         if (item instanceof LegendaryJoker) {
@@ -85,8 +141,15 @@ public class SpriteUtil {
             return merge(a, b);
         }
 
-        if (item instanceof Joker) {
+        if (item instanceof Joker joker) {
             var coord = jokerSprites.get(item.getName());
+
+            if (joker.getName().equals(UnCommonJoker101C.Hologram.getName())) {
+                var canio = jokerSprites.get("Canio");
+                var face = new Coordinate(canio.x() - 1, canio.y() + 1);
+
+                return merge(sprite(71, 95, coord, jokers), sprite(71, 95, face, jokers));
+            }
 
             return sprite(71, 95, coord, jokers);
         }
@@ -97,7 +160,7 @@ public class SpriteUtil {
             return sprite(71, 95, coord, vouchers);
         }
 
-        if (item instanceof Spectral || item instanceof Tarot || item instanceof Planet) {
+        if (item instanceof Spectral || item instanceof Tarot || item instanceof Planet || item instanceof Specials) {
             var coord = tarotSprites.get(item.getName());
 
             return sprite(71, 95, coord, tarots);
@@ -124,7 +187,15 @@ public class SpriteUtil {
         return null;
     }
 
-    private static Coordinate getCoordinate(Enhancement en) {
+    private static @Nullable BufferedImage getEdition(@NotNull Edition edition) {
+        if (edition.getEnhancerIndex() == -1) return null;
+
+        return sprite(71, 94, new Coordinate(edition.getEnhancerIndex(), 0), editions);
+
+    }
+
+    @Contract("_ -> new")
+    private static @NotNull Coordinate getCoordinate(Enhancement en) {
         int x = 1, y = 0;
 
         if (en == Enhancement.Luck) {
@@ -160,7 +231,7 @@ public class SpriteUtil {
         return image.getSubimage(coordinate.x() * w, coordinate.y() * h, w, h);
     }
 
-    private static BufferedImage merge(BufferedImage image1, BufferedImage image2) {
+    private static @NotNull BufferedImage merge(@NotNull BufferedImage image1, BufferedImage image2) {
         var result = new BufferedImage(image1.getWidth(), image1.getHeight(), image1.getType());
 
         result.getGraphics().drawImage(image1, 0, 0, image1.getWidth(), image1.getHeight(), null);

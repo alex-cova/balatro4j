@@ -32,7 +32,7 @@ public class JokerData implements Item {
     @JsonIgnore
     @Override
     public Filter auto(int ante, Edition edition) {
-        return joker.auto(1, Edition.NoEdition);
+        return joker.auto(ante, edition);
     }
 
     @JsonIgnore

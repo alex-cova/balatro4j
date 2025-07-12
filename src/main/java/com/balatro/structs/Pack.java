@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PackInfo {
+public class Pack {
 
     private final PackType type;
     private Set<EditionItem> options;
 
-    public PackInfo(@NotNull PackType type) {
+    public Pack(@NotNull PackType type) {
         this.type = type;
     }
 

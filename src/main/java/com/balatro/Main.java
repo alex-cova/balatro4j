@@ -1,9 +1,12 @@
 package com.balatro;
 
 import com.balatro.api.*;
+import com.balatro.cache.JokerFile;
+import com.balatro.cache.PreProcessedSeeds;
+import com.balatro.cache.QueryResult;
 import com.balatro.enums.*;
 import com.balatro.structs.EditionItem;
-import com.balatro.structs.PackInfo;
+import com.balatro.structs.Pack;
 import com.balatro.ui.*;
 import com.balatro.ui.Card;
 import org.jetbrains.annotations.Contract;
@@ -12,15 +15,20 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main extends JFrame {
 
@@ -29,6 +37,10 @@ public class Main extends JFrame {
     private final JLabel progressLabel = new JLabel();
     private final JButton startButton = new JButton("Start");
     private final List<ItemCheckbox> selections = new ArrayList<>();
+    private final JComboBox<Stake> stakeComboBox = new JComboBox<>();
+    private final JComboBox<Deck> deckComboBox = new JComboBox<>();
+    private final JComboBox<Integer> seedsPerThread = new JComboBox<>();
+    private final JCheckBox cache = new JCheckBox("Search in cache");
 
     public Main() throws HeadlessException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,14 +48,45 @@ public class Main extends JFrame {
 
         add(tabbedPane, BorderLayout.CENTER);
         JPanel toolBar = new JPanel();
+        JPanel footer = new JPanel();
+        footer.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         add(toolBar, BorderLayout.NORTH);
+        add(footer, BorderLayout.SOUTH);
+
+        footer.add(progressLabel);
+        footer.add(progressBar);
 
         progressLabel.setPreferredSize(new Dimension(250, 20));
 
         toolBar.add(startButton);
-        toolBar.add(progressLabel);
-        toolBar.add(progressBar);
+        toolBar.add(new JLabel("Deck:"));
+        toolBar.add(deckComboBox);
+        toolBar.add(new JLabel("Stake:"));
+        toolBar.add(stakeComboBox);
+        toolBar.add(new JLabel("Seeds per thread:"));
+        toolBar.add(seedsPerThread);
+        toolBar.add(cache);
+
+        cache.setToolTipText("Way Faster search but limited");
+
+        seedsPerThread.addItem(500_000);
+        seedsPerThread.addItem(1_000_000);
+        seedsPerThread.addItem(2_000_000);
+        seedsPerThread.addItem(5_000_000);
+        seedsPerThread.addItem(10_000_000);
+        seedsPerThread.addItem(25_000_000);
+        seedsPerThread.addItem(50_000_000);
+        seedsPerThread.addItem(100_000_000);
+        seedsPerThread.addItem(500_000_000);
+
+        for (Stake value : Stake.values()) {
+            stakeComboBox.addItem(value);
+        }
+
+        for (Deck value : Deck.values()) {
+            deckComboBox.addItem(value);
+        }
 
         toolBar.setPreferredSize(new Dimension(1024, 45));
 
@@ -64,6 +107,14 @@ public class Main extends JFrame {
         startButton.addActionListener(e -> search());
     }
 
+    private List<EditionItem> getSelections() {
+        return selections.stream()
+                .filter(ItemCheckbox::isSelected)
+                .map(ItemCheckbox::getEditionItem)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
     private void search() {
         var filter = buildFilter();
 
@@ -73,46 +124,129 @@ public class Main extends JFrame {
         }
 
         startButton.setEnabled(false);
+        deckComboBox.setEnabled(false);
+        stakeComboBox.setEnabled(false);
+        seedsPerThread.setEnabled(false);
+        cache.setEnabled(false);
+
+        for (ItemCheckbox selection : selections) {
+            selection.setEnabled(false);
+        }
+
+        final var selectedDeck = (Deck) deckComboBox.getSelectedItem();
+        final var selectedStake = (Stake) stakeComboBox.getSelectedItem();
 
         new Thread(() -> {
-            var seeds = Balatro.search(Runtime.getRuntime().availableProcessors(), 1_000_000)
-                    .filter(filter)
-                    .autoConfigure()
-                    .progressListener((speed, progress) -> {
-                        SwingUtilities.invokeLater(() -> {
-                            progressLabel.setText(speed);
-                            progressBar.setValue(progress);
-                        });
-                    })
-                    .find();
+            Set<String> seeds;
+
+            var file = new File("cache.jkr");
+
+            if (cache.isSelected() && file.exists()) {
+                seeds = new PreProcessedSeeds()
+                        .loadFile(file)
+                        .search(getSelections())
+                        .stream()
+                        .map(QueryResult::seed)
+                        .collect(Collectors.toSet());
+            } else {
+                seeds = Balatro.search(Runtime.getRuntime().availableProcessors(),
+                                Runtime.getRuntime().availableProcessors() * (Integer) seedsPerThread.getSelectedItem())
+                        .configuration(balatro -> balatro.deck(selectedDeck)
+                                .stake(selectedStake))
+                        .filter(filter)
+                        .autoConfigure()
+                        .progressListener((speed, progress) -> {
+                            SwingUtilities.invokeLater(() -> {
+                                progressLabel.setText(speed);
+                                progressBar.setValue(progress);
+                            });
+                        })
+                        .find();
+            }
+
+            progressBar.setValue(-1);
+            progressBar.setMaximum(Math.min(seeds.size(), 25000));
+            progressBar.setMinimum(0);
+
+            progressLabel.setText("Processing seeds...");
 
             var runs = seeds.parallelStream()
-                    .map(seed -> Balatro.builder(seed, 8)
-                            .analyzeAll())
+                    .limit(Math.min(seeds.size(), 25000))
+                    .map(seed -> {
+                        var run = Balatro.builder(seed, 8)
+                                .analyzeAll();
+
+                        progressBar.setValue(progressBar.getValue() + 1);
+
+                        return run;
+                    })
                     .sorted((A, B) -> Float.compare(A.getScore(), B.getScore()) * -1)
                     .toList();
 
+            progressBar.setMaximum(100);
+            progressBar.setValue(0);
             renderRuns(runs);
 
             startButton.setEnabled(true);
+            deckComboBox.setEnabled(true);
+            stakeComboBox.setEnabled(true);
+            seedsPerThread.setEnabled(true);
+            cache.setEnabled(true);
+
+            for (ItemCheckbox selection : selections) {
+                selection.setEnabled(true);
+            }
+
+            progressLabel.setText("Finished");
+
         }).start();
 
     }
 
+    private void appendToCache(List<Run> runs) {
+        progressLabel.setText("Adding found seeds to cache...");
+        progressBar.setValue(JProgressBar.UNDEFINED_CONDITION);
+        JokerFile.appendToCache(new File("cache.jkr"), runs);
+    }
+
     private void renderRuns(@NotNull List<Run> runs) {
+        if (runs.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No seeds found, try again, or try with a bigger number of seeds per thread",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!cache.isSelected()) {
+            appendToCache(runs);
+        }
+
         JTable table = new JTable();
 
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Seed", "Score"});
 
-        for (int i = 0; i < runs.size(); i++) {
-            Run run = runs.get(i);
+        for (Run run : runs) {
             model.addRow(new Object[]{run, run.getScore()});
         }
 
         table.setModel(model);
 
-        tabbedPane.add("Results", new JScrollPane(table));
+        for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+            if (tabbedPane.getComponentAt(i) instanceof JScrollPane s) {
+                if (s.getClientProperty("kekw") != null) {
+                    tabbedPane.removeTabAt(i);
+                    break;
+                }
+            } else {
+                System.out.println(tabbedPane.getTabComponentAt(i));
+            }
+        }
+
+        var scroll = new JScrollPane(table);
+        scroll.putClientProperty("kekw", "kekw");
+
+        tabbedPane.insertTab("Results", null, scroll, "Results", 0);
+        tabbedPane.setSelectedIndex(0);
 
         table.addMouseListener(new MouseAdapter() {
             @Override
@@ -130,46 +264,52 @@ public class Main extends JFrame {
                 }
             }
         });
+
+        JOptionPane.showMessageDialog(this, "Found " + new DecimalFormat("#,###").format(runs.size())
+                                            + " seeds", "Finished", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Contract("_ -> new")
     private @NotNull JComponent buildPreview(@NotNull Run run) {
-        JPanel preview = new JPanel();
-        preview.setLayout(new GridLayout(8, 1));
+        JTabbedPane preview = new JTabbedPane();
 
         for (Ante ante : run) {
             var antePanel = new JPanel();
             antePanel.setLayout(new VerticalLayoutManager());
-            antePanel.setBorder(new TitledBorder(new EmptyBorder(0, 0, 0, 0), "Ante " + ante.getAnte()));
 
             var shop = new JPanel();
             shop.setLayout(new HorizontalLayoutManager());
             shop.setBorder(new TitledBorder(new EmptyBorder(0, 0, 0, 0), "Shop"));
+
             var scrollShop = new JScrollPane(shop);
+            scrollShop.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
+            scrollShop.setBorder(new EmptyBorder(0, 0, 0, 0));
             scrollShop.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
             antePanel.add(scrollShop);
 
             for (EditionItem editionItem : ante.getShopQueue()) {
-                shop.add(new Card(editionItem.getName(), SpriteUtil.getSprite(editionItem.item())));
+                shop.add(new Card(editionItem.getName(), SpriteUtil.getSprite(editionItem)));
             }
 
-            for (PackInfo pack : ante.getPacks()) {
+            for (Pack pack : ante.getPacks()) {
                 var packPanel = new JPanel();
                 packPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-                packPanel.setBorder(new TitledBorder(pack.getType().getName()));
+                packPanel.setBorder(new TitledBorder(new MatteBorder(1, 0, 0, 0, Color.BLACK), pack.getType().getName()));
                 packPanel.setMinimumSize(new Dimension(100, 100));
 
                 for (EditionItem option : pack.getOptions()) {
-                    packPanel.add(new Card(option.getName(), SpriteUtil.getSprite(option.item())));
+                    packPanel.add(new Card(option.getName(), SpriteUtil.getSprite(option)));
                 }
 
                 antePanel.add(packPanel);
             }
 
-            preview.add(antePanel);
+            preview.addTab("Ante " + ante.getAnte(), antePanel);
         }
 
         var sc = new JScrollPane(preview);
+        sc.setBorder(new EmptyBorder(0, 0, 0, 0));
+        sc.setViewportBorder(new EmptyBorder(0, 0, 0, 0));
         sc.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         return sc;
@@ -189,7 +329,7 @@ public class Main extends JFrame {
         return Filter.compound(items);
     }
 
-    private void render(Item[] items, String tabName) {
+    private void render(Item @NotNull [] items, String tabName) {
         JPanel panel = new JPanel();
         tabbedPane.add(tabName, new JScrollPane(panel));
 

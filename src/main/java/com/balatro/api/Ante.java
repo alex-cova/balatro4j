@@ -3,7 +3,7 @@ package com.balatro.api;
 import com.balatro.enums.*;
 import com.balatro.structs.EditionItem;
 import com.balatro.structs.JokerData;
-import com.balatro.structs.PackInfo;
+import com.balatro.structs.Pack;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +34,7 @@ public interface Ante extends CommonQueries {
 
     Boss getBoss();
 
-    List<PackInfo> getPacks();
+    List<Pack> getPacks();
 
     @JsonIgnore
     Map<String, JokerData> getLegendaryJokers();

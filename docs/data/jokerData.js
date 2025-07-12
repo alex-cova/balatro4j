@@ -833,7 +833,7 @@ export default new Map([
 			"y": 7
 		}
 	],
-	["Shoot the Moo",
+	["Shoot the Moon",
 		{
 			"x": 2,
 			"y": 6

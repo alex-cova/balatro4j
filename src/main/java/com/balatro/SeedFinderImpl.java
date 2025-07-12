@@ -155,10 +155,11 @@ public final class SeedFinderImpl implements SeedFinder {
                         var remainingTasks = tasks.stream()
                                 .filter(a -> !a.isDone())
                                 .count();
-                        System.out.println(format.format(c - last) + " ops/s seeds analyzed: " + format.format(c) + " " + getMemory() + " remaining tasks: " + remainingTasks);
+                        System.out.println(format.format(c - last) + " ops/s seeds analyzed: " + format.format(c)
+                                           + " " + getMemory() + " remaining tasks: " + remainingTasks + ", seeds found: " + format.format(foundSeeds.size()));
 
                         if (progressListener != null) {
-                            progressListener.accept(format.format(c - last) + " ops/s", Math.round(((float) c / total) * 100.0f));
+                            progressListener.accept(format.format(c - last) + " ops/s, found: " + format.format(foundSeeds.size()), Math.round(((float) c / total) * 100.0f));
                         }
 
                         last = c;

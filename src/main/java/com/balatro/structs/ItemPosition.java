@@ -32,7 +32,7 @@ public record ItemPosition(Item item, int ante, Edition edition) implements Comp
 
     @Override
     public Filter auto(int ante, Edition edition) {
-        return item.auto(1, Edition.NoEdition);
+        return item.auto(ante, edition);
     }
 
     @Override

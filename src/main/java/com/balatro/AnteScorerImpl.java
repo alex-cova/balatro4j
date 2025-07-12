@@ -5,7 +5,7 @@ import com.balatro.api.Run;
 import com.balatro.enums.*;
 import com.balatro.structs.EditionItem;
 import com.balatro.structs.JokerData;
-import com.balatro.structs.PackInfo;
+import com.balatro.structs.Pack;
 import org.jetbrains.annotations.NotNull;
 
 public class AnteScorerImpl implements AnteScorer {
@@ -102,7 +102,7 @@ public class AnteScorerImpl implements AnteScorer {
             }
         }
 
-        for (PackInfo pack : ante.getPacks()) {
+        for (Pack pack : ante.getPacks()) {
             if (pack.getType().isStandard()) continue;
             score += pack.getType().getChoices();
 

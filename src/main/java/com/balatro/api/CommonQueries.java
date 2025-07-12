@@ -39,10 +39,6 @@ public interface CommonQueries {
 
     boolean hasInBuffonPack(@NotNull Item item, Edition edition);
 
-    default boolean hasInSpectral(@NotNull Item item) {
-        return hasInSpectral(item, Edition.NoEdition);
-    }
-
     boolean hasInSpectral(@NotNull Item item, Edition edition);
 
     boolean hasVoucher(Voucher voucher);

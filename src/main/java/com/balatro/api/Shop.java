@@ -11,7 +11,7 @@ public interface Shop extends Iterable<EditionItem> {
 
     Shop copy();
 
-    void add(@NotNull ShopItem value, Edition edition);
+    void add(@NotNull ShopItem value);
 
     EditionItem get(int index);
 
