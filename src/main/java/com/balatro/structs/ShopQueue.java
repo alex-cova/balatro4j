@@ -49,6 +49,10 @@ public final class ShopQueue implements Shop {
     @Override
     public void add(@NotNull ShopItem value) {
         map.put(value.getItem().getName(), value.getEdition());
+        if (value.getItem() instanceof EditionItem ei) {
+            queue.add(ei);
+            return;
+        }
         queue.add(new EditionItem(value.getItem(), value.getEdition()));
     }
 
