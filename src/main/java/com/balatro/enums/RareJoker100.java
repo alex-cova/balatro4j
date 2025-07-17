@@ -21,7 +21,7 @@ public enum RareJoker100 implements Joker {
     The_Tribe("The Tribe"),
     Invisible_Joker("Invisible Joker"),
     Brainstorm("Brainstorm"),
-    Drivers_License("Drivers Licens");
+    Drivers_License("Drivers License");
 
     private final String name;
 

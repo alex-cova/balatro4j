@@ -86,7 +86,7 @@ public final class SeedFinderImpl implements SeedFinder {
 
         System.out.println("--------------------------------------------------------------------------------------------");
         System.out.println("FINISHED: " + (init.until(LocalDateTime.now(), ChronoUnit.SECONDS)) + " seconds | "
-                           + format.format(count.longValue() / Math.max(time, 1)) + " Seeds/sec, Seeds analyzed: " + format.format(count.longValue()));
+                + format.format(count.longValue() / Math.max(time, 1)) + " Seeds/sec, Seeds analyzed: " + format.format(count.longValue()));
         System.out.println(getMemory());
         System.out.println("--------------------------------------------------------------------------------------------");
 
