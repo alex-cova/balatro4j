@@ -1,5 +1,6 @@
 package com.balatro.cache;
 
+import com.balatro.api.Run;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -11,6 +12,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JokerFile {
+
+    public static void appendToCache(File jokerFile, @NotNull List<Run> runList) {
+        try {
+            var baos = new ByteArrayOutputStream();
+
+            for (Run run : runList) {
+                write(baos, new Data(run));
+            }
+
+            try (FileOutputStream fos = new FileOutputStream(jokerFile, true)) {
+                fos.write(baos.toByteArray());
+            }
+            baos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void write(@NotNull ByteArrayOutputStream baos, @NotNull Data data) {
         baos.writeBytes(data.getSeed().getBytes());

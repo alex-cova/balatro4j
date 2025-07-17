@@ -75,7 +75,7 @@ publishing {
     publications.create<MavenPublication>("maven") {
         groupId = "com.balatro"
         artifactId = "balatro4j"
-        version = "1.0.0-SNAPSHOT"
+        version = "2.0.0-SNAPSHOT"
 
         from(components["java"])
     }

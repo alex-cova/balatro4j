@@ -111,7 +111,13 @@ public final class Functions implements Lock {
             lock(Specials.THE_SOUL);
             return new EditionItem(data.joker, data.edition);
         }
-        return randchoice(source, TAROTS);
+        var tarot = randchoice(source, TAROTS);
+
+        if (tarot == Tarot.The_Wheel_of_Fortune) {
+            return new EditionItem(tarot, nextWheelOfFortune());
+        }
+
+        return tarot;
     }
 
     public Item nextPlanet(Coordinate source, int ante, boolean soulable) {
@@ -149,33 +155,6 @@ public final class Functions implements Lock {
         return randchoice(source, SPECTRALS);
     }
 
-    private Edition getEdition(int ante, Coordinate[] editionArr) {
-        // Get edition
-        int editionRate = 1;
-
-        if (isVoucherActive(Voucher.Glow_Up)) {
-            editionRate = 4;
-        } else if (isVoucherActive(Voucher.Hone)) {
-            editionRate = 2;
-        }
-
-        var edition = Edition.NoEdition;
-        var editionPoll = random(editionArr[ante]);
-
-        if (editionPoll > 0.997) {
-            edition = Edition.Negative;
-        } else if (editionPoll > 1 - 0.006 * editionRate) {
-            edition = Edition.Polychrome;
-        } else if (editionPoll > 1 - 0.02 * editionRate) {
-            edition = Edition.Holographic;
-        } else if (editionPoll > 1 - 0.04 * editionRate) {
-            edition = Edition.Foil;
-        }
-
-        return edition;
-    }
-
-
     static final Set<String> setA = Set.of("Gros Michel", "Ice Cream", "Cavendish", "Luchador", "Turtle Bean", "Diet Cola",
             "Popcorn", "Ramen", "Seltzer", "Mr. Bones", "Invisible Joker");
 
@@ -207,46 +186,56 @@ public final class Functions implements Lock {
         final var edition = getEdition(ante, editionArr);
 
         // Get next joker
-        Item joker;
+        Coordinate coordinate;
+        Item[] items;
 
         switch (rarity) {
             case 4 -> {
+                items = LEGENDARY_JOKERS;
                 if (params.version > 10099) {
-                    joker = randchoice(Joker4, LEGENDARY_JOKERS);
+                    coordinate = Joker4;
                 } else {
-                    joker = randchoice(joker4Arr[ante], LEGENDARY_JOKERS);
+                    coordinate = joker4Arr[ante];
                 }
             }
             case 3 -> {
+                coordinate = joker3Arr[ante];
+
                 if (params.version > 10103) {
-                    joker = randchoice(joker3Arr[ante], RARE_JOKERS);
+                    items = RARE_JOKERS;
                 } else {
                     if (params.version > 10099) {
-                        joker = randchoice(joker3Arr[ante], RARE_JOKERS_101C);
+                        items = RARE_JOKERS_101C;
                     } else {
-                        joker = randchoice(joker3Arr[ante], RARE_JOKERS_100);
+                        items = RARE_JOKERS_100;
                     }
                 }
             }
             case 2 -> {
+                coordinate = joker2Arr[ante];
+
                 if (params.version > 10103) {
-                    joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS);
+                    items = UNCOMMON_JOKERS;
                 } else {
                     if (params.version > 10099) {
-                        joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS_101C);
+                        items = UNCOMMON_JOKERS_101C;
                     } else {
-                        joker = randchoice(joker2Arr[ante], UNCOMMON_JOKERS_100);
+                        items = UNCOMMON_JOKERS_100;
                     }
                 }
             }
             default -> {
+                coordinate = joker1Arr[ante];
+
                 if (params.version > 10099) {
-                    joker = randchoice(joker1Arr[ante], COMMON_JOKERS);
+                    items = COMMON_JOKERS;
                 } else {
-                    joker = randchoice(joker1Arr[ante], COMMON_JOKERS_100);
+                    items = COMMON_JOKERS_100;
                 }
             }
         }
+
+        final var joker = randchoice(coordinate, items);
 
         // Get next joker stickers
         var stickers = new JokerStickers();
@@ -254,10 +243,10 @@ public final class Functions implements Lock {
         if (hasStickers) {
             if (params.version > 10103) {
                 boolean searchForSticker = (params.getStake() == Stake.Black_Stake ||
-                        params.getStake() == Stake.Blue_Stake ||
-                        params.getStake() == Stake.Purple_Stake ||
-                        params.getStake() == Stake.Orange_Stake ||
-                        params.getStake() == Stake.Gold_Stake);
+                                            params.getStake() == Stake.Blue_Stake ||
+                                            params.getStake() == Stake.Purple_Stake ||
+                                            params.getStake() == Stake.Orange_Stake ||
+                                            params.getStake() == Stake.Gold_Stake);
 
                 double stickerPoll = 0.0;
 
@@ -291,8 +280,8 @@ public final class Functions implements Lock {
 
             } else {
                 if (params.getStake() == Stake.Black_Stake || params.getStake() == Stake.Blue_Stake ||
-                        params.getStake() == Stake.Purple_Stake || params.getStake() == Stake.Orange_Stake ||
-                        params.getStake() == Stake.Gold_Stake) {
+                    params.getStake() == Stake.Purple_Stake || params.getStake() == Stake.Orange_Stake ||
+                    params.getStake() == Stake.Gold_Stake) {
                     if (!setA.contains(joker.getName())) {
                         stickers.setEternal(random(stake_shop_joker_eternalArr[ante]) > 0.7);
                     }
@@ -308,7 +297,8 @@ public final class Functions implements Lock {
             }
         }
 
-        return new JokerData(joker, rarity, edition, stickers);
+        return new JokerData(joker, rarity, edition, stickers)
+                .setResampleInfo(coordinate, items);
     }
 
     // Shop Logic
@@ -452,6 +442,8 @@ public final class Functions implements Lock {
     public static Coordinate boss = new Coordinate("boss", -1, 0);
     public static Coordinate omen_globe = new Coordinate("omen_globe", -1, 1);
     public static Coordinate Joker4 = new Coordinate("Joker4", -1, 2);
+    public static Coordinate wheel_of_fortune = new Coordinate("wheel_of_fortune", -1, 3);
+    public static Coordinate edition_generic = new Coordinate("edition_generic", -1, 4);
 
     static {
         heat(30);
@@ -792,19 +784,12 @@ public final class Functions implements Lock {
         return chosenBoss;
     }
 
-    @SuppressWarnings("SameParameterValue")
+    @SuppressWarnings({"SameParameterValue", "unchecked"})
     private <T extends Item> T _randchoice(Coordinate id, @NotNull List<T> items) {
         T item = items.get(randint(id, items.size() - 1));
 
         if (isLocked(item)) {
-            int resample = 2;
-            while (true) {
-                item = items.get(randintResample(id.resample(resample), items.size() - 1));
-                resample++;
-                if (!isLocked(item) || resample > 1000) {
-                    return item;
-                }
-            }
+            return resample(id, (T[]) items.toArray());
         }
 
         return item;
@@ -816,16 +801,26 @@ public final class Functions implements Lock {
         if (params.isShowman()) return item;
 
         if (isLocked(item)) {
-            int resample = 2;
-            while (true) {
-                item = items[randintResample(id.resample(resample), items.length - 1)];
-                resample++;
-                if (!isLocked(item) || resample > 1000) {
-                    return item;
-                }
-            }
+            return resample(id, items);
         }
         return item;
+    }
+
+    public Item resample(@NotNull JokerData jokerData) {
+        return resample(jokerData.getCoordinate(), jokerData.getItems());
+    }
+
+    private <T extends Item> T resample(@NotNull Coordinate id, @NotNull T @NotNull [] items) {
+        T item;
+
+        int resample = 2;
+        while (true) {
+            item = items[randintResample(id.resample(resample), items.length - 1)];
+            resample++;
+            if (!isLocked(item) || resample > 1000) {
+                return item;
+            }
+        }
     }
 
     @Override
@@ -856,6 +851,95 @@ public final class Functions implements Lock {
     @Override
     public void firstLock() {
         lock.firstLock();
+    }
+
+    public int getShopWindow() {
+        int size = 2;
+
+        if (lock.isLocked(Voucher.Overstock)) {
+            size++;
+        }
+
+        if (lock.isLocked(Voucher.Overstock_Plus)) {
+            size++;
+        }
+
+        return size;
+    }
+
+    public Edition nextWheelOfFortune() {
+        //1 / 4
+        if (random(wheel_of_fortune) > 0.25) {
+            return pollEdition(wheel_of_fortune, null, true, true);
+        }
+
+        return Edition.NoEdition;
+    }
+
+    private Edition getEdition(int ante, Coordinate[] editionArr) {
+        // Get edition
+        var editionRate = getEditionRate();
+        var edition = Edition.NoEdition;
+        var editionPoll = random(editionArr[ante]);
+
+        if (editionPoll > 0.997) {
+            edition = Edition.Negative;
+        } else if (editionPoll > 1 - 0.006 * editionRate) {
+            edition = Edition.Polychrome;
+        } else if (editionPoll > 1 - 0.02 * editionRate) {
+            edition = Edition.Holographic;
+        } else if (editionPoll > 1 - 0.04 * editionRate) {
+            edition = Edition.Foil;
+        }
+
+        return edition;
+    }
+
+    public int getEditionRate() {
+        int editionRate = 1;
+
+        if (isVoucherActive(Voucher.Glow_Up)) {
+            editionRate = 4;
+        } else if (isVoucherActive(Voucher.Hone)) {
+            editionRate = 2;
+        }
+
+        return editionRate;
+    }
+
+    public Edition pollEdition(Coordinate coordinate, Double modifier, boolean noNegative, boolean guaranteed) {
+        double editionPoll = random(coordinate);
+        var editionRate = getEditionRate();
+
+        if (guaranteed) {
+            if (editionPoll > 1 - 0.003 * 25 && !noNegative) {
+                return Edition.Polychrome;
+            } else if (editionPoll > 1 - 0.006 * 25) {
+                return Edition.Polychrome;
+            } else if (editionPoll > 1 - 0.02 * 25) {
+                return Edition.Holographic;
+            } else if (editionPoll > 1 - 0.04 * 25) {
+                return Edition.Foil;
+            }
+        } else {
+            if (editionPoll > 1 - multi(0.003, modifier) && !noNegative) {
+                return Edition.Negative;
+            } else if (editionPoll > 1 - 0.006 * multi(editionRate, modifier)) {
+                return Edition.Polychrome;
+            } else if (editionPoll > 1 - 0.02 * multi(editionRate, modifier)) {
+                return Edition.Holographic;
+            } else if (editionPoll > 1 - 0.04 * multi(editionRate, modifier)) {
+                return Edition.Foil;
+            }
+        }
+
+        return null;
+    }
+
+    private double multi(double editionRate, Double mod) {
+        if (mod == null) return editionRate;
+
+        return editionRate * mod;
     }
 }
 

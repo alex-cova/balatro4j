@@ -15,7 +15,7 @@ public final class Cache2D implements Cache {
 
     public Cache2D(int maxAnte) {
         generatedFirstPack = false;
-        specials = new double[3];
+        specials = new double[5];
         nodes = new double[maxAnte][44];
     }
 

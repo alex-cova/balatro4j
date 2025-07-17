@@ -1,9 +1,8 @@
 package com.balatro.structs;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
-import com.balatro.enums.Edition;
-import com.balatro.enums.Enhancement;
-import com.balatro.enums.Seal;
+import com.balatro.enums.*;
 import org.jetbrains.annotations.Nullable;
 
 public record Card(com.balatro.enums.Card base, @Nullable Enhancement enhancement, Edition edition,
@@ -22,5 +21,18 @@ public record Card(com.balatro.enums.Card base, @Nullable Enhancement enhancemen
     @Override
     public int ordinal() {
         return 0;
+    }
+
+    public Rank getRank() {
+        return base.getRank();
+    }
+
+    public Suit getSuit() {
+        return base.getSuit();
+    }
+
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return null;
     }
 }

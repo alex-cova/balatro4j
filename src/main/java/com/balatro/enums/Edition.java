@@ -26,6 +26,18 @@ public enum Edition implements Item {
         return name;
     }
 
+    public int getEnhancerIndex() {
+        if (this == Edition.Foil) {
+            return 1;
+        } else if (this == Edition.Holographic) {
+            return 2;
+        } else if (this == Edition.Polychrome) {
+            return 3;
+        }
+
+        return -1;
+    }
+
     @Override
     public int getYIndex() {
         return -1;

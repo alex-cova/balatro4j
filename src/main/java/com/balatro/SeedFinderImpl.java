@@ -17,6 +17,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,8 @@ public final class SeedFinderImpl implements SeedFinder {
     private Filter filter;
     private final Set<String> foundSeeds = new HashSet<>();
     private Consumer<Balatro> configuration;
+    private boolean autoconfigure;
+    private BiConsumer<String, Integer> progressListener;
 
     public SeedFinderImpl() {
         this(Runtime.getRuntime().availableProcessors(), 1_000_000);
@@ -54,8 +57,20 @@ public final class SeedFinderImpl implements SeedFinder {
     }
 
     @Override
+    public SeedFinder progressListener(BiConsumer<String, Integer> progressListener) {
+        this.progressListener = progressListener;
+        return this;
+    }
+
+    @Override
     public SeedFinder filter(Filter filter) {
         this.filter = filter;
+        return this;
+    }
+
+    @Override
+    public SeedFinder autoConfigure() {
+        autoconfigure = true;
         return this;
     }
 
@@ -70,6 +85,13 @@ public final class SeedFinderImpl implements SeedFinder {
     private void search() {
         if (filter == null) {
             throw new IllegalStateException("No filters were added");
+        }
+
+        if (autoconfigure) {
+            var builder = Balatro.builder("alex", 1);
+            builder.disableAll();
+            filter.configure(builder);
+            builder.printConfigurations();
         }
 
         if (lock.get()) {
@@ -88,6 +110,7 @@ public final class SeedFinderImpl implements SeedFinder {
         System.out.println("FINISHED: " + (init.until(LocalDateTime.now(), ChronoUnit.SECONDS)) + " seconds | "
                 + format.format(count.longValue() / Math.max(time, 1)) + " Seeds/sec, Seeds analyzed: " + format.format(count.longValue()));
         System.out.println(getMemory());
+        System.out.println("Seeds found: " + format.format(foundSeeds.size()));
         System.out.println("--------------------------------------------------------------------------------------------");
 
     }
@@ -104,8 +127,9 @@ public final class SeedFinderImpl implements SeedFinder {
         }
 
         final int amount = seedsPerThread / divisor;
+        final long total = (long) seedsPerThread * parallelism;
 
-        System.out.println("Searching " + format.format((long) parallelism * seedsPerThread) + " seeds with " + parallelism + " tasks, " + format.format(amount) + " seeds per task");
+        System.out.println("Searching " + format.format(total) + " seeds with " + parallelism + " tasks, " + format.format(amount) + " seeds per task");
         System.out.println("Divisor: " + divisor);
 
         long last = 0;
@@ -131,7 +155,13 @@ public final class SeedFinderImpl implements SeedFinder {
                         var remainingTasks = tasks.stream()
                                 .filter(a -> !a.isDone())
                                 .count();
-                        System.out.println(format.format(c - last) + " ops/s seeds analyzed: " + format.format(c) + " " + getMemory() + " remaining tasks: " + remainingTasks);
+                        System.out.println(format.format(c - last) + " ops/s seeds analyzed: " + format.format(c)
+                                           + " " + getMemory() + " remaining tasks: " + remainingTasks + ", seeds found: " + format.format(foundSeeds.size()));
+
+                        if (progressListener != null) {
+                            progressListener.accept(format.format(c - last) + " ops/s, found: " + format.format(foundSeeds.size()), Math.round(((float) c / total) * 100.0f));
+                        }
+
                         last = c;
                     }
                 } catch (InterruptedException e) {
@@ -163,10 +193,15 @@ public final class SeedFinderImpl implements SeedFinder {
                 count.increment();
                 var seed = BalatroImpl.generateRandomSeed();
 
-                var builder = Balatro.builder(seed, 0);
+                var builder = Balatro.builder(seed, 1);
 
-                if (configuration != null) {
-                    configuration.accept(builder);
+                if (autoconfigure) {
+                    builder.disableAll();
+                    filter.configure(builder);
+                } else {
+                    if (configuration != null) {
+                        configuration.accept(builder);
+                    }
                 }
 
                 var run = builder

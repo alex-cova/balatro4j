@@ -1,5 +1,6 @@
 package com.balatro.structs;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
 import com.balatro.enums.Edition;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +28,11 @@ public record ItemPosition(Item item, int ante, Edition edition) implements Comp
         value |= ante;
 
         return value;
+    }
+
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return item.auto(ante, edition);
     }
 
     @Override

@@ -30,6 +30,11 @@ public final class ShopQueue implements Shop {
         this.queue = queue;
     }
 
+    @Override
+    public @NotNull Iterator<EditionItem> iterator() {
+        return queue.iterator();
+    }
+
     @Contract(" -> new")
     @Override
     public @NotNull Shop copy() {
@@ -42,9 +47,13 @@ public final class ShopQueue implements Shop {
     }
 
     @Override
-    public void add(@NotNull ShopItem value, Edition edition) {
-        map.put(value.getItem().getName(), edition);
-        queue.add(new EditionItem(value.getItem(), edition));
+    public void add(@NotNull ShopItem value) {
+        map.put(value.getItem().getName(), value.getEdition());
+        if (value.getItem() instanceof EditionItem ei) {
+            queue.add(ei);
+            return;
+        }
+        queue.add(new EditionItem(value.getItem(), value.getEdition()));
     }
 
     @Override

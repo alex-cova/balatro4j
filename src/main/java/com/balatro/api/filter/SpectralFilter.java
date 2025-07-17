@@ -1,5 +1,6 @@
 package com.balatro.api.filter;
 
+import com.balatro.api.Balatro;
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
 import com.balatro.api.Run;
@@ -14,8 +15,13 @@ public record SpectralFilter(int ante, Item item, Edition edition) implements Fi
     @Override
     public boolean filter(Run run) {
         if (ante == -1) {
-            return run.hasInSpectral(item);
+            return run.hasInSpectral(item, edition);
         }
         return run.hasInSpectral(ante, item, edition);
+    }
+
+    @Override
+    public void configure(Balatro balatro) {
+        balatro.enableSpectralPack();
     }
 }

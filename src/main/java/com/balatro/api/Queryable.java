@@ -5,10 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface Queryable extends CommonQueries {
 
-    default boolean hasInPack(int ante, Item item) {
-        return hasInPack(ante, item, Edition.NoEdition);
-    }
-
     boolean hasInPack(int ante, Item item, Edition edition);
 
     boolean hasInShop(int ante, Item item, Edition edition);

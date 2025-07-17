@@ -39,4 +39,8 @@ public interface Joker extends Item {
         return getType() == JokerType.LEGENDARY;
     }
 
+    @Override
+    default Filter auto(int ante, Edition edition) {
+        return inPack(ante, edition).or(inShop(ante, edition));
+    }
 }

@@ -81,4 +81,8 @@ public enum Boss implements Item {
         return new BossFilter(this, true);
     }
 
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return isPresent();
+    }
 }

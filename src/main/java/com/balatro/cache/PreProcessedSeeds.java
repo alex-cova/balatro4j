@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +26,15 @@ import static com.balatro.enums.LegendaryJoker.*;
 public class PreProcessedSeeds {
 
     private List<Data> dataList;
+
+    public PreProcessedSeeds loadFile(@NotNull File file) {
+        if (!file.exists()) {
+            dataList = Collections.emptyList();
+            return this;
+        }
+        dataList = JokerFile.readFile(file);
+        return this;
+    }
 
     public static void main(String[] args) {
         var p = new PreProcessedSeeds();
@@ -98,7 +108,7 @@ public class PreProcessedSeeds {
     }
 
 
-    public List<QueryResult> search(@NotNull List<Item> items) {
+    public List<QueryResult> search(@NotNull List<? extends Item> items) {
         List<QueryResult> found = new ArrayList<>();
 
         var editionItems = items.stream()
@@ -121,7 +131,7 @@ public class PreProcessedSeeds {
         return found;
     }
 
-    public Set<String> search(@NotNull Set<String> tokens) {
+    public Set<String> searchByName(@NotNull Set<String> tokens) {
         return find(tokens.stream()
                 .map(Query::new)
                 .toList())

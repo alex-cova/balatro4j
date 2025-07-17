@@ -7,12 +7,14 @@ import com.balatro.enums.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public interface Run extends Queryable {
+public interface Run extends Queryable, Iterable<Ante> {
 
     ObjectMapper mapper = new ObjectMapper()
             .setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -167,5 +169,11 @@ public interface Run extends Queryable {
     @JsonIgnore
     default boolean hasJoker(Joker joker, int maxShopIndex) {
         return hasInBuffonPack(joker) || hasInShop(joker, maxShopIndex, Edition.NoEdition);
+    }
+
+    @Override
+    @NotNull
+    default Iterator<Ante> iterator() {
+        return antes().iterator();
     }
 }

@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 final class AnteImpl implements Ante {
 
     private final int ante;
-    private final Shop shopQueue;
+    private final ShopQueue shopQueue;
     private final Set<Tag> tags;
     private Voucher voucher;
     private Boss boss;
-    private final List<PackInfo> packInfos;
+    private final List<Pack> packs;
     //Cache
     @JsonIgnore
     private Map<String, JokerData> legendaryJokers;
@@ -43,9 +43,9 @@ final class AnteImpl implements Ante {
         }
 
         if (configuration.isAnalyzePacks()) {
-            this.packInfos = new ArrayList<>(10);
+            this.packs = new ArrayList<>(10);
         } else {
-            this.packInfos = Collections.emptyList();
+            this.packs = Collections.emptyList();
         }
     }
 
@@ -61,7 +61,7 @@ final class AnteImpl implements Ante {
 
     @Override
     public boolean hasInShop(@NotNull Item item, Edition edition) {
-        return getShopQueue().contains(item, edition);
+        return shopQueue.contains(item, edition);
     }
 
     @Override
@@ -89,8 +89,8 @@ final class AnteImpl implements Ante {
         tags.add(tag);
     }
 
-    void addToQueue(@NotNull ShopItem value, Edition edition) {
-        shopQueue.add(value, edition);
+    void addToQueue(@NotNull ShopItem value) {
+        shopQueue.add(value);
     }
 
     void setBoss(Boss boss) {
@@ -101,9 +101,9 @@ final class AnteImpl implements Ante {
         this.voucher = voucher;
     }
 
-    void addPack(@NotNull PackInfo packInfo, Set<EditionItem> options) {
-        packInfo.setOptions(options);
-        packInfos.add(packInfo);
+    void addPack(@NotNull Pack pack, Set<EditionItem> options) {
+        pack.setOptions(options);
+        packs.add(pack);
     }
 
     @Contract(" -> new")
@@ -135,12 +135,22 @@ final class AnteImpl implements Ante {
 
         legendaryJokers = new HashMap<>();
 
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.getKind().isLegendaryEnabled()) {
-                for (EditionItem option : packInfo.getOptions()) {
-                    if (option.isLegendary()) {
-                        legendaryJokers.put(option.item().getName(), option.jokerData());
-                    }
+        for (Pack pack : packs) {
+            if (pack.getKind() == PackKind.Buffoon) {
+                continue;
+            }
+
+            if (pack.getKind() == PackKind.Standard) {
+                continue;
+            }
+
+            if (pack.getKind() == PackKind.Celestial) {
+                continue;
+            }
+
+            for (EditionItem option : pack.getOptions()) {
+                if (option.isLegendary()) {
+                    legendaryJokers.put(option.item().getName(), option.jokerData());
                 }
             }
         }
@@ -166,8 +176,8 @@ final class AnteImpl implements Ante {
             }
         }
 
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.containsOption(item.getName(), edition)) {
+        for (Pack pack : packs) {
+            if (pack.containsOption(item.getName(), edition)) {
                 return true;
             }
         }
@@ -176,8 +186,8 @@ final class AnteImpl implements Ante {
 
     @Override
     public boolean hasPack(PackType packType) {
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.getType() == packType) {
+        for (Pack pack : packs) {
+            if (pack.getType() == packType) {
                 return true;
             }
         }
@@ -196,12 +206,12 @@ final class AnteImpl implements Ante {
             }
         }
 
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.getKind() != PackKind.Spectral) {
+        for (Pack pack : packs) {
+            if (pack.getKind() != PackKind.Spectral) {
                 continue;
             }
 
-            if (packInfo.containsOption(item.getName())) {
+            if (pack.containsOption(item.getName())) {
                 return true;
             }
         }
@@ -220,8 +230,8 @@ final class AnteImpl implements Ante {
         }
 
         int count = 0;
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.containsOption(item.getName())) {
+        for (Pack pack : packs) {
+            if (pack.containsOption(item.getName())) {
                 count++;
             }
         }
@@ -230,12 +240,12 @@ final class AnteImpl implements Ante {
 
     @Override
     public boolean hasInBuffonPack(@NotNull Item item, Edition edition) {
-        for (PackInfo packInfo : packInfos) {
-            if (packInfo.getKind() != PackKind.Buffoon) {
+        for (Pack pack : packs) {
+            if (pack.getKind() != PackKind.Buffoon) {
                 continue;
             }
 
-            if (packInfo.containsOption(item.getName(), edition)) {
+            if (pack.containsOption(item.getName(), edition)) {
                 return true;
             }
         }
@@ -247,15 +257,14 @@ final class AnteImpl implements Ante {
         return ante;
     }
 
-    @Contract(" -> new")
+    @JsonIgnore
     @Override
-    public @NotNull Shop getShopQueue() {
+    public Shop getShopQueue() {
         return shopQueue.copy();
     }
 
-    @Contract(value = " -> new", pure = true)
     @Override
-    public @NotNull Set<Tag> getTags() {
+    public Set<Tag> getTags() {
         return new HashSet<>(tags);
     }
 
@@ -269,19 +278,18 @@ final class AnteImpl implements Ante {
         return boss;
     }
 
-    @Contract(value = " -> new", pure = true)
     @Override
-    public @NotNull List<PackInfo> getPacks() {
-        return new ArrayList<>(packInfos);
+    public List<Pack> getPacks() {
+        return new ArrayList<>(packs);
     }
 
     @Override
-    public @NotNull Set<EditionItem> getJokers() {
+    public Set<EditionItem> getJokers() {
         var a = shopQueue.stream()
                 .filter(EditionItem::isJoker)
                 .collect(Collectors.toSet());
 
-        var b = packInfos.stream()
+        var b = packs.stream()
                 .filter(p -> p.getKind() == PackKind.Buffoon)
                 .flatMap(pack -> pack.getOptions().stream())
                 .collect(Collectors.toSet());
@@ -340,7 +348,7 @@ final class AnteImpl implements Ante {
 
     @Override
     public Set<Spectral> getSpectrals() {
-        return packInfos.stream()
+        return packs.stream()
                 .filter(a -> a.getKind() == PackKind.Spectral)
                 .flatMap(a -> a.getOptions().stream()
                         .map(EditionItem::item))
@@ -351,35 +359,35 @@ final class AnteImpl implements Ante {
 
     @Override
     public int getStandardPackCount() {
-        return (int) packInfos.stream()
+        return (int) packs.stream()
                 .filter(a -> a.getKind() == PackKind.Standard)
                 .count();
     }
 
     @Override
     public int getJokerPackCount() {
-        return (int) packInfos.stream()
+        return (int) packs.stream()
                 .filter(a -> a.getKind() == PackKind.Buffoon)
                 .count();
     }
 
     @Override
     public int getSpectralPackCount() {
-        return (int) packInfos.stream()
+        return (int) packs.stream()
                 .filter(a -> a.getKind() == PackKind.Spectral)
                 .count();
     }
 
     @Override
     public int getTarotPackCount() {
-        return (int) packInfos.stream()
+        return (int) packs.stream()
                 .filter(a -> a.getKind() == PackKind.Arcana)
                 .count();
     }
 
     @Override
     public int getPlanetPackCount() {
-        return (int) packInfos.stream()
+        return (int) packs.stream()
                 .filter(a -> a.getKind() == PackKind.Celestial)
                 .count();
     }

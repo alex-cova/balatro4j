@@ -60,5 +60,8 @@ public enum Voucher implements Item {
         return new VoucherFilter(this);
     }
 
-
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return new VoucherFilter(this, ante);
+    }
 }

@@ -1,5 +1,6 @@
 package com.balatro.structs;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
 import com.balatro.api.Joker;
 import com.balatro.enums.*;
@@ -25,6 +26,12 @@ public record EditionItem(Item item, @NotNull Edition edition) implements Item {
 
         Objects.requireNonNull(item);
         Objects.requireNonNull(edition);
+    }
+
+    @JsonIgnore
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return item.auto(ante, edition);
     }
 
     @JsonIgnore

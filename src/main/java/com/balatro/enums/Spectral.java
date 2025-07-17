@@ -1,6 +1,8 @@
 package com.balatro.enums;
 
+import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.filter.SpectralFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -39,4 +41,8 @@ public enum Spectral implements Item {
         return 5;
     }
 
+    @Override
+    public Filter auto(int ante, Edition edition) {
+        return new SpectralFilter(ante, this, edition);
+    }
 }
