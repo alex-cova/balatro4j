@@ -30,6 +30,12 @@ public class JokerFile {
         }
     }
 
+    public static void write(@NotNull ByteArrayOutputStream baos, @NotNull CompressedData data) {
+        for (long datum : data.getData()) {
+            baos.writeBytes(ByteBuffer.allocate(Long.BYTES).putLong(datum).array());
+        }
+    }
+
     public static void write(@NotNull ByteArrayOutputStream baos, @NotNull Data data) {
         baos.writeBytes(data.getSeed().getBytes());
 
@@ -62,6 +68,49 @@ public class JokerFile {
         }
 
         return Collections.emptyList();
+    }
+
+    public static List<CompressedData> readCompressedFile(@NotNull File file) {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
+            return readCompressed(bis);
+        } catch (IOException e) {
+            Logger.getLogger(PreProcessedSeeds.class.getName())
+                    .log(Level.SEVERE, null, e);
+        }
+
+        return Collections.emptyList();
+    }
+
+    public static @NotNull List<CompressedData> readCompressed(@NotNull InputStream bis) throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+        byte[] bytes = new byte[8];
+
+        List<CompressedData> compressedList = new ArrayList<>();
+
+        while (bis.read(bytes) != -1) {
+            buffer.clear();
+            buffer.put(bytes);
+            long a = buffer.getLong(0);
+
+            read(bis, bytes);
+            buffer.clear();
+            buffer.put(bytes);
+            long b = buffer.getLong(0);
+
+            read(bis, bytes);
+            buffer.clear();
+            buffer.put(bytes);
+            long c = buffer.getLong(0);
+
+            read(bis, bytes);
+            buffer.clear();
+            buffer.put(bytes);
+            long d = buffer.getLong(0);
+
+            compressedList.add(new CompressedData(new long[]{a, b, c, d}));
+        }
+
+        return compressedList;
     }
 
     public static @NotNull List<Data> read(@NotNull InputStream bis) throws IOException {

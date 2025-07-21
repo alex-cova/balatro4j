@@ -2,12 +2,13 @@ package com.balatro.enums;
 
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.Stored;
 import com.balatro.api.filter.VoucherFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = ItemSerializer.class)
-public enum Voucher implements Item {
+public enum Voucher implements Item, Stored {
     Overstock("Overstock"),
     Overstock_Plus("Overstock Plus"),
     Clearance_Sale("Clearance Sale"),
@@ -63,5 +64,10 @@ public enum Voucher implements Item {
     @Override
     public Filter auto(int ante, Edition edition) {
         return new VoucherFilter(this, ante);
+    }
+
+    @Override
+    public int getIndex() {
+        return 32 + ordinal();
     }
 }

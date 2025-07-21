@@ -2,11 +2,12 @@ package com.balatro.enums;
 
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.Stored;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = ItemSerializer.class)
-public enum LegendaryJoker implements Item {
+public enum LegendaryJoker implements Item, Stored {
     Canio("Canio"),
     Triboulet("Triboulet"),
     Yorick("Yorick"),
@@ -31,5 +32,10 @@ public enum LegendaryJoker implements Item {
     @Override
     public Filter auto(int ante, Edition edition) {
         return inSpectral(ante, edition).or(inPack(ante, edition));
+    }
+
+    @Override
+    public int getIndex() {
+        return 190 + ordinal();
     }
 }

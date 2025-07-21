@@ -1,8 +1,9 @@
 package com.balatro.enums;
 
 import com.balatro.api.Joker;
+import com.balatro.api.Stored;
 
-public enum RareJoker100 implements Joker {
+public enum RareJoker100 implements Joker, Stored {
     DNA("DNA"),
     Sixth_Sense("Sixth Sense"),
     Seance("Seance"),
@@ -43,6 +44,9 @@ public enum RareJoker100 implements Joker {
         return JokerType.RARE;
     }
 
-
+    @Override
+    public int getIndex() {
+        return 211 + ordinal();
+    }
 
 }

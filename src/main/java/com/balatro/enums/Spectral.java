@@ -2,12 +2,13 @@ package com.balatro.enums;
 
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.Stored;
 import com.balatro.api.filter.SpectralFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = ItemSerializer.class)
-public enum Spectral implements Item {
+public enum Spectral implements Item, Stored {
 
     Familiar("Familiar"),
     Grim("Grim"),
@@ -44,5 +45,11 @@ public enum Spectral implements Item {
     @Override
     public Filter auto(int ante, Edition edition) {
         return new SpectralFilter(ante, this, edition);
+    }
+
+
+    @Override
+    public int getIndex() {
+        return 195 + ordinal();
     }
 }

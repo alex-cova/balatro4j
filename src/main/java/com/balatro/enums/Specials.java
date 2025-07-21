@@ -2,11 +2,12 @@ package com.balatro.enums;
 
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.Stored;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = ItemSerializer.class)
-public enum Specials implements Item {
+public enum Specials implements Item, Stored {
     BLACKHOLE("Black Hole"),
     THE_SOUL("The Soul");
 
@@ -29,5 +30,10 @@ public enum Specials implements Item {
     @Override
     public Filter auto(int ante, Edition edition) {
         return inPack(ante);
+    }
+
+    @Override
+    public int getIndex() {
+        return 188 + ordinal();
     }
 }

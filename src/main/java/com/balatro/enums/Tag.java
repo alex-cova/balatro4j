@@ -2,12 +2,13 @@ package com.balatro.enums;
 
 import com.balatro.api.Filter;
 import com.balatro.api.Item;
+import com.balatro.api.Stored;
 import com.balatro.api.filter.TagFilter;
 import com.balatro.jackson.ItemSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = ItemSerializer.class)
-public enum Tag implements Item {
+public enum Tag implements Item, Stored {
     Uncommon_Tag("Uncommon Tag"),
     Rare_Tag("Rare Tag"),
     Negative_Tag("Negative Tag"),
@@ -51,5 +52,11 @@ public enum Tag implements Item {
     @Override
     public Filter auto(int ante, Edition edition) {
         return new TagFilter(this, ante);
+    }
+
+
+    @Override
+    public int getIndex() {
+        return 231 + ordinal();
     }
 }

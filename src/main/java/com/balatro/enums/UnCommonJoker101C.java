@@ -1,8 +1,9 @@
 package com.balatro.enums;
 
 import com.balatro.api.Joker;
+import com.balatro.api.Stored;
 
-public enum UnCommonJoker101C implements Joker {
+public enum UnCommonJoker101C implements Joker, Stored {
     Joker_Stencil("Joker Stencil"),
     Four_Fingers("Four Fingers"),
     Mime("Mime"),
@@ -88,5 +89,8 @@ public enum UnCommonJoker101C implements Joker {
         return JokerType.UNCOMMON;
     }
 
-
+    @Override
+    public int getIndex() {
+        return 64 + ordinal();
+    }
 }
