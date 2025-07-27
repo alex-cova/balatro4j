@@ -296,7 +296,6 @@ public final class Functions implements Lock {
                 }
             }
         }
-
         return new JokerData(joker, rarity, edition, stickers)
                 .setResampleInfo(coordinate, items);
     }
@@ -876,7 +875,7 @@ public final class Functions implements Lock {
         return Edition.NoEdition;
     }
 
-    private Edition getEdition(int ante, Coordinate[] editionArr) {
+    public Edition getEdition(int ante, Coordinate[] editionArr) {
         // Get edition
         var editionRate = getEditionRate();
         var edition = Edition.NoEdition;
@@ -891,6 +890,8 @@ public final class Functions implements Lock {
         } else if (editionPoll > 1 - 0.04 * editionRate) {
             edition = Edition.Foil;
         }
+
+        //System.out.println("editionPoll: " + editionPoll+" "+editionArr[ante]+" "+edition);
 
         return edition;
     }

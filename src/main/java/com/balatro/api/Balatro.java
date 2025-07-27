@@ -1,6 +1,7 @@
 package com.balatro.api;
 
 import com.balatro.BalatroImpl;
+import com.balatro.Functions;
 import com.balatro.SeedFinderImpl;
 import com.balatro.enums.Deck;
 import com.balatro.enums.PackKind;
@@ -54,6 +55,8 @@ public interface Balatro {
     static @NotNull SeedFinder search(int seedsPerThread) {
         return new SeedFinderImpl(Runtime.getRuntime().availableProcessors(), seedsPerThread);
     }
+
+    Functions functions();
 
     Run analyze();
 

@@ -4,30 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a0b0fd-d34c-44ab-820d-a89287e66fd0" name="Changes" comment="generate editions for wheel of fortune">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/balatro/Seed32bit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/balatro/api/Stored.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/balatro/cache/Memory256Long.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/tests/Main.java" afterDir="false" />
+    <list default="true" id="b0a0b0fd-d34c-44ab-820d-a89287e66fd0" name="Changes" comment="compressed cache">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/balatro/ui/SeedRenderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/RNGTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/BalatroImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/BalatroImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/CompressedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/cache/CompressedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/JokerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/cache/JokerFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker100.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker100.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/LegendaryJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/LegendaryJoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker100.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker100.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker101C.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker101C.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Specials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Specials.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Spectral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Spectral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker100.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker100.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker101C.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker101C.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Voucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Voucher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/BalatroTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/BalatroTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/CompressionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/CompressionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Balatro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/api/Balatro.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,8 +71,8 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -106,12 +90,12 @@
     &quot;assignee&quot;: &quot;alex-cova&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:alex-cova/balatro4j.git",
-    "accountId": "43cd3933-db42-424b-a37e-cdd2bd47c6f1"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:alex-cova/balatro4j.git&quot;,
+    &quot;accountId&quot;: &quot;43cd3933-db42-424b-a37e-cdd2bd47c6f1&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -140,6 +124,8 @@
     "Application.Performance.executor": "Run",
     "Application.PreProcessedSeeds.executor": "Run",
     "Application.Rebuild.executor": "Run",
+    "Application.SeedRenderer.executor": "Run",
+    "Application.com.balatro.Main.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
     "Gradle.Balatro4j [:com.balatro.Main.main()].executor": "Debug",
     "Gradle.Balatro4j [check].executor": "Run",
@@ -167,6 +153,7 @@
     "Gradle.LockTests.executor": "Run",
     "Gradle.LockTests.testCache2D.executor": "Run",
     "Gradle.LockTests.testLegendaryLock.executor": "Run",
+    "Gradle.RNGTests.testEditions.executor": "Run",
     "Gradle.ScoringTest.testScoring.executor": "Run",
     "Gradle.balatro4j [buildFatJar].executor": "Run",
     "Gradle.balatro4j [publishToMavenLocal].executor": "Run",
@@ -196,7 +183,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CompressedData">
+  <component name="RunManager" selected="Application.SeedRenderer">
     <configuration name="CompressedData" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.balatro.cache.CompressedData" />
       <module name="Balatro4j.main" />
@@ -210,12 +197,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.Main" />
-      <module name="Balatro4j.test" />
+    <configuration name="SeedRenderer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.ui.SeedRenderer" />
+      <module name="Balatro4j.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tests.*" />
+          <option name="PATTERN" value="com.balatro.ui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -223,29 +210,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BalatroTests.checkCharMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.checkCharMaps&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
+    <configuration name="com.balatro.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.Main" />
+      <module name="Balatro4j.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.balatro.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="BalatroTests.testCompressedFile" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -271,7 +247,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BalatroTests.testSeed32" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RNGTests.testEditions" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -284,7 +260,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.testSeed32&quot;" />
+            <option value="&quot;tests.RNGTests.testEditions&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -297,19 +273,19 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SeedRenderer" />
+        <item itemvalue="Application.com.balatro.Main" />
+        <item itemvalue="Gradle.RNGTests.testEditions" />
         <item itemvalue="Application.CompressedData" />
         <item itemvalue="Gradle.BalatroTests.testCompressedFile" />
-        <item itemvalue="Gradle.BalatroTests.testSeed32" />
-        <item itemvalue="Gradle.BalatroTests.checkCharMaps" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.12" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.12" />
       </set>
     </attachedChunks>
   </component>
@@ -391,6 +367,13 @@
       <workItem from="1752776779305" duration="5879000" />
       <workItem from="1752787517861" duration="2000" />
       <workItem from="1752796747371" duration="8384000" />
+      <workItem from="1753219945194" duration="2000" />
+      <workItem from="1753417399373" duration="3270000" />
+      <workItem from="1753420748494" duration="677000" />
+      <workItem from="1753422430552" duration="2427000" />
+      <workItem from="1753483135068" duration="624000" />
+      <workItem from="1753589195157" duration="6179000" />
+      <workItem from="1753656460623" duration="2731000" />
     </task>
     <task id="LOCAL-00001" summary="fixed serialization problems">
       <option name="closed" value="true" />

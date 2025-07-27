@@ -68,6 +68,18 @@ public class Main extends JFrame {
         toolBar.add(seedsPerThread);
         toolBar.add(cache);
 
+        var button = new JButton("Enter");
+        button.addActionListener(e -> {
+            var seed = JOptionPane.showInputDialog(this, "Enter seed");
+
+            var run = Balatro.builder(seed, 8)
+                    .analyzeAll();
+
+            showRun(run);
+        });
+
+        toolBar.add(button);
+
         cache.setToolTipText("Way Faster search but limited");
 
         seedsPerThread.addItem(500_000);
@@ -254,19 +266,23 @@ public class Main extends JFrame {
                 if (table.getSelectedRow() != -1) {
                     Run run = (Run) model.getValueAt(table.getSelectedRow(), 0);
 
-                    JDialog dialog = new JDialog(Main.this, true);
-                    dialog.setContentPane(buildPreview(run));
-                    dialog.setTitle(run.seed() + " " + run.getScore());
-                    dialog.setLocationRelativeTo(Main.this);
-                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    dialog.setSize(new Dimension(1024, 768));
-                    dialog.setVisible(true);
+                    showRun(run);
                 }
             }
         });
 
         JOptionPane.showMessageDialog(this, "Found " + new DecimalFormat("#,###").format(runs.size())
                                             + " seeds", "Finished", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showRun(Run run) {
+        JDialog dialog = new JDialog(Main.this, true);
+        dialog.setContentPane(buildPreview(run));
+        dialog.setTitle(run.seed() + " " + run.getScore());
+        dialog.setLocationRelativeTo(Main.this);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setSize(new Dimension(1024, 768));
+        dialog.setVisible(true);
     }
 
     @Contract("_ -> new")

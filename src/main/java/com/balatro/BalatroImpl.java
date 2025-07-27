@@ -121,19 +121,16 @@ public final class BalatroImpl extends Configuration implements Balatro {
     @Contract(" -> new")
     @Override
     public @NotNull @Unmodifiable Run analyze() {
-        return performAnalysis(seed, maxAnte, cardsPerAnte, deck, stake, version);
+        return performAnalysis(seed, maxAnte, cardsPerAnte, stake);
     }
 
-    @Contract("_, _, _, _, _, _ -> new")
-    private @NotNull RunImpl performAnalysis(byte[] seed, int maxAnte, @NotNull List<Integer> cardsPerAnte, Deck deck, Stake stake, @NotNull Version version) {
+    @Contract("_, _, _, _ -> new")
+    private @NotNull RunImpl performAnalysis(byte[] seed, int maxAnte, @NotNull List<Integer> cardsPerAnte, Stake stake) {
         if (cardsPerAnte.size() != maxAnte) {
             throw new IllegalArgumentException("cardsPerAnte must have the same size as maxAnte (%s - %s)".formatted(maxAnte, cardsPerAnte.size()));
         }
 
-        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version));
-        functions.initLocks(1, freshProfile, freshRun);
-        functions.firstLock();
-        functions.setDeck(deck);
+        var functions = functions();
         var antes = new ArrayList<AnteImpl>(options.size());
 
         for (int a = 1; a <= maxAnte; a++) {
@@ -164,7 +161,7 @@ public final class BalatroImpl extends Configuration implements Balatro {
             }
 
             if (analyzeShopQueue) {
-                for (int q = 1; q <= cardsPerAnte.get(a - 1); q++) {
+                for (int i = 0; i < cardsPerAnte.get(a - 1); i++) {
                     play.addToQueue(functions.nextShopItem(a));
                 }
             }
@@ -236,7 +233,7 @@ public final class BalatroImpl extends Configuration implements Balatro {
                             output.append(rank.getName());
                             output.append(" of ")
                                     .append(card.base().getSuit().getName());
-                            options.add(new EditionItem(new AbstractCard(output.toString(), card)));
+                            options.add(new EditionItem(new AbstractCard(output.toString(), card), card.edition()));
                         }
                     }
                 }
@@ -379,6 +376,16 @@ public final class BalatroImpl extends Configuration implements Balatro {
         }
 
         return this;
+    }
+
+    @Override
+    public Functions functions() {
+        Functions functions = new Functions(seed, maxAnte, new InstanceParams(deck, stake, showman, version));
+        functions.initLocks(1, freshProfile, freshRun);
+        functions.firstLock();
+        functions.setDeck(deck);
+
+        return functions;
     }
 
     @Override
