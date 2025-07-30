@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.balatro"
-version = "1.0-SNAPSHOT"
+version = "2.0.1"
 
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
@@ -75,7 +75,7 @@ publishing {
     publications.create<MavenPublication>("maven") {
         groupId = "com.balatro"
         artifactId = "balatro4j"
-        version = "2.0.0-SNAPSHOT"
+        version = "2.0.1"
 
         from(components["java"])
     }
