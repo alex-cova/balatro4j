@@ -794,12 +794,32 @@ public final class Functions implements Lock {
         return item;
     }
 
+    /*
+    randchoice<T extends ItemImpl>(id: string, items: T[]): ItemImpl {
+        if (!items || items.length === 0) {
+            throw new Error('Items array cannot be empty');
+        }
+
+        let item = items[this.randint(id, 0, items.length - 1)];
+
+        if ((!this.params.isShowman() && this.isLocked(item)) || item.getName() === "RETRY") {
+            let resample = 2;
+            while (true) {
+                item = items[this.randint(`${id}_resample${resample}`, 0, items.length - 1)];
+                resample++;
+                if ((!this.isLocked(item) && item.getName() !== "RETRY") || resample > 1000) {
+                    return item;
+                }
+            }
+        }
+        return item;
+    }
+
+     */
     public <T extends Item> T randchoice(Coordinate id, @NotNull T @NotNull [] items) {
         T item = items[randint(id, items.length - 1)];
 
-        if (params.isShowman()) return item;
-
-        if (isLocked(item)) {
+        if ((!params.isShowman() && isLocked(item)) || item.getName().equals("RETRY")) {
             return resample(id, items);
         }
         return item;

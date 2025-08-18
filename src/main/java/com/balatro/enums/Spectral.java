@@ -25,7 +25,9 @@ public enum Spectral implements Item, Stored {
     Hex("Hex"),
     Trance("Trance"),
     Medium("Medium"),
-    Cryptid("Cryptid");
+    Cryptid("Cryptid"),
+    RETRY("RETRY"),
+    RETRY2("RETRY");
 
     private final String name;
 

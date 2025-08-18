@@ -2,6 +2,15 @@
 
 A balatro seed analyzer and finder, coded in pure Java based on Immolate
 
+### Features
+
+- Seed render, convert any seed to PNG
+- Seed scoring
+- Fully customizable seed searching API with autoconfiguration for max speed
+- Basic UI to find and view seeds
+- Perkeo a seed database able to find any seed instantly
+- Canio an ultra compressed seed database (256bit per seed) to instant seed searching up to 20 million seeds
+
 Requeriments:
 
 - Java 23 or GraalVM 23 if you want to compile the project to native image
@@ -13,7 +22,7 @@ Requeriments:
 ./gradlew nativeCompile
 ```
 
-I've seen more speed running the JVM version than the native one, so I recommend using the JVM version
+> I've seen more speed running the JVM version than the native one, so I recommend using the JVM version
 
 ### Examples
 
@@ -44,6 +53,41 @@ LK2LWI8
 U7ZYC85
 KNIGXTT
 ```
+
+## Perkeo cached seed searching
+
+
+```java
+void cachedSearch(){
+    var p = new PreProcessedSeeds();
+    p.start(Runtime.getRuntime().availableProcessors(), 2_000_000_000);
+    //After created the db, subsequent queries will be instant resolved    
+    
+    var result = p.search(List.of(Perkeo, Triboulet, RareJoker.Blueprint, RareJoker.Brainstorm,
+            UnCommonJoker.Sock_and_Buskin, CommonJoker.Hanging_Chad, RareJoker.Invisible_Joker));
+}
+```
+
+
+## Convert a seed into a Image
+
+```java
+void seedToImage(){
+    var run = Balatro.random(8)
+            .analyzeAll();
+
+    var image = new SeedRenderer(run)
+            .render();
+
+    try {
+        ImageIO.write(image, "PNG", new File("rendered.png"));
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
+```
+
+## Convert a seed into a JSON
 
 ```java
 void runToJson() {

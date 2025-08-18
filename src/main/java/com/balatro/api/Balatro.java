@@ -19,9 +19,18 @@ public interface Balatro {
     Set<PackKind> defaultPacks = Set.of(PackKind.Arcana, PackKind.Buffoon, PackKind.Spectral);
     List<Integer> firstAnte = List.of(15);
 
+    @Contract("_ -> new")
+    static @NotNull Balatro builder(String seed) {
+        return builder(seed, 8);
+    }
+
     @Contract("_,_ -> new")
-    static @NotNull Balatro builder(String seed, int maxAnte) {
+    static @NotNull Balatro builder(@NotNull String seed, int maxAnte) {
         return builder(seed.getBytes(), maxAnte);
+    }
+
+    static @NotNull Balatro random(int maxAnte) {
+        return builder(BalatroImpl.generateRandomSeed(), maxAnte);
     }
 
     static @NotNull Balatro builder(byte[] seed, int maxAnte) {

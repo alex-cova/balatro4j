@@ -7,19 +7,19 @@ import com.balatro.api.Balatro;
 import com.balatro.api.Run;
 import com.balatro.api.Stored;
 import com.balatro.cache.*;
-import com.balatro.enums.Boss;
-import com.balatro.enums.Edition;
-import com.balatro.enums.Tag;
-import com.balatro.enums.Voucher;
+import com.balatro.enums.*;
 import com.balatro.structs.EditionItem;
 import com.balatro.structs.ItemPosition;
+import com.balatro.ui.SeedRenderer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +42,36 @@ public class BalatroTests implements Seed32bit {
                 Assertions.fail("Repeated char " + Seed32bit.CHARACTERS_ON[i] + " at index " + i + " in character map");
             }
         }
+    }
+
+    @Test
+    void testRender() {
+        var run = Balatro.random(8)
+                .analyzeAll();
+
+        var image = new SeedRenderer(run)
+                .render();
+
+        try {
+            ImageIO.write(image, "PNG", new File("rendered.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void testFV5S4RBO() {
+        var pack = Balatro.builder("FV5S4RBO")
+                .analyzeAll()
+                .getFirstAnte()
+                .getPacks(PackKind.Spectral)
+                .getFirst();
+
+        Assertions.assertTrue(pack.containsOption(Spectral.Trance));
+        Assertions.assertTrue(pack.containsOption(Spectral.Incantation));
+        Assertions.assertTrue(pack.containsOption(Spectral.Hex));
+        Assertions.assertTrue(pack.containsOption(Spectral.Talisman));
+
     }
 
     @RepeatedTest(1000)
@@ -119,6 +149,7 @@ public class BalatroTests implements Seed32bit {
                         .and(Brainstorm.inBuffonPack(2).or(Brainstorm.inShop(2)))
                         .and(Invisible_Joker.inBuffonPack(3).or(Invisible_Joker.inShop(3)))
                         .and(Certificate.inShop(4).or(Certificate.inBuffonPack(4))))
+                .autoConfigure()
                 .find();
 
         seeds.forEach(System.out::println);

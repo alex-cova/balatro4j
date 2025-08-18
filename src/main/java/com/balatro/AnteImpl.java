@@ -284,6 +284,13 @@ final class AnteImpl implements Ante {
     }
 
     @Override
+    public List<Pack> getPacks(PackKind kind) {
+        return packs.stream()
+                .filter(pack -> pack.getKind() == kind)
+                .toList();
+    }
+
+    @Override
     public Set<EditionItem> getJokers() {
         var a = shopQueue.stream()
                 .filter(EditionItem::isJoker)

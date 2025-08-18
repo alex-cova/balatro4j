@@ -36,6 +36,8 @@ public interface Ante extends CommonQueries {
 
     List<Pack> getPacks();
 
+    List<Pack> getPacks(PackKind kind);
+
     @JsonIgnore
     Map<String, JokerData> getLegendaryJokers();
 
