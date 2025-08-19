@@ -817,11 +817,18 @@ public final class Functions implements Lock {
 
      */
     public <T extends Item> T randchoice(Coordinate id, @NotNull T @NotNull [] items) {
-        T item = items[randint(id, items.length - 1)];
+        var c = randint(id, items.length - 1);
 
-        if ((!params.isShowman() && isLocked(item)) || item.getName().equals("RETRY")) {
+        T item = items[c];
+
+        if (item.getName().equals("RETRY")) {
             return resample(id, items);
         }
+
+        if (!params.isShowman() && isLocked(item)) {
+            return resample(id, items);
+        }
+
         return item;
     }
 
@@ -836,7 +843,8 @@ public final class Functions implements Lock {
         while (true) {
             item = items[randintResample(id.resample(resample), items.length - 1)];
             resample++;
-            if (!isLocked(item) || resample > 1000) {
+            //if ((item != Item::RETRY && !isLocked(item)) || resample > 1000)
+            if ((!item.getName().equals("RETRY") && !isLocked(item)) || resample > 1000) {
                 return item;
             }
         }

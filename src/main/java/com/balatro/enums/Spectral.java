@@ -26,8 +26,8 @@ public enum Spectral implements Item, Stored {
     Trance("Trance"),
     Medium("Medium"),
     Cryptid("Cryptid"),
-    RETRY("RETRY"),
-    RETRY2("RETRY");
+    RETRY("RETRY"),//The Soul
+    RETRY2("RETRY");//Black hole
 
     private final String name;
 
@@ -48,7 +48,6 @@ public enum Spectral implements Item, Stored {
     public Filter auto(int ante, Edition edition) {
         return new SpectralFilter(ante, this, edition);
     }
-
 
     @Override
     public int getIndex() {

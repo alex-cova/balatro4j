@@ -74,6 +74,24 @@ public class BalatroTests implements Seed32bit {
 
     }
 
+    @Test
+    void testHVC549OP() {
+        var pack = Balatro.builder("HVC549OP")
+                .analyzeAll()
+                .getAnte(2)
+                .getPacks(PackKind.Spectral)
+                .getFirst();
+
+        for (EditionItem option : pack.getOptions()) {
+            System.out.println(option.getName());
+        }
+
+        Assertions.assertTrue(pack.containsOption(Spectral.Cryptid));
+        Assertions.assertTrue(pack.containsOption(Spectral.Aura));
+        Assertions.assertTrue(pack.containsOption(Spectral.Familiar));
+        Assertions.assertTrue(pack.containsOption(Spectral.Ankh));
+    }
+
     @RepeatedTest(1000)
     void testSeed32() {
 
