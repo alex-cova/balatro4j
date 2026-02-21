@@ -4,22 +4,22 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("java")
     id("application")
-    id("org.graalvm.buildtools.native") version "0.11.1"
+    id("io.ktor.plugin") version "3.3.0"
+    kotlin("jvm") version "2.2.20"
 }
-
-group = "com.balatro"
-version = "2.0.1"
-
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
+
+group = "com.balatro"
+version = "2.0.1"
+
 dependencies {
     implementation(project(":perkeo"))
-    implementation(project(":ui"))
 
     compileOnly("org.jetbrains:annotations:26.0.2")
     implementation("com.fasterxml.jackson.core:jackson-core:2.18.2")
@@ -31,6 +31,11 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+
+}
+
+application {
+    mainClass.set("com.balatro.Main")
 }
 
 tasks.withType<Test> {
@@ -52,15 +57,8 @@ tasks.withType<Test> {
     }
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
-
-graalvmNative {
-    binaries.all {
-        resources.autodetect()
-        buildArgs.add("-O3")
+ktor {
+    fatJar {
+        archiveFileName.set("balatro4j-ui.jar")
     }
 }

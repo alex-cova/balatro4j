@@ -5,15 +5,157 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0a0b0fd-d34c-44ab-820d-a89287e66fd0" name="Changes" comment="fix Spectral Pack">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/compile-native.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/shared.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/perkeo/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/ShopInstance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Stored.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/perkeo/src/main/resources/META-INF/native-image/reachability-metadata.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/Seed32Tests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/CanioGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/Differentiator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/GenerateCanio.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/tests/UITest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/Functions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Spectral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Spectral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/tests/BalatroTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/BalatroTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/AnteImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/AnteScorer.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AnteScorer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/AnteScorerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteScorerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/BalatroImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/BalatroImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/BooleanArrayLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/BooleanArrayLock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Cache.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Cache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Cache2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Cache2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/CacheMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/CacheMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/CompoundFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/CompoundFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Coordinate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/DoubleLong.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/DoubleLong.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Functions.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Functions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/LockImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/LockImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/LongArrayLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/LongArrayLock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/LuaRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/LuaRandom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/java/com/balatro/ui/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Performance.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Performance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/RunImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/RunImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Seed32bit.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Seed32bit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/SeedFinderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/SeedFinderImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ShopInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/AbstractCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AbstractCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Ante.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Ante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Balatro.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Balatro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/CommonQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/CommonQueries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Filter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Filter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Joker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Lock.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Lock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Queryable.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Queryable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/SeedFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/SeedFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Shop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/Stored.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/AndFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/AndFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/BossFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/BossFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/InBuffonPackFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/InBuffonPackFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/InPackFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/InPackFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/InShopFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/InShopFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/OrFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/OrFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/SpectralFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/SpectralFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/TagFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/TagFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/api/filter/VoucherFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/filter/VoucherFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/CompressedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/CompressedData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/JokerFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/JokerFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/Memory256Long.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/Memory256Long.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/PreProcessedSeeds.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/PreProcessedSeeds.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/cache/QueryResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/cache/QueryResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Boss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/CommonJoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/CommonJoker100.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Edition.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Edition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Enhancement.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Enhancement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/JokerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/JokerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/LegendaryJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/LegendaryJoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/PackKind.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/PackKind.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/PackType.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/PackType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Planet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Rank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/RareJoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker100.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/RareJoker101C.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Seal.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Seal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Specials.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Specials.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Spectral.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Spectral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Stake.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Stake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Suit.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Suit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Tarot.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Tarot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/UnCommonJoker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker100.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/UnCommonJoker101C.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Version.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/enums/Voucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/enums/Voucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/jackson/ItemSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/jackson/ItemSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/EditionItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/EditionItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/InstanceParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/InstanceParams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/ItemPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/ItemPosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/JokerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/JokerData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/JokerStickers.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/JokerStickers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/Pack.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/Pack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/ShopItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/ShopItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/structs/ShopQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/structs/ShopQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/Card.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/Coordinate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/HorizontalLayoutManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/ItemCheckbox.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/SeedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/Sprite.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/SpriteUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/VerticalLayoutManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/balatro/ui/WrapLayout.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/8BitDeck.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/8BitDeck.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Editions.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Editions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Enhancers.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Enhancers.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Jokers.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Jokers.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Tags.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Tags.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Tarots.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Tarots.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Vouchers.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/images/Vouchers.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/json/jokers.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/json/jokers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/json/tags.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/json/tags.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/json/tarots.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/json/tarots.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/json/vouchers.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/json/vouchers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/BalatroTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/BalatroTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/GeneralTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/GeneralTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/LockTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/LockTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/Perkeo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/Perkeo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/RNGTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/RNGTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/ScoringTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/ScoringTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/StatefulLuaRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/test/java/tests/StatefulLuaRandom.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="227" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -24,6 +166,12 @@
     <system id="GRADLE">
       <state>
         <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/perkeo">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/ui">
           <activation />
         </task>
         <projects_view>
@@ -41,24 +189,36 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Balatro4j" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
+                <item name="perkeo" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="perkeo" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="ktor" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="perkeo" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="publishing" type="c8890929:TasksNode$1" />
+                <item name="verification" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="ui" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="ui" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="ui" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="verification" type="c8890929:TasksNode$1" />
               </path>
@@ -96,14 +256,18 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;git@github.com:alex-cova/balatro4j.git&quot;,
-    &quot;accountId&quot;: &quot;43cd3933-db42-424b-a37e-cdd2bd47c6f1&quot;
+    &quot;accountId&quot;: &quot;fb0e7c8d-91a7-4e35-bcef-83a6bc0cf769&quot;
   }
 }</component>
-  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-8.14.3-bin/cv11ve7ro1n3o1j4so8xd9n66/gradle-8.14.3" javaHome="/Library/Java/JavaVirtualMachines/amazon-corretto-21.jdk/Contents/Home" gradleVersion="8.14.3" />
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3/gradle-9.1.0" javaHome="$USER_HOME$/.gradle/jdks/eclipse_adoptium-21-aarch64-os_x.2/jdk-21.0.8+9/Contents/Home" gradleVersion="9.1.0" />
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -117,82 +281,131 @@
     <option name="showModules" value="false" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CompressedData.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CompressionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JokerFile.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Localization.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LuaRandom.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Performance.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PreProcessedSeeds.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Rebuild.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SeedRenderer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.com.balatro.Main.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Gradle.Balatro4j [:com.balatro.Main.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Balatro4j [check].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [nativeCompile].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [nativeRun].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [publishMavenPublicationToGithubRepository].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [publishToMavenLocal].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.apiTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.checkCharMaps.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.test33JCJSA.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testComplexQuery.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testCompressedFile.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testFV5S4RBO.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testFilters.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testHVC549OP.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testIGSPUNF.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testJHZ7FPM.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testJokerFile.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testNALDC19B.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testParseSearch.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testRender.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testSeed32.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollisionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollisionTest.testCollisions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollitionTest.testCollitions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GeneralTests.testRandom.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.testCache2D.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.testLegendaryLock.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.RNGTests.testEditions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ScoringTest.testScoring.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.balatro4j [buildFatJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.balatro4j [publishToMavenLocal].executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.immolate2.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last.edited.regexp&quot;: &quot;123450&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/alex/Developer/Balatro4j&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CanioGenerator.executor": "Run",
+    "Application.CompressedData.executor": "Run",
+    "Application.CompressionTest.executor": "Run",
+    "Application.Differentiator.executor": "Run",
+    "Application.JokerFile.executor": "Run",
+    "Application.Localization.executor": "Run",
+    "Application.LuaRandom.executor": "Run",
+    "Application.LuaRandom2.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Performance.executor": "Run",
+    "Application.PreProcessedSeeds.executor": "Run",
+    "Application.Rebuild.executor": "Run",
+    "Application.SeedRenderer.executor": "Run",
+    "Application.com.balatro.Main.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.Balatro4j [:com.balatro.Main.main()].executor": "Debug",
+    "Gradle.Balatro4j [:perkeo:test].executor": "Run",
+    "Gradle.Balatro4j [build].executor": "Run",
+    "Gradle.Balatro4j [check].executor": "Run",
+    "Gradle.Balatro4j [nativeCompile].executor": "Run",
+    "Gradle.Balatro4j [nativeRun].executor": "Run",
+    "Gradle.Balatro4j [publishMavenPublicationToGithubRepository].executor": "Run",
+    "Gradle.Balatro4j [publishToMavenLocal].executor": "Run",
+    "Gradle.Balatro4j [test].executor": "Run",
+    "Gradle.Balatro4j:perkeo [test].executor": "Run",
+    "Gradle.Balatro4j:ui [test].executor": "Run",
+    "Gradle.BalatroTests.apiTest.executor": "Run",
+    "Gradle.BalatroTests.checkCharMaps.executor": "Run",
+    "Gradle.BalatroTests.executor": "Run",
+    "Gradle.BalatroTests.test33JCJSA.executor": "Run",
+    "Gradle.BalatroTests.testComplexQuery.executor": "Run",
+    "Gradle.BalatroTests.testCompressedFile.executor": "Run",
+    "Gradle.BalatroTests.testFV5S4RBO.executor": "Run",
+    "Gradle.BalatroTests.testFilters.executor": "Run",
+    "Gradle.BalatroTests.testHVC549OP.executor": "Run",
+    "Gradle.BalatroTests.testIGSPUNF.executor": "Run",
+    "Gradle.BalatroTests.testJHZ7FPM.executor": "Run",
+    "Gradle.BalatroTests.testJokerFile.executor": "Run",
+    "Gradle.BalatroTests.testNALDC19B.executor": "Run",
+    "Gradle.BalatroTests.testParseSearch.executor": "Run",
+    "Gradle.BalatroTests.testRender.executor": "Run",
+    "Gradle.BalatroTests.testSeed32.executor": "Run",
+    "Gradle.CollisionTest.executor": "Run",
+    "Gradle.CollisionTest.testCollisions.executor": "Run",
+    "Gradle.CollitionTest.testCollitions.executor": "Run",
+    "Gradle.GeneralTests.testRandom.executor": "Run",
+    "Gradle.LockTests.executor": "Run",
+    "Gradle.LockTests.testCache2D.executor": "Run",
+    "Gradle.LockTests.testLegendaryLock.executor": "Run",
+    "Gradle.RNGTests.testEditions.executor": "Run",
+    "Gradle.ScoringTest.testScoring.executor": "Run",
+    "Gradle.Seed32Tests.testGeneration.executor": "Run",
+    "Gradle.UITest.executor": "Run",
+    "Gradle.balatro4j [buildFatJar].executor": "Run",
+    "Gradle.balatro4j [publishToMavenLocal].executor": "Run",
+    "Node.js.immolate2.js.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last.edited.regexp": "123450",
+    "last_opened_file_path": "/Users/alex/Developer/Balatro4j",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/ui/src/main" />
+      <recent name="$PROJECT_DIR$/perkeo/src/main/java/com/balatro" />
+      <recent name="$PROJECT_DIR$/perkeo/src/main/java" />
+      <recent name="$PROJECT_DIR$/perkeo" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ui/main" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="tests" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Balatro4j [test]">
-    <configuration name="Balatro4j [publishMavenPublicationToGithubRepository]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Application.PreProcessedSeeds">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.ui.Main" />
+      <module name="Balatro4j.ui.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.balatro.ui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PreProcessedSeeds" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.cache.PreProcessedSeeds" />
+      <module name="Balatro4j.perkeo.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.balatro.cache.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Balatro4j [:perkeo:test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -203,40 +416,21 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="publishMavenPublicationToGithubRepository" />
+            <option value=":perkeo:test" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="Balatro4j [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="BalatroTests.testFV5S4RBO" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BalatroTests.testCompressedFile" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -247,20 +441,23 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":perkeo:test" />
             <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.testFV5S4RBO&quot;" />
+            <option value="&quot;tests.BalatroTests.testCompressedFile&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="BalatroTests.testHVC549OP" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BalatroTests.testJHZ7FPM" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -271,58 +468,37 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":test" />
+            <option value=":perkeo:test" />
             <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.testHVC549OP&quot;" />
+            <option value="&quot;tests.BalatroTests.testJHZ7FPM&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="BalatroTests.testRender" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.testRender&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Balatro4j [test]" />
-        <item itemvalue="Gradle.BalatroTests.testHVC549OP" />
-        <item itemvalue="Gradle.BalatroTests.testFV5S4RBO" />
-        <item itemvalue="Gradle.BalatroTests.testRender" />
-        <item itemvalue="Gradle.Balatro4j [publishMavenPublicationToGithubRepository]" />
+        <item itemvalue="Application.PreProcessedSeeds" />
+        <item itemvalue="Gradle.Balatro4j [:perkeo:test]" />
+        <item itemvalue="Gradle.BalatroTests.testCompressedFile" />
+        <item itemvalue="Gradle.BalatroTests.testJHZ7FPM" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
-        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -427,7 +603,21 @@
       <workItem from="1755478997087" duration="2774000" />
       <workItem from="1755539560680" duration="33000" />
       <workItem from="1755563199590" duration="786000" />
-      <workItem from="1755564192728" duration="258000" />
+      <workItem from="1755564192728" duration="293000" />
+      <workItem from="1755564548691" duration="15000" />
+      <workItem from="1755564714324" duration="801000" />
+      <workItem from="1755624728732" duration="5000" />
+      <workItem from="1756007852091" duration="1178000" />
+      <workItem from="1756140762236" duration="5000" />
+      <workItem from="1756164162262" duration="2043000" />
+      <workItem from="1758483545334" duration="91000" />
+      <workItem from="1758483642653" duration="8000" />
+      <workItem from="1758734994030" duration="22000" />
+      <workItem from="1759790087445" duration="6206000" />
+      <workItem from="1759877992123" duration="4693000" />
+      <workItem from="1760479748533" duration="261000" />
+      <workItem from="1760480064968" duration="5268000" />
+      <workItem from="1771644903914" duration="4981000" />
     </task>
     <task id="LOCAL-00001" summary="fixed serialization problems">
       <option name="closed" value="true" />
@@ -621,7 +811,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755482157210</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="fix Spectral Pack">
+      <option name="closed" value="true" />
+      <created>1755564473671</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1755564473671</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -665,5 +863,16 @@
     <MESSAGE value="fix Spectral Pack" />
     <option name="LAST_COMMIT_MESSAGE" value="fix Spectral Pack" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Functions.java</url>
+          <line>223</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
