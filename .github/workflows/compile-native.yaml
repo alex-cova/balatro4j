@@ -1,0 +1,55 @@
+name: GraalVM build
+on: [ push, pull_request ]
+env:
+  MAVEN_SECRET: ${{ secrets.MAVEN_SECRET }}
+  MAVEN_USER: ${{ vars.MAVEN_USER }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print Versions
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          native-image --version
+
+      - name: Compile Native Image
+        run: |
+          ./gradlew nativeCompile
+          cd build/native/nativeCompile
+          zip -r compiled-native-image.zip *
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          compression-level: 0
+          name: compiled-native-image
+          path: build/native/nativeCompile/compiled-native-image.zip
+
+      - name: Copy artifact to EC2
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "build/native/nativeCompile/compiled-native-image.zip"
+          target: "~/"
+
+      - name: Deploy and restart service
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~
+            unzip -o compiled-native-image.zip
+            sudo systemctl restart bot

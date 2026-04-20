@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
 import java.util.Set;
 
 import static com.balatro.Util.pseudohash;
@@ -32,10 +31,43 @@ public final class Functions implements Lock {
     public static final CommonJoker[] COMMON_JOKERS = CommonJoker.values();
     public static final Boss[] BOSSES = Boss.values();
 
-    /** Stakes that enable sticker search in nextJoker(). */
-    private static final EnumSet<Stake> STICKER_STAKES = EnumSet.of(
-            Stake.Black_Stake, Stake.Blue_Stake, Stake.Purple_Stake,
-            Stake.Orange_Stake, Stake.Gold_Stake);
+    private static final double[] PACK_WEIGHTS;
+
+    // Source classification — avoids repeated String.equals() in nextJoker's hot path.
+    private static final int SRC_OTHER = 0;
+    private static final int SRC_SOU = 1;
+    private static final int SRC_WRA_OR_RTA = 2;
+    private static final int SRC_UTA = 3;
+    private static final int SRC_BUF = 4;
+
+    // Stakes that enable sticker search — packed into an int bitmask indexed by Stake.ordinal().
+    private static final int STICKER_STAKE_MASK =
+            (1 << Stake.Black_Stake.ordinal())
+          | (1 << Stake.Blue_Stake.ordinal())
+          | (1 << Stake.Purple_Stake.ordinal())
+          | (1 << Stake.Orange_Stake.ordinal())
+          | (1 << Stake.Gold_Stake.ordinal());
+
+    private static final int ORANGE_OR_GOLD_MASK =
+            (1 << Stake.Orange_Stake.ordinal()) | (1 << Stake.Gold_Stake.ordinal());
+
+    // Per-rarity bit masks of setA/setB membership. Index = rarity (1=common, 2=uncommon, 3=rare, 4=legendary).
+    // Replaces HashSet<String> + joker.getName() lookups with a single AND/shift.
+    private static final long[] SETA_MASK = new long[5];
+    private static final long[] SETB_MASK = new long[5];
+
+    private static final Set<String> SETA_NAMES = Set.of(
+            "Gros Michel", "Ice Cream", "Cavendish", "Luchador", "Turtle Bean", "Diet Cola",
+            "Popcorn", "Ramen", "Seltzer", "Mr. Bones", "Invisible Joker");
+
+    private static final Set<String> SETB_NAMES = Set.of(
+            "Ceremonial Dagger", "Ride the Bus", "Runner", "Constellation", "Green Joker",
+            "Red Card", "Madness", "Square Joker", "Vampire", "Rocket", "Obelisk", "Lucky Cat",
+            "Flash Card", "Spare Trousers", "Castle", "Wee Joker");
+
+    // Kept for backwards compatibility with any external reference; no longer used internally.
+    static final Set<String> setA = SETA_NAMES;
+    static final Set<String> setB = SETB_NAMES;
 
     private final InstanceParams params;
     private final Cache cache;
@@ -56,53 +88,35 @@ public final class Functions implements Lock {
         this.lock = new LongArrayLock();
     }
 
-    private int randintResample(String id, int max) {
-        var c = cache.get(id);
-
-        if (c == null) {
-            c = pseudohash(id.getBytes(), seed);
-            cache.put(id, c);
-        }
-
-        var value = round13((c * 1.72431234 + 2.134453429141) % 1);
-
-        cache.put(id, value);
-
-        return LuaRandom.randint((value + hashedSeed) / 2, max);
-    }
-
     /**
      * Long-keyed variant of randintResample that avoids String allocation.
      * Only falls back to String creation for the pseudohash on cache miss.
      */
     private int randintResample(Coordinate coord, int resampleCount, int max) {
-        long key = coord.resampleKey(resampleCount);
-        var c = cache.getResample(key);
+        final long key = coord.resampleKey(resampleCount);
+        // Primitive getter avoids boxing — NaN sentinel signals cache miss since cached values
+        // always come from a (% 1) operation and are finite.
+        final double cached = cache.getResampleOrNaN(key);
 
-        if (c == null) {
-            // Only allocate the String on first-time cache miss for pseudohash
-            String fullKey = coord.resample(resampleCount);
-            c = pseudohash(fullKey.getBytes(), seed);
-            cache.putResample(key, c);
-        }
+        final double c = Double.isNaN(cached)
+                ? pseudohash(coord.resample(resampleCount).getBytes(), seed)
+                : cached;
 
-        var value = round13((c * 1.72431234 + 2.134453429141) % 1);
-
+        final double value = round13((c * 1.72431234 + 2.134453429141) % 1);
         cache.putResample(key, value);
 
         return LuaRandom.randint((value + hashedSeed) / 2, max);
     }
 
     private double getNode(Coordinate id) {
-        var c = cache.get(id);
+        double c = cache.get(id);
 
         if (c == 0.0) {
             c = id.pseudohash(seed);
-            cache.put(id, c);
+            // Skip the intermediate put — it would be overwritten by the put below anyway.
         }
 
-        var value = round13((c * 1.72431234 + 2.134453429141) % 1);
-
+        final double value = round13((c * 1.72431234 + 2.134453429141) % 1);
         cache.put(id, value);
 
         return (value + hashedSeed) / 2;
@@ -117,12 +131,20 @@ public final class Functions implements Lock {
     }
 
     public PackType randweightedchoice(Coordinate ID, PackType[] items) {
-        double poll = random(ID) * 22.42;
+        final double poll = random(ID) * 22.42;
         int idx = 0;
         double weight = 0;
-        while (weight < poll) {
-            weight += items[idx].getValue();
-            idx++;
+
+        // Fast path for the canonical PACKS array — avoids the virtual getValue() call per iteration.
+        if (items == PACKS) {
+            final double[] w = PACK_WEIGHTS;
+            while (weight < poll) {
+                weight += w[idx++];
+            }
+        } else {
+            while (weight < poll) {
+                weight += items[idx++].getValue();
+            }
         }
         return items[idx - 1];
     }
@@ -179,24 +201,18 @@ public final class Functions implements Lock {
         return randchoice(source, SPECTRALS);
     }
 
-    static final Set<String> setA = Set.of("Gros Michel", "Ice Cream", "Cavendish", "Luchador", "Turtle Bean", "Diet Cola",
-            "Popcorn", "Ramen", "Seltzer", "Mr. Bones", "Invisible Joker");
-
-    static final Set<String> setB = Set.of("Ceremonial Dagger", "Ride the Bus", "Runner", "Constellation", "Green Joker",
-            "Red Card", "Madness", "Square Joker", "Vampire", "Rocket", "Obelisk", "Lucky Cat", "Flash Card",
-            "Spare Trousers", "Castle", "Wee Joker");
-
     public JokerData nextJoker(@NotNull String source,
                                Coordinate[] joker1Arr, Coordinate[] joker2Arr, Coordinate[] joker3Arr, Coordinate[] joker4Arr,
                                Coordinate[] rarityArr, Coordinate[] editionArr,
                                int ante, boolean hasStickers) {
-        // Get rarity
-        int rarity = 1;
+        // Classify source once — subsequent dispatches become int comparisons instead of String.equals.
+        final int srcType = sourceType(source);
 
-        switch (source) {
-            case "sou" -> rarity = 4;
-            case "wra", "rta" -> rarity = 3;
-            case "uta" -> rarity = 2;
+        int rarity = 1;
+        switch (srcType) {
+            case SRC_SOU -> rarity = 4;
+            case SRC_WRA_OR_RTA -> rarity = 3;
+            case SRC_UTA -> rarity = 2;
             default -> {
                 double rarityPoll = random(rarityArr[ante]);
                 if (rarityPoll > 0.95) {
@@ -207,71 +223,64 @@ public final class Functions implements Lock {
             }
         }
 
-        final var edition = getEdition(ante, editionArr);
+        final Edition edition = getEdition(ante, editionArr);
 
-        // Get next joker
-        Coordinate coordinate;
-        Item[] items;
-
+        final Coordinate coordinate;
+        final Item[] items;
         switch (rarity) {
-            case 4 -> {
-                items = LEGENDARY_JOKERS;
-                coordinate = Joker4;
-            }
-            case 3 -> {
-                coordinate = joker3Arr[ante];
-                items = RARE_JOKERS;
-            }
-            case 2 -> {
-                coordinate = joker2Arr[ante];
-                items = UNCOMMON_JOKERS;
-            }
-            default -> {
-                coordinate = joker1Arr[ante];
-                items = COMMON_JOKERS;
-            }
+            case 4 -> { items = LEGENDARY_JOKERS; coordinate = Joker4; }
+            case 3 -> { coordinate = joker3Arr[ante]; items = RARE_JOKERS; }
+            case 2 -> { coordinate = joker2Arr[ante]; items = UNCOMMON_JOKERS; }
+            default -> { coordinate = joker1Arr[ante]; items = COMMON_JOKERS; }
         }
 
-        final var joker = randchoice(coordinate, items);
-
-        // Get next joker stickers
-        var stickers = new JokerStickers();
+        final Item joker = randchoice(coordinate, items);
+        final JokerStickers stickers = new JokerStickers();
 
         if (hasStickers) {
-            boolean searchForSticker = STICKER_STAKES.contains(params.getStake());
+            final Stake stake = params.getStake();
+            final int stakeBit = 1 << stake.ordinal();
+            final boolean searchForSticker = (STICKER_STAKE_MASK & stakeBit) != 0;
 
             double stickerPoll = 0.0;
-
             if (searchForSticker) {
-                if (source.equals("buf")) {
-                    stickerPoll = random(packetperArr[ante]);
-                } else {
-                    stickerPoll = random(etperpollArr[ante]);
-                }
+                stickerPoll = (srcType == SRC_BUF)
+                        ? random(packetperArr[ante])
+                        : random(etperpollArr[ante]);
             }
+
+            final long jokerBit = 1L << joker.ordinal();
 
             if (stickerPoll > 0.7) {
-                if (!setA.contains(joker.getName())) {
+                if ((SETA_MASK[rarity] & jokerBit) == 0) {
                     stickers.setRental(true);
                 }
-            }
-
-            if ((stickerPoll > 0.4 && stickerPoll <= 0.7) && (params.getStake() == Stake.Orange_Stake || params.getStake() == Stake.Gold_Stake)) {
-                if (!setB.contains(joker.getName())) {
+            } else if (stickerPoll > 0.4 && (ORANGE_OR_GOLD_MASK & stakeBit) != 0) {
+                if ((SETB_MASK[rarity] & jokerBit) == 0) {
                     stickers.setPerishable(true);
                 }
             }
 
-            if (params.getStake() == Stake.Gold_Stake) {
-                if (source.equals("buf")) {
-                    stickers.setRental(random(packssjrArr[ante]) > 0.7);
-                } else {
-                    stickers.setRental(random(ssjrArr[ante]) > 0.7);
-                }
+            if (stake == Stake.Gold_Stake) {
+                final double poll = (srcType == SRC_BUF)
+                        ? random(packssjrArr[ante])
+                        : random(ssjrArr[ante]);
+                stickers.setRental(poll > 0.7);
             }
         }
+
         return new JokerData(joker, rarity, edition, stickers)
                 .setResampleInfo(coordinate, items);
+    }
+
+    private static int sourceType(String source) {
+        return switch (source) {
+            case "sou" -> SRC_SOU;
+            case "wra", "rta" -> SRC_WRA_OR_RTA;
+            case "uta" -> SRC_UTA;
+            case "buf" -> SRC_BUF;
+            default -> SRC_OTHER;
+        };
     }
 
     // Shop Logic
@@ -311,11 +320,10 @@ public final class Functions implements Lock {
 
     @Contract("_ -> new")
     public @NotNull ShopItem nextShopItem(int ante) {
-        var shop = getShopInstance();
+        final ShopInstance shop = getShopInstance();
 
         double cdtPoll = random(cdtArr[ante]) * shop.getTotalRate();
-
-        Type type;
+        final Type type;
 
         if (cdtPoll < shop.jokerRate()) {
             type = Type.Joker;
@@ -329,36 +337,22 @@ public final class Functions implements Lock {
                     type = Type.Planet;
                 } else {
                     cdtPoll -= shop.planetRate();
-                    if (cdtPoll < shop.playingCardRate()) {
-                        type = Type.PlayingCard;
-                    } else {
-                        type = Type.Spectral;
-                    }
+                    type = (cdtPoll < shop.playingCardRate()) ? Type.PlayingCard : Type.Spectral;
                 }
             }
         }
 
-        switch (type) {
-            case Type.Joker -> {
+        return switch (type) {
+            case Joker -> {
                 var jkr = nextJoker("sho", joker1ShoArr, joker2ShoArr, joker3ShoArr, joker4ShoArr,
                         rarityShoArr, editionShoArr, ante, true);
-                return new ShopItem(type, jkr.joker, jkr);
+                yield new ShopItem(type, jkr.joker, jkr);
             }
-            case Type.Tarot -> {
-                return new ShopItem(type, nextTarot(tarotShoArr[ante], ante, false));
-            }
-            case Type.Planet -> {
-                return new ShopItem(type, nextPlanet(planetShoArr[ante], ante, false));
-            }
-            case Type.Spectral -> {
-                return new ShopItem(type, nextSpectral(spectralShoArr[ante], ante, false));
-            }
-            case Type.PlayingCard -> {
-                return new ShopItem(type, nextStandardCard(ante));
-            }
-        }
-
-        throw new IllegalStateException("Error: ShopItem type not found");
+            case Tarot -> new ShopItem(type, nextTarot(tarotShoArr[ante], ante, false));
+            case Planet -> new ShopItem(type, nextPlanet(planetShoArr[ante], ante, false));
+            case Spectral -> new ShopItem(type, nextSpectral(spectralShoArr[ante], ante, false));
+            case PlayingCard -> new ShopItem(type, nextStandardCard(ante));
+        };
     }
 
     public PackType nextPack(int ante) {
@@ -425,6 +419,29 @@ public final class Functions implements Lock {
 
     static {
         heat(30);
+
+        // Cache PackType weights in a primitive array to skip enum virtual dispatch in randweightedchoice.
+        PACK_WEIGHTS = new double[PACKS.length];
+        for (int i = 0; i < PACKS.length; i++) {
+            PACK_WEIGHTS[i] = PACKS[i].getValue();
+        }
+
+        // Build rarity-indexed bit masks once from the name-based sets.
+        buildSetMask(1, COMMON_JOKERS);
+        buildSetMask(2, UNCOMMON_JOKERS);
+        buildSetMask(3, RARE_JOKERS);
+        buildSetMask(4, LEGENDARY_JOKERS);
+    }
+
+    private static void buildSetMask(int rarity, Item[] items) {
+        long a = 0L, b = 0L;
+        for (int i = 0; i < items.length; i++) {
+            final String n = items[i].getName();
+            if (SETA_NAMES.contains(n)) a |= (1L << i);
+            if (SETB_NAMES.contains(n)) b |= (1L << i);
+        }
+        SETA_MASK[rarity] = a;
+        SETB_MASK[rarity] = b;
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -551,9 +568,8 @@ public final class Functions implements Lock {
         }
 
         // Edition
-        var edition = Edition.NoEdition;
-
-        double editionPoll = random(standard_editionArr[ante]);
+        Edition edition = Edition.NoEdition;
+        final double editionPoll = random(standard_editionArr[ante]);
 
         if (editionPoll > 0.988) {
             edition = Edition.Polychrome;
@@ -564,10 +580,10 @@ public final class Functions implements Lock {
         }
 
         // Seal
-        var seal = Seal.NoSeal;
+        Seal seal = Seal.NoSeal;
 
         if (random(stdsealArr[ante]) > 0.8) {
-            double sealPoll = random(stdsealtypeArr[ante]);
+            final double sealPoll = random(stdsealtypeArr[ante]);
             if (sealPoll > 0.75) {
                 seal = Seal.RedSeal;
             } else if (sealPoll > 0.5) {
@@ -583,20 +599,22 @@ public final class Functions implements Lock {
     }
 
     public @NotNull Item @NotNull [] nextArcanaPack(int size, int ante) {
-        var pack = new Item[size];
+        final Item[] pack = new Item[size];
+        final boolean showman = params.isShowman();
+        final boolean omenGlobeActive = isVoucherActive(Voucher.Omen_Globe);
 
         for (int i = 0; i < size; i++) {
-            if (isVoucherActive(Voucher.Omen_Globe) && random(omen_globe) > 0.8) {
+            if (omenGlobeActive && random(omen_globe) > 0.8) {
                 pack[i] = nextSpectral(spectralAr2Arr[ante], ante, true);
             } else {
                 pack[i] = nextTarot(tarotAr1Arr[ante], ante, true);
             }
-            if (!params.isShowman()) {
+            if (!showman) {
                 lock(pack[i]);
             }
         }
 
-        if (params.isShowman()) return pack;
+        if (showman) return pack;
 
         for (Item item : pack) {
             if (item instanceof EditionItem) {
@@ -610,16 +628,17 @@ public final class Functions implements Lock {
     }
 
     public @NotNull Item @NotNull [] nextCelestialPack(int size, int ante) {
-        var pack = new Item[size];
+        final Item[] pack = new Item[size];
+        final boolean showman = params.isShowman();
 
         for (int i = 0; i < size; i++) {
             pack[i] = nextPlanet(planetpl1lArr[ante], ante, true);
-            if (!params.isShowman()) {
+            if (!showman) {
                 lock(pack[i]);
             }
         }
 
-        if (params.isShowman()) return pack;
+        if (showman) return pack;
 
         for (Item item : pack) {
             unlock(item);
@@ -629,23 +648,22 @@ public final class Functions implements Lock {
     }
 
     public @NotNull Item @NotNull [] nextSpectralPack(int size, int ante) {
-        var pack = new Item[size];
+        final Item[] pack = new Item[size];
+        final boolean showman = params.isShowman();
 
         for (int i = 0; i < size; i++) {
             pack[i] = nextSpectral(spectralSpeArr[ante], ante, true);
-
-            if (!params.isShowman()) {
+            if (!showman) {
                 lock(pack[i]);
             }
         }
 
-        if (params.isShowman()) return pack;
+        if (showman) return pack;
 
         for (Item item : pack) {
             if (item instanceof EditionItem) {
                 continue;
             }
-
             unlock(item);
         }
 
@@ -653,7 +671,7 @@ public final class Functions implements Lock {
     }
 
     public @NotNull com.balatro.structs.Card @NotNull [] nextStandardPack(int size, int ante) {
-        var pack = new com.balatro.structs.Card[size];
+        final com.balatro.structs.Card[] pack = new com.balatro.structs.Card[size];
 
         for (int i = 0; i < size; i++) {
             pack[i] = nextStandardCard(ante);
@@ -663,21 +681,20 @@ public final class Functions implements Lock {
     }
 
     public @NotNull JokerData @NotNull [] nextBuffoonPack(int size, int ante) {
-        var pack = new JokerData[size];
-
-        JokerData joker;
+        final JokerData[] pack = new JokerData[size];
+        final boolean showman = params.isShowman();
 
         for (int i = 0; i < size; i++) {
-            joker = nextJoker("buf", joker1BufArr, joker2BufArr, joker3BufArr, joker4BufArr,
+            final JokerData joker = nextJoker("buf", joker1BufArr, joker2BufArr, joker3BufArr, joker4BufArr,
                     rarityBufArr, editionBufArr, ante, true);
             pack[i] = joker;
 
-            if (!params.isShowman()) {
+            if (!showman) {
                 lock(joker.getJoker());
             }
         }
 
-        if (params.isShowman()) return pack;
+        if (showman) return pack;
 
         for (JokerData jokerData : pack) {
             unlock(jokerData.getJoker());
@@ -732,26 +749,26 @@ public final class Functions implements Lock {
     private final Boss[] bossBuffer = new Boss[BOSSES.length];
 
     public Boss nextBoss(int ante) {
+        final boolean isBossAnte = (ante % 8 == 0);
         int numBosses = 0;
-        boolean isBossAnte = (ante % 8 == 0);
 
-        // First pass: Try to find unlocked bosses
-        for (Boss b : BOSSES) {
-            if (isLocked(b)) continue;
+        // Iterative: find unlocked bosses; if none match, unlock the class and retry.
+        while (true) {
+            for (Boss b : BOSSES) {
+                if (isLocked(b)) continue;
 
-            if (isBossAnte ? b.notT() : b.isT()) {
-                bossBuffer[numBosses++] = b;
+                if (isBossAnte ? b.notT() : b.isT()) {
+                    bossBuffer[numBosses++] = b;
+                }
             }
-        }
 
-        // If no bosses found, unlock appropriate bosses and try again
-        if (numBosses == 0) {
+            if (numBosses > 0) break;
+
             for (Boss b : BOSSES) {
                 if (isBossAnte ? b.notT() : b.isT()) {
                     unlock(b);
                 }
             }
-            return nextBoss(ante);
         }
 
         Boss chosenBoss = bossBuffer[randint(boss, numBosses - 1)];
@@ -776,9 +793,7 @@ public final class Functions implements Lock {
     }
 
     public <T extends Item> @NotNull T randchoice(Coordinate id, @NotNull T @NotNull [] items) {
-        var c = randint(id, items.length - 1);
-
-        T item = items[c];
+        final T item = items[randint(id, items.length - 1)];
 
         if (item.isRetry()) {
             return resample(id, items);
@@ -796,11 +811,9 @@ public final class Functions implements Lock {
     }
 
     private <T extends Item> @NotNull T resample(@NotNull Coordinate id, @NotNull T @NotNull [] items) {
-        T item;
-
         int resampleCount = 2;
         while (true) {
-            item = items[randintResample(id, resampleCount, items.length - 1)];
+            final T item = items[randintResample(id, resampleCount, items.length - 1)];
             resampleCount++;
             if ((!item.isRetry() && !isLocked(item)) || resampleCount > 1000) {
                 return item;
@@ -862,71 +875,45 @@ public final class Functions implements Lock {
     }
 
     public Edition getEdition(int ante, Coordinate[] editionArr) {
-        // Get edition
-        var editionRate = getEditionRate();
-        var edition = Edition.NoEdition;
-        var editionPoll = random(editionArr[ante]);
+        final int editionRate = getEditionRate();
+        final double editionPoll = random(editionArr[ante]);
 
-        if (editionPoll > 0.997) {
-            edition = Edition.Negative;
-        } else if (editionPoll > 1 - 0.006 * editionRate) {
-            edition = Edition.Polychrome;
-        } else if (editionPoll > 1 - 0.02 * editionRate) {
-            edition = Edition.Holographic;
-        } else if (editionPoll > 1 - 0.04 * editionRate) {
-            edition = Edition.Foil;
-        }
+        if (editionPoll > 0.997) return Edition.Negative;
+        if (editionPoll > 1.0 - 0.006 * editionRate) return Edition.Polychrome;
+        if (editionPoll > 1.0 - 0.02 * editionRate) return Edition.Holographic;
+        if (editionPoll > 1.0 - 0.04 * editionRate) return Edition.Foil;
 
-        //System.out.println("editionPoll: " + editionPoll+" "+editionArr[ante]+" "+edition);
-
-        return edition;
+        return Edition.NoEdition;
     }
 
     public int getEditionRate() {
-        int editionRate = 1;
-
-        if (isVoucherActive(Voucher.Glow_Up)) {
-            editionRate = 4;
-        } else if (isVoucherActive(Voucher.Hone)) {
-            editionRate = 2;
-        }
-
-        return editionRate;
+        if (isVoucherActive(Voucher.Glow_Up)) return 4;
+        if (isVoucherActive(Voucher.Hone)) return 2;
+        return 1;
     }
 
     public @Nullable Edition pollEdition(Coordinate coordinate, Double modifier, boolean noNegative, boolean guaranteed) {
-        double editionPoll = random(coordinate);
-        var editionRate = getEditionRate();
+        final double editionPoll = random(coordinate);
 
         if (guaranteed) {
-            if (editionPoll > 1 - 0.003 * 25 && !noNegative) {
-                return Edition.Polychrome;
-            } else if (editionPoll > 1 - 0.006 * 25) {
-                return Edition.Polychrome;
-            } else if (editionPoll > 1 - 0.02 * 25) {
-                return Edition.Holographic;
-            } else if (editionPoll > 1 - 0.04 * 25) {
-                return Edition.Foil;
-            }
-        } else {
-            if (editionPoll > 1 - multi(0.003, modifier) && !noNegative) {
-                return Edition.Negative;
-            } else if (editionPoll > 1 - 0.006 * multi(editionRate, modifier)) {
-                return Edition.Polychrome;
-            } else if (editionPoll > 1 - 0.02 * multi(editionRate, modifier)) {
-                return Edition.Holographic;
-            } else if (editionPoll > 1 - 0.04 * multi(editionRate, modifier)) {
-                return Edition.Foil;
-            }
+            // Preserve original thresholds exactly (0.925 / 0.85 / 0.5 / 0.0 — the "25x" guaranteed multiplier).
+            if (editionPoll > 0.925 && !noNegative) return Edition.Polychrome;
+            if (editionPoll > 0.85) return Edition.Polychrome;
+            if (editionPoll > 0.5) return Edition.Holographic;
+            if (editionPoll > 0.0) return Edition.Foil;
+            return null;
         }
+
+        final int editionRate = getEditionRate();
+        // Hoist the modifier null-check out of the multi() calls.
+        final double modOr1 = (modifier == null) ? 1.0 : modifier;
+        final double rateMod = editionRate * modOr1;
+
+        if (editionPoll > 1.0 - 0.003 * modOr1 && !noNegative) return Edition.Negative;
+        if (editionPoll > 1.0 - 0.006 * rateMod) return Edition.Polychrome;
+        if (editionPoll > 1.0 - 0.02 * rateMod) return Edition.Holographic;
+        if (editionPoll > 1.0 - 0.04 * rateMod) return Edition.Foil;
 
         return null;
     }
-
-    private double multi(double editionRate, Double mod) {
-        if (mod == null) return editionRate;
-
-        return editionRate * mod;
-    }
 }
-

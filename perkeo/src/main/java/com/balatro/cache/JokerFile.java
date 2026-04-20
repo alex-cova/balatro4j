@@ -14,55 +14,55 @@ import java.util.logging.Logger;
 
 public class JokerFile {
 
+    // Fixed-size record overhead: 8-byte seed + 4-byte score + 4-byte count.
+    private static final int RECORD_HEADER_BYTES = 8 + 4 + 4;
+
     public static void appendToCache(File jokerFile, @NotNull List<Run> runList) {
-        try {
-            var baos = new ByteArrayOutputStream();
-
+        try (DataOutputStream dos = new DataOutputStream(
+                new BufferedOutputStream(new FileOutputStream(jokerFile, true)))) {
             for (Run run : runList) {
-                write(baos, new Data(run));
+                writeTo(dos, new Data(run));
             }
-
-            try (FileOutputStream fos = new FileOutputStream(jokerFile, true)) {
-                fos.write(baos.toByteArray());
-            }
-            baos.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void write(@NotNull ByteArrayOutputStream baos, @NotNull CompressedData data) {
-        for (long datum : data.getData()) {
-            baos.writeBytes(ByteBuffer.allocate(Long.BYTES).putLong(datum).array());
+        // CompressedData still uses long[]; write via DataOutputStream to avoid per-long ByteBuffer allocation.
+        try (DataOutputStream dos = new DataOutputStream(baos)) {
+            for (long datum : data.getData()) {
+                dos.writeLong(datum);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static void write(@NotNull ByteArrayOutputStream baos, @NotNull Data data) {
-        baos.writeBytes(data.getSeed().getBytes());
+        try {
+            writeTo(new DataOutputStream(baos), data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void writeTo(@NotNull DataOutputStream dos, @NotNull Data data) throws IOException {
+        final byte[] seedBytes = data.getSeed().getBytes();
+        dos.write(seedBytes, 0, 8);
+        dos.writeInt(data.getScore());
 
         final int[] positions = data.getData();
-
-        final var intBuffer = ByteBuffer.allocate(Integer.BYTES);
-
-        baos.writeBytes(ByteBuffer.allocate(Integer.BYTES).putInt(data.getScore()).array());
-        baos.writeBytes(ByteBuffer.allocate(Integer.BYTES).putInt(positions.length).array());
-
-        if (positions.length > 0) {
-            var positionArray = new byte[positions.length * Integer.BYTES];
-
-            for (int i = 0; i < positions.length; i++) {
-                intBuffer.putInt(0, positions[i]);
-                System.arraycopy(intBuffer.array(), 0, positionArray, i * Integer.BYTES, Integer.BYTES);
-            }
-
-            baos.writeBytes(positionArray);
+        dos.writeInt(positions.length);
+        for (int p : positions) {
+            dos.writeInt(p);
         }
-
     }
 
     public static @NotNull List<Data> readFile(@NotNull File file) {
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
-            return read(bis);
+        try (DataInputStream dis = new DataInputStream(
+                new BufferedInputStream(new FileInputStream(file)))) {
+            return read(dis, file.length());
         } catch (IOException e) {
             Logger.getLogger(PreProcessedSeeds.class.getName())
                     .log(Level.SEVERE, null, e);
@@ -114,41 +114,57 @@ public class JokerFile {
         return compressedList;
     }
 
+    /**
+     * @deprecated use {@link #read(DataInputStream, long)} — this overload wraps the stream unconditionally.
+     */
+    @Deprecated
     public static @NotNull List<Data> read(@NotNull InputStream bis) throws IOException {
-        List<Data> dataList = new ArrayList<>();
-        byte[] seedBytes = new byte[8];
-        byte[] intBytes = new byte[Integer.BYTES];
-        ByteBuffer intBuffer = ByteBuffer.allocate(Integer.BYTES);
+        return read(new DataInputStream(bis), -1L);
+    }
 
-        while (bis.read(seedBytes) != -1) {
-            String seed = new String(seedBytes);
-            if (!seed.matches("[a-zA-Z0-9]{8}")) {
+    public static @NotNull List<Data> read(@NotNull DataInputStream dis, long fileSize) throws IOException {
+        // Estimate capacity from file size to avoid ArrayList.grow() cycles on multi-million-entry caches.
+        final int estimated = fileSize > 0
+                ? (int) Math.min(fileSize / (RECORD_HEADER_BYTES + 8L * 4), Integer.MAX_VALUE)
+                : 16;
+        final List<Data> dataList = new ArrayList<>(Math.max(16, estimated));
+        final byte[] seedBytes = new byte[8];
+
+        while (true) {
+            final int read = dis.read(seedBytes);
+            if (read == -1) break;
+            if (read != 8) {
+                throw new IOException("Unexpected end of file mid-seed");
+            }
+
+            final String seed = new String(seedBytes);
+            if (!isValidSeed(seed)) {
                 throw new IllegalStateException("Invalid seed: '" + seed + "'");
             }
 
-            read(bis, intBytes);
-            intBuffer.clear();
-            intBuffer.put(intBytes);
-            int score = intBuffer.getInt(0);
+            final int score = dis.readInt();
+            final int dataSize = dis.readInt();
 
-            read(bis, intBytes);
-            intBuffer.clear();
-            intBuffer.put(intBytes);
-            int dataSize = intBuffer.getInt(0);
-
-            int[] data = new int[dataSize];
-
+            final int[] data = new int[dataSize];
             for (int i = 0; i < dataSize; i++) {
-                read(bis, intBytes);
-                intBuffer.clear();
-                intBuffer.put(intBytes);
-                data[i] = intBuffer.getInt(0);
+                data[i] = dis.readInt();
             }
 
             dataList.add(new Data(seed, score, data));
         }
 
         return dataList;
+    }
+
+    private static boolean isValidSeed(@NotNull String seed) {
+        if (seed.length() != 8) return false;
+        for (int i = 0; i < 8; i++) {
+            final char c = seed.charAt(i);
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void read(@NotNull InputStream is, byte[] arr) throws IOException {
@@ -158,15 +174,13 @@ public class JokerFile {
     }
 
     public static void writeToFile(File file, @NotNull List<CompressedData> compressedData) {
-        var baos = new ByteArrayOutputStream();
-
-        for (CompressedData run : compressedData) {
-            write(baos, run);
-        }
-        
-        try {
-            Files.write(file.toPath(), baos.toByteArray());
-            baos.close();
+        try (DataOutputStream dos = new DataOutputStream(
+                new BufferedOutputStream(Files.newOutputStream(file.toPath())))) {
+            for (CompressedData run : compressedData) {
+                for (long datum : run.getData()) {
+                    dos.writeLong(datum);
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

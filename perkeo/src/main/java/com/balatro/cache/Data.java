@@ -9,6 +9,7 @@ import com.balatro.structs.JokerData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class Data {
@@ -20,6 +21,9 @@ public final class Data {
     public Data(String seed, int score, int[] data) {
         this.seed = seed;
         this.score = score;
+        // Sort numerically so isOn can binary-search on (yIndex, ordinal).
+        // Encoding puts yIndex in the high byte, so ascending int order == (yIndex, ordinal, edition, ante).
+        Arrays.sort(data);
         this.data = data;
     }
 
@@ -62,13 +66,14 @@ public final class Data {
             }
         }
 
-        itemPositions.sort(ItemPosition::compareTo);
-
         data = new int[itemPositions.size()];
 
         for (int i = 0; i < itemPositions.size(); i++) {
             data[i] = itemPositions.get(i).encode();
         }
+
+        // Sort numerically for binary-search in isOn — the old ItemPosition.compareTo sort is no longer needed.
+        Arrays.sort(data);
 
         itemPositions.clear();
     }
@@ -97,32 +102,48 @@ public final class Data {
 
 
     public boolean isOn(@NotNull ItemPosition item) {
-        for (int value : data) {
-            int yIndex = (value >> 24) & 0xFF;
+        // data[] is sorted ascending. The encoding is yIndex<<24 | ordinal<<16 | edition<<8 | ante.
+        // All entries matching (yIndex, ordinal) form a contiguous range we can bracket with two
+        // binary searches over the top 16 bits.
+        final int prefix = (item.getYIndex() << 24) | (item.ordinal() << 16);
+        final int lo = lowerBound(data, prefix);
 
-            if (yIndex != item.getYIndex()) continue;
+        if (lo == data.length || (data[lo] & 0xFFFF0000) != prefix) {
+            return false;
+        }
 
-            int ordinal = (value >> 16) & 0xFF;
-
-            if (ordinal != item.ordinal()) continue;
-
-            if (item.edition() == Edition.NoEdition && item.ante() == 0) {
-                return true;
-            }
-
-            int edition = (value >> 8) & 0xFF;
-
-            if (item.edition().ordinal() != edition) continue;
-
-            int ante = (value) & 0xFF;
-
-            if (ante > item.ante()) continue;
-
+        // ante == 0 with NoEdition is the "any match is fine" shortcut in the original.
+        if (item.edition() == Edition.NoEdition && item.ante() == 0) {
             return true;
         }
 
+        final int hi = lowerBound(data, prefix + 0x10000);
+        final int requestedEdition = item.edition().ordinal();
+        final int requestedAnte = item.ante();
+
+        for (int i = lo; i < hi; i++) {
+            final int value = data[i];
+            final int edition = (value >> 8) & 0xFF;
+            if (edition != requestedEdition) continue;
+
+            final int ante = value & 0xFF;
+            if (ante > requestedAnte) continue;
+
+            return true;
+        }
         return false;
     }
 
-
+    private static int lowerBound(int[] a, int key) {
+        int lo = 0, hi = a.length;
+        while (lo < hi) {
+            final int mid = (lo + hi) >>> 1;
+            if (a[mid] < key) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
 }

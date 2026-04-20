@@ -45,6 +45,11 @@ public enum Spectral implements Item, Stored {
     }
 
     @Override
+    public boolean isRetry() {
+        return this == RETRY || this == RETRY2;
+    }
+
+    @Override
     public Filter auto(int ante, Edition edition) {
         return new SpectralFilter(ante, this, edition);
     }

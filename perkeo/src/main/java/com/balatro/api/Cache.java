@@ -27,4 +27,14 @@ public interface Cache {
      * Store a resample value by long key (encoded from Coordinate.resampleKey).
      */
     void putResample(long key, double value);
+
+    /**
+     * Primitive-friendly variant of {@link #getResample(long)} that returns {@link Double#NaN}
+     * when the key is absent. Hot-path callers should prefer this to avoid Double autoboxing.
+     * Default impl bridges to the boxed accessor for custom implementations.
+     */
+    default double getResampleOrNaN(long key) {
+        Double v = getResample(key);
+        return v == null ? Double.NaN : v;
+    }
 }

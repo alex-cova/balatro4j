@@ -36,10 +36,13 @@ public class Util {
     private static final double five_inv_prec = Math.pow(5, 13);
 
     public static double round13(double x) {
-        double tentative = Math.floor(x * inv_prec) / inv_prec;
-        double truncated = ((x * two_inv_prec) % 1.0) * five_inv_prec;
-        if (tentative != x && truncated % 1.0 >= 0.5 && tentative != nextAfter(x, 1)) {
-            return (Math.floor(x * inv_prec) + 1) / inv_prec;
+        // Callers always pass x from (c % 1) which lies in (-1, 1), so Math.nextUp(x) matches
+        // the old nextAfter(x, 1) semantics and is a HotSpot intrinsic on x86/aarch64.
+        final double floored = Math.floor(x * inv_prec);
+        final double tentative = floored / inv_prec;
+        final double truncated = ((x * two_inv_prec) % 1.0) * five_inv_prec;
+        if (tentative != x && truncated % 1.0 >= 0.5 && tentative != Math.nextUp(x)) {
+            return (floored + 1) / inv_prec;
         }
         return tentative;
     }

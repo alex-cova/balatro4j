@@ -21,7 +21,9 @@ public interface Item {
 
     @JsonIgnore
     default boolean isRetry() {
-        return getName().equals("RETRY");
+        // Only Spectral.RETRY / RETRY2 are retries — other Item enums short-circuit here
+        // instead of paying for a virtual getName() call + String.equals on the hot path.
+        return false;
     }
 
     default boolean eq(@NotNull Item item) {

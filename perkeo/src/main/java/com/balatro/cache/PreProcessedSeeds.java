@@ -15,15 +15,40 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.balatro.enums.LegendaryJoker.*;
 
 public class PreProcessedSeeds {
+
+    /**
+     * Case-insensitive lookup table of every searchable item, built once from all supported enums.
+     * Replaces the 10 linear scans that the original {@link #parseSearch} performed per query.
+     * First-wins semantics (via putIfAbsent) mirror the original enum-iteration order.
+     */
+    private static final Map<String, Item> ITEM_LOOKUP = buildItemLookup();
+
+    private static @NotNull Map<String, Item> buildItemLookup() {
+        Map<String, Item> map = new HashMap<>(256);
+        addAll(map, Spectral.values());
+        addAll(map, CommonJoker.values());
+        addAll(map, RareJoker.values());
+        addAll(map, LegendaryJoker.values());
+        addAll(map, UnCommonJoker.values());
+        addAll(map, Tag.values());
+        addAll(map, Boss.values());
+        addAll(map, Planet.values());
+        addAll(map, Tarot.values());
+        addAll(map, Voucher.values());
+        return map;
+    }
+
+    private static void addAll(Map<String, Item> map, Item @NotNull [] values) {
+        for (Item v : values) {
+            map.putIfAbsent(v.getName().toLowerCase(Locale.ROOT), v);
+        }
+    }
 
     private List<Data> dataList;
 
@@ -97,7 +122,6 @@ public class PreProcessedSeeds {
             System.out.println("File size: " + decimalFormat.format(baos.size()));
 
             try {
-
                 Files.write(file.toPath(), baos.toByteArray());
                 baos.close();
             } catch (IOException e) {
@@ -109,141 +133,74 @@ public class PreProcessedSeeds {
 
 
     public List<QueryResult> search(@NotNull List<? extends Item> items) {
-        List<QueryResult> found = new ArrayList<>();
-
-        var editionItems = items.stream()
-                .map(i -> {
-                    if (i instanceof EditionItem ei) {
-                        return new ItemPosition(ei, 8);
-                    }
-
-                    return new ItemPosition(i, 8);
-                }).toList();
-
-        for (Data data : dataList) {
-            if (data.contains(editionItems)) {
-                found.add(new QueryResult(data.getSeed(), data.getScore()));
+        // Build the query list directly — streams add allocation overhead for a small, fixed-size input.
+        final List<ItemPosition> editionItems = new ArrayList<>(items.size());
+        for (Item i : items) {
+            if (i instanceof EditionItem ei) {
+                editionItems.add(new ItemPosition(ei, 8));
+            } else {
+                editionItems.add(new ItemPosition(i, 8));
             }
         }
 
-        found.sort((a, b) -> Integer.compare(b.score(), a.score()));
-
-        return found;
+        return runQuery(editionItems);
     }
 
     public Set<String> searchByName(@NotNull Set<String> tokens) {
-        return find(tokens.stream()
-                .map(Query::new)
-                .toList())
-                .stream()
+        final List<Query> queries = new ArrayList<>(tokens.size());
+        for (String token : tokens) {
+            queries.add(new Query(token));
+        }
+        return find(queries).stream()
                 .map(QueryResult::seed)
                 .collect(Collectors.toSet());
     }
 
     public List<QueryResult> find(List<Query> tokens) {
-        List<QueryResult> found = new ArrayList<>();
+        return runQuery(parseSearch(tokens));
+    }
 
-        var items = parseSearch(tokens);
-
-        for (Data data : dataList) {
-            if (data.contains(items)) {
-                found.add(new QueryResult(data.getSeed(), data.getScore()));
-            }
+    /**
+     * Scans {@code dataList} for every seed matching the given item positions.
+     * Parallelized because each {@link Data#contains} call is pure/read-only and the list
+     * can reach millions of entries; the fork-join pool handles small inputs gracefully.
+     */
+    private @NotNull List<QueryResult> runQuery(@NotNull List<ItemPosition> items) {
+        final List<Data> source = dataList;
+        if (source == null || source.isEmpty()) {
+            return new ArrayList<>(0);
         }
 
-        return found;
+        return source.parallelStream()
+                .filter(d -> d.contains(items))
+                .map(d -> new QueryResult(d.getSeed(), d.getScore()))
+                .sorted((a, b) -> Integer.compare(b.score(), a.score()))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static @NotNull List<ItemPosition> parseSearch(@NotNull List<Query> queries) {
-        List<ItemPosition> items = new ArrayList<>(queries.size());
+        final List<ItemPosition> items = new ArrayList<>(queries.size());
+        StringBuilder missing = null;
 
         for (Query query : queries) {
-            for (Spectral value : Spectral.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
+            final Item match = ITEM_LOOKUP.get(query.getItem().toLowerCase(Locale.ROOT));
+            if (match != null) {
+                items.add(new ItemPosition(match, query.getEdition()));
+            } else {
+                if (missing == null) {
+                    missing = new StringBuilder();
+                } else {
+                    missing.append(',');
                 }
-            }
-
-            for (CommonJoker value : CommonJoker.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (RareJoker value : RareJoker.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (LegendaryJoker value : values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (UnCommonJoker value : UnCommonJoker.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-            for (Tag value : Tag.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (Boss value : Boss.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (Planet value : Planet.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (Tarot value : Tarot.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
-            }
-
-            for (Voucher value : Voucher.values()) {
-                if (query.getItem().equalsIgnoreCase(value.getName())) {
-                    items.add(new ItemPosition(value, query.getEdition()));
-                    break;
-                }
+                missing.append(query.getItem());
             }
         }
 
-        if (items.size() < queries.size()) {
-            var itemNames = items.stream()
-                    .map(Item::getName)
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toSet());
-
-            var missing = queries.stream()
-                    .map(Query::getItem)
-                    .filter(item -> !itemNames.contains(item.toLowerCase()))
-                    .collect(Collectors.joining(","));
-
-            throw new IllegalStateException("Failed to parse search, missing: " + missing + ", tokens %s items %s".formatted(queries.size(), items.size()));
+        if (missing != null) {
+            throw new IllegalStateException("Failed to parse search, missing: " + missing
+                    + ", tokens %s items %s".formatted(queries.size(), items.size()));
         }
 
         return items;
     }
-
-
 }
