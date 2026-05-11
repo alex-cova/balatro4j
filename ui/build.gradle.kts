@@ -12,8 +12,8 @@ repositories {
     mavenCentral()
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.toVersion(26)
+java.targetCompatibility = JavaVersion.toVersion(26)
 
 group = "com.balatro"
 version = "2.0.1"
@@ -54,6 +54,12 @@ tasks.withType<Test> {
         showCauses = true
         showStackTraces = true
         showStandardStreams = true
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(26))
     }
 }
 

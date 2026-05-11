@@ -40,8 +40,11 @@ public class Util {
         // the old nextAfter(x, 1) semantics and is a HotSpot intrinsic on x86/aarch64.
         final double floored = Math.floor(x * inv_prec);
         final double tentative = floored / inv_prec;
-        final double truncated = ((x * two_inv_prec) % 1.0) * five_inv_prec;
-        if (tentative != x && truncated % 1.0 >= 0.5 && tentative != Math.nextUp(x)) {
+        final double twoScaled = x * two_inv_prec;
+        final double twoFraction = x >= 0.0 ? twoScaled - Math.floor(twoScaled) : twoScaled % 1.0;
+        final double truncated = twoFraction * five_inv_prec;
+        final double truncatedFraction = truncated >= 0.0 ? truncated - Math.floor(truncated) : truncated % 1.0;
+        if (tentative != x && truncatedFraction >= 0.5 && tentative != Math.nextUp(x)) {
             return (floored + 1) / inv_prec;
         }
         return tentative;

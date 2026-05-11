@@ -5,6 +5,7 @@ import com.balatro.api.Run;
 import com.balatro.enums.Edition;
 import com.balatro.enums.PackKind;
 import com.balatro.impl.SeedFinderImpl;
+import com.balatro.vector.VectorFilters;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,15 +27,16 @@ public class Performance {
 
         var df = new DecimalFormat("#,##0");
 
-        var seeds = Balatro.search(100_000_000)
+        var negativeLegendaryFilter = Perkeo.inPack(Edition.Negative).or(Triboulet.inPack(Edition.Negative))
+                .or(Canio.inPack(Edition.Negative)).or(Yorick.inPack(Edition.Negative))
+                .or(Chicot.inPack(Edition.Negative));
+
+        var seeds = Balatro.vectorSearch(100_000_000)
+                .vectorFilter(VectorFilters.negativeLegendaryInAnteOnePacks())
                 .configuration(config -> config.maxAnte(1)
-                        .disablePack(PackKind.Standard)
-                        .disablePack(PackKind.Buffoon)
-                        .disablePack(PackKind.Celestial)
-                )
-                .filter(Perkeo.inPack(Edition.Negative).or(Triboulet.inPack(Edition.Negative))
-                        .or(Canio.inPack(Edition.Negative)).or(Yorick.inPack(Edition.Negative))
-                        .or(Chicot.inPack(Edition.Negative)))
+                        .disableShopQueue()
+                        .disablePack(PackKind.Buffoon))
+                .filter(negativeLegendaryFilter)
                 .find();
 
         System.out.println("Seeds found: " + df.format(seeds.size()));
