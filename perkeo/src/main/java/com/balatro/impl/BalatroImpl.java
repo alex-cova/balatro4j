@@ -271,7 +271,7 @@ public final class BalatroImpl extends Configuration implements Balatro {
     @Override
     public Balatro enableBoss() {
         analyzeBoss = true;
-        return null;
+        return this;
     }
 
     @Override
