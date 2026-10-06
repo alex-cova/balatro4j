@@ -69,6 +69,7 @@ let positionLocation;
 let timeLocation;
 let resolutionLocation;
 let startTime;
+let animationFrameId;
 
 function createShader(gl, type, source) {
 	const shader = gl.createShader(type);
@@ -97,9 +98,12 @@ function createProgram(gl, vertexShader, fragmentShader) {
 }
 
 function init() {
-	const search = document.getElementById('search');
-	search.scrollIntoView({ behavior: 'smooth', top: 0 });
 	const canvas = document.getElementById('glCanvas');
+	if (!canvas) {
+		console.error('Missing #glCanvas element for shader background');
+		return;
+	}
+
 	gl = canvas.getContext('webgl');
 
 	if (!gl) {
@@ -109,7 +113,14 @@ function init() {
 
 	const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
 	const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+	if (!vertexShader || !fragmentShader) {
+		return;
+	}
+
 	program = createProgram(gl, vertexShader, fragmentShader);
+	if (!program) {
+		return;
+	}
 
 	positionLocation = gl.getAttribLocation(program, 'position');
 	timeLocation = gl.getUniformLocation(program, 'iTime');
@@ -132,6 +143,10 @@ function init() {
 }
 
 function resize() {
+	if (!gl) {
+		return;
+	}
+
 	const canvas = gl.canvas;
 	const displayWidth = canvas.clientWidth;
 	const displayHeight = canvas.clientHeight;
@@ -144,6 +159,10 @@ function resize() {
 }
 
 function render() {
+	if (!gl || !program) {
+		return;
+	}
+
 	resize();
 
 	gl.useProgram(program);
@@ -154,8 +173,13 @@ function render() {
 	gl.uniform2f(resolutionLocation, gl.canvas.width, gl.canvas.height);
 
 	gl.drawArrays(gl.TRIANGLES, 0, 6);
-	requestAnimationFrame(render);
+	animationFrameId = requestAnimationFrame(render);
 }
 
-window.addEventListener('load', init);
+window.addEventListener('load', init, { once: true });
 window.addEventListener('resize', resize);
+window.addEventListener('beforeunload', () => {
+	if (animationFrameId) {
+		cancelAnimationFrame(animationFrameId);
+	}
+});

@@ -1,240 +1,424 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Legendary Seeds</title>
+    <meta charset="UTF-8">
+    <title>Perkeo for iPhone</title>
+    <meta name="description"
+        content="Perkeo is a fan-made iPhone companion for Balatro players. Explore the app, view screenshots, and download it on the App Store.">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.png" type="image/png">
-    <!-- iOS/Safari specific icons -->
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/autoComplete.min.js"></script>
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/css/autoComplete.01.min.css">
-    <link rel="stylesheet" href="./css/main.css" />
     <style>
         @font-face {
-            font-family: 'CustomFont';
-            src: url('https://balatroseeds.com/_next/static/media/115c09a31c224434-s.p.woff2') format('woff2');
+            font-family: "CustomFont";
+            src: url("https://balatroseeds.com/_next/static/media/115c09a31c224434-s.p.woff2") format("woff2");
+        }
+
+        :root {
+            color-scheme: dark;
+            --bg: #05070b;
+            --panel: rgba(13, 18, 30, 0.78);
+            --panel-border: rgba(255, 255, 255, 0.12);
+            --text: #f7f3ee;
+            --muted: #d1d0d7;
+            --accent: #ff7a3d;
+            --accent-2: #ffbc58;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             margin: 0;
-            /* overflow: hidden; */
-            /* display: flex; */
-            /* flex-direction: column; */
-            /* align-items: center; */
-            /* justify-content: center; */
-            /* height: 100vh; */
-            background-color: #000;
-            color: #fff;
-            background-attachment: fixed;
-            height: 100vh;
-            /* max-height: 100vh; */
-            /* overflow: hidden; */
-            font-family: 'CustomFont', sans-serif;
-
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "CustomFont", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         canvas#glCanvas {
+            position: fixed;
+            inset: 0;
             width: 100vw;
             height: 100vh;
             display: block;
+            z-index: -2;
+        }
+
+        body::before {
+            content: "";
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
+            background:
+                radial-gradient(circle at top, rgba(12, 24, 59, 0.18), transparent 30%),
+                linear-gradient(180deg, rgba(3, 5, 9, 0.35), rgba(3, 5, 9, 0.82));
             z-index: -1;
         }
 
-        .container {
-            z-index: 1;
-            text-align: center;
+        .page {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 32px 0 56px;
         }
 
-        .title {
-            animation: wiggle 1s infinite;
-        }
-
-        @keyframes wiggle {
-
-            0%,
-            100% {
-                transform: rotate(-3deg);
-            }
-
-            50% {
-                transform: rotate(3deg);
-            }
-        }
-
-        .input-group {
-            display: flex;
-            justify-content: center;
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 420px);
+            gap: 48px;
             align-items: center;
         }
 
-        .input-group input {
-            padding: 10px;
-            font-size: 1em;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            font-family: 'CustomFont', sans-serif;
-            width: 300px;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--accent-2);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        .input-group button {
-            padding: 10px;
-            font-size: 1em;
-            margin-left: 10px;
-            border-radius: 10px;
-            background-color: lightgray;
-            border: none;
-            cursor: pointer;
-            font-family: 'CustomFont', sans-serif;
+        h1,
+        h2,
+        p {
+            margin: 0;
         }
 
-        .example-text {
-            margin-top: 10px;
-            font-size: 0.9em;
-            font-family: 'CustomFont', sans-serif;
+        .hero-copy {
+            display: grid;
+            gap: 20px;
         }
 
-        .tags {
+        .hero-copy h1 {
+            font-size: clamp(3rem, 8vw, 5.75rem);
+            line-height: 0.96;
+            max-width: 10ch;
+        }
+
+        .hero-copy p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.65;
+            color: var(--muted);
+            max-width: 56ch;
+        }
+
+        .cta-row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 10px;
+            gap: 14px;
         }
 
-        .tag {
-            background-color: #444;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin: 5px;
-            display: flex;
+        .button {
+            display: inline-flex;
             align-items: center;
-            font-family: 'CustomFont', sans-serif;
+            justify-content: center;
+            min-height: 54px;
+            padding: 0 22px;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+            font-size: 1rem;
         }
 
-        .tag .close {
-            margin-left: 5px;
-            cursor: pointer;
+        .button:hover {
+            transform: translateY(-2px);
         }
 
-        /* .cards-container {
-            margin-top: 20px;
-            min-height: 200px;
-            max-height: 500px;
-            overflow-y: auto;
+        .button-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #111;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-note {
+            color: rgba(247, 243, 238, 0.72);
+            font-size: 0.95rem;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-frame {
+            width: min(100%, 360px);
+            padding: 14px;
+            border-radius: 36px;
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .phone-frame img {
             width: 100%;
-            display: flex;
-            justify-content: center;
-        } */
+            display: block;
+            border-radius: 28px;
+        }
 
-        .cards {
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin: 32px 0 72px;
+        }
+
+        .feature {
+            padding: 24px;
+            border-radius: 24px;
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            backdrop-filter: blur(14px);
+        }
+
+        .feature h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .screenshots {
+            display: grid;
+            gap: 18px;
+            margin-bottom: 72px;
+        }
+
+        .screenshots-header {
+            display: grid;
+            gap: 12px;
+            max-width: 64ch;
+        }
+
+        .screenshots-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+
+        .screenshots-header p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .screenshot-card {
+            margin: 0;
+            padding: 12px;
+            border-radius: 28px;
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            display: block;
+            border-radius: 18px;
+        }
+
+        .cta-banner {
+            display: grid;
+            gap: 18px;
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(255, 122, 61, 0.18), rgba(255, 188, 88, 0.1));
+            border: 1px solid rgba(255, 188, 88, 0.24);
+            box-shadow: var(--shadow);
+        }
+
+        .cta-banner h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+        }
+
+        .cta-banner p {
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 50ch;
+        }
+
+        .beta-banner {
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.18), rgba(33, 150, 243, 0.1));
+            border: 1px solid rgba(129, 199, 132, 0.26);
+        }
+
+        footer {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto 28px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            font-size: 1.5em;
-            font-family: 'CustomFont', sans-serif;
-            width: 75px;
-            height: 65px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            transition: transform 0.2s;
-        }
-
-        .copy-button {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px;
-            font-size: 0.8em;
-            margin-top: 10px;
-            font-family: 'CustomFont', sans-serif;
-        }
-
-        .simpletext {
-            font-family: 'CustomFont', sans-serif;
-            font-size: 0.8em;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .result-item {
-            font-family: 'CustomFont', sans-serif;
-            font-size: 0.8em;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .footer {
-            display: flex;
+            gap: 12px 24px;
             justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 10px;
-            color: #fff;
+            color: rgba(247, 243, 238, 0.72);
+            font-size: 0.92rem;
+        }
+
+        footer a {
+            color: inherit;
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 32px;
+            }
+
+            .hero-copy h1 {
+                max-width: none;
+            }
+
+            .feature-grid,
+            .screenshot-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .page {
+                width: min(100% - 24px, 1120px);
+                padding-top: 24px;
+            }
+
+            .feature-grid,
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy h1 {
+                font-size: clamp(2.4rem, 13vw, 4rem);
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            footer {
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main class="container">
-        <canvas id="glCanvas"></canvas>
-        <section id="search">
-            <img class="title"
-                src="data:image/png;base64,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">
-            <div class="title" style=" font-size: 3em; margin-bottom: 40px;
-        font-family: 'CustomFont', sans-serif;">Legendary Seeds</div>
-            <div class="input-group">
-                <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off"
-                    autocapitalize="off" , placeholder="Enter Item Names">
-                <button id="searchbutton">Search</button>
+    <canvas id="glCanvas"></canvas>
+    <main class="page">
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="eyebrow">Now on the App Store</span>
+                <h1>Perkeo brings your best Balatro seeds to iPhone.</h1>
+                <p>Save memorable discoveries, revisit standout runs, and keep your favorite Balatro seeds close at hand with a fast, fan-made iOS companion.</p>
+                <div class="cta-row">
+                    <a class="button button-primary" href="https://apps.apple.com/app/id6743195834" target="_blank"
+                        rel="noreferrer">Download on the App Store</a>
+                    <a class="button button-secondary" href="#screenshots">View screenshots</a>
+                </div>
+                <p class="hero-note">Perkeo and this website are fan-made and are not affiliated with Balatro.</p>
             </div>
-            <div class="example-text">Example: Brainstorm, Blueprint, Perkeo</div>
-            <div class="tags" id="tags"></div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <img src="./public/460x998bb.webp" alt="Perkeo iPhone screenshot" fetchpriority="high">
+                </div>
+            </div>
         </section>
 
-        <section id="results">
-            <div class="cards-container">
-                <div class="cards" id="cards"></div>
+        <section class="feature-grid" aria-label="Perkeo highlights">
+            <article class="feature">
+                <h2>Built for quick scouting</h2>
+                <p>Open the app and jump straight into the runs and seeds you want to revisit without digging through notes or screenshots.</p>
+            </article>
+            <article class="feature">
+                <h2>Made for iPhone</h2>
+                <p>A focused mobile layout keeps seed tracking close by while you play, so the details you care about stay easy to reach.</p>
+            </article>
+            <article class="feature">
+                <h2>Fan-made for Balatro players</h2>
+                <p>Perkeo is designed around the community’s seed-sharing workflow, with a polished interface that feels at home on iOS.</p>
+            </article>
+        </section>
+
+        <section class="screenshots" id="screenshots">
+            <div class="screenshots-header">
+                <span class="eyebrow">Screenshots</span>
+                <h2>See the app before you download it.</h2>
+                <p>These in-app previews show the Perkeo experience on iPhone, from browsing seeds to keeping the details of a great run close by.</p>
+            </div>
+            <div class="screenshot-grid">
+                <figure class="screenshot-card">
+                    <img src="./public/460x998bb.webp" alt="Perkeo iPhone screenshot 1" loading="lazy">
+                </figure>
+                <figure class="screenshot-card">
+                    <img src="./public/460x998bb-2.webp" alt="Perkeo iPhone screenshot 2" loading="lazy">
+                </figure>
+                <figure class="screenshot-card">
+                    <img src="./public/460x998bb-3.webp" alt="Perkeo iPhone screenshot 3" loading="lazy">
+                </figure>
+                <figure class="screenshot-card">
+                    <img src="./public/460x998bb-4.webp" alt="Perkeo iPhone screenshot 4" loading="lazy">
+                </figure>
+                <figure class="screenshot-card">
+                    <img src="./public/460x998bb-5.webp" alt="Perkeo iPhone screenshot 5" loading="lazy">
+                </figure>
             </div>
         </section>
 
-        <section id="run">
-            <div class="run-container">
-                <div class="run" id="run"></div>
+        <section class="cta-banner beta-banner">
+            <span class="eyebrow">Android private beta</span>
+            <h2>Want early access on Android?</h2>
+            <p>Perkeo is also available as a private beta on Google Play. Join the test track to try upcoming Android builds before wider release.</p>
+            <div class="cta-row">
+                <a class="button button-primary" href="https://play.google.com/apps/internaltest/4701310509901876133"
+                    target="_blank" rel="noreferrer">Join the Android beta</a>
+            </div>
+        </section>
+
+        <section class="cta-banner">
+            <span class="eyebrow">Get the app</span>
+            <h2>Download Perkeo and keep your next great seed within reach.</h2>
+            <p>Ready to try it on your phone? Head to the App Store and start building your own library of memorable Balatro runs.</p>
+            <div class="cta-row">
+                <a class="button button-primary" href="https://apps.apple.com/app/id6743195834" target="_blank"
+                    rel="noreferrer">Open App Store</a>
+                <a class="button button-secondary" href="./privacy.html">Privacy policy</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="footer">
-            <p class="simpletext">This is a fan site.</p>
-            <a class="simpletext" href="https://store.steampowered.com/app/2379780/Balatro/">Buy Balatro on Steam.</a>
-        </div>
+        <span>Perkeo is a fan-made companion and is not affiliated with Balatro.</span>
+        <span><a href="./privacy.html">Privacy Policy</a></span>
     </footer>
     <script src="./js/shader.js"></script>
-    <script src="./js/main.js" type="module"></script>
 </body>
 
 </html>

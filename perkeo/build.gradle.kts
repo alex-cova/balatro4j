@@ -7,11 +7,10 @@ plugins {
     id("maven-publish")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.toVersion(26)
+java.targetCompatibility = JavaVersion.toVersion(26)
 
 group = "com.balatro"
-version = "2.0.1"
 
 repositories {
     mavenCentral()
@@ -35,6 +34,7 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs("--add-modules", "jdk.incubator.vector")
 
     testLogging {
         events = mutableSetOf(
@@ -52,11 +52,25 @@ tasks.withType<Test> {
     }
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf("--add-modules", "jdk.incubator.vector"))
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs("--add-modules", "jdk.incubator.vector")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(26))
+    }
+}
+
 publishing {
     publications.create<MavenPublication>("maven") {
         groupId = "com.balatro"
         artifactId = "balatro4j"
-        version = "2.0.1"
+        version = project.version.toString()
 
         from(components["java"])
     }

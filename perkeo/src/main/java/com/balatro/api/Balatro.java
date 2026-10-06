@@ -6,6 +6,7 @@ import com.balatro.enums.PackKind;
 import com.balatro.enums.Stake;
 import com.balatro.impl.BalatroImpl;
 import com.balatro.impl.SeedFinderImpl;
+import com.balatro.vector.VectorSeedFinder;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,6 +59,20 @@ public interface Balatro {
 
     static @NotNull SeedFinder search(int seedsPerThread) {
         return new SeedFinderImpl(Runtime.getRuntime().availableProcessors(), seedsPerThread);
+    }
+
+    @Contract(" -> new")
+    static @NotNull VectorSeedFinder vectorSearch() {
+        return new VectorSeedFinder();
+    }
+
+    @Contract("_, _ -> new")
+    static @NotNull VectorSeedFinder vectorSearch(int parallelism, int seedsPerThread) {
+        return new VectorSeedFinder(parallelism, seedsPerThread);
+    }
+
+    static @NotNull VectorSeedFinder vectorSearch(int seedsPerThread) {
+        return new VectorSeedFinder(Runtime.getRuntime().availableProcessors(), seedsPerThread);
     }
 
     Functions functions();

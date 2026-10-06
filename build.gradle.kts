@@ -8,10 +8,14 @@ plugins {
 }
 
 group = "com.balatro"
-version = "2.0.1"
+version = findProperty("version")?.toString() ?: "2.0.1"
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+subprojects {
+    version = rootProject.version
+}
+
+java.sourceCompatibility = JavaVersion.toVersion(26)
+java.targetCompatibility = JavaVersion.toVersion(26)
 
 repositories {
     mavenCentral()
@@ -31,10 +35,12 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs("--add-modules", "jdk.incubator.vector")
 
     testLogging {
         events = mutableSetOf(
@@ -54,8 +60,16 @@ tasks.withType<Test> {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(26))
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf("--add-modules", "jdk.incubator.vector"))
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs("--add-modules", "jdk.incubator.vector")
 }
 
 graalvmNative {
