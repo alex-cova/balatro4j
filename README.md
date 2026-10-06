@@ -4,8 +4,8 @@
 
 [![Build](https://github.com/alex-cova/balatro4j/actions/workflows/compile-native.yaml/badge.svg)](https://github.com/alex-cova/balatro4j/actions/workflows/compile-native.yaml)
 [![Version](https://img.shields.io/badge/version-2.0.1-blue)](https://github.com/alex-cova/balatro4j/releases)
-[![Java](https://img.shields.io/badge/Java-21%2B-orange?logo=openjdk)](https://openjdk.org/)
-[![Gradle](https://img.shields.io/badge/Gradle-8.12-02303A?logo=gradle)](https://gradle.org/)
+[![Java](https://img.shields.io/badge/Java-26%2B-orange?logo=openjdk)](https://openjdk.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.4-02303A?logo=gradle)](https://gradle.org/)
 [![GitHub Packages](https://img.shields.io/badge/GitHub%20Packages-available-green?logo=github)](https://github.com/alex-cova/balatro4j/packages)
 
 ---
@@ -13,6 +13,7 @@
 ## ✨ Features
 
 - **🔍 Seed Finder** — Fully customizable multi-threaded seed search API with auto-configuration for maximum speed (~6M seeds/sec)
+- **⚡ Vector Seed Finder** — SIMD-accelerated search using the JDK Vector API (`jdk.incubator.vector`); evaluates multiple seeds per CPU instruction for PRNG-compatible filters
 - **🖼️ Seed Renderer** — Convert any seed to a PNG image with game-accurate sprite rendering
 - **📊 Seed Scorer** — Evaluate and rank seeds programmatically
 - **🗂️ Perkeo Database** — Pre-processed seed database for instant query resolution
@@ -34,11 +35,13 @@
 
 | Requirement | Version |
 |---|---|
-| Java (JDK) | 21 or higher |
-| Gradle | 8.12 (wrapper included) |
+| Java (JDK) | 26 or higher |
+| Gradle | 9.4 (wrapper included) |
 | GraalVM _(optional, for native build)_ | 23+ |
 
 > **Note:** The JVM version is generally faster than the native image compilation. Native compilation is recommended only for distribution purposes.
+>
+> **Vector search** requires JDK 26+ with the `jdk.incubator.vector` module enabled. The Gradle build configures this automatically via `--add-modules jdk.incubator.vector`.
 
 ---
 
@@ -128,7 +131,9 @@ System.out.println(run.toJson());
 Run run = Balatro.random(8).analyzeAll();
 ```
 
-### 3. Search for seeds with specific jokers
+### 3. Search for seeds with specific jokers (scalar)
+
+The standard `Balatro.search()` API runs a full seed analysis for every candidate. Use this when filters require complete run inspection (shop queues, multiple antes, complex AND/OR logic).
 
 ```java
 import com.balatro.api.Balatro;
@@ -161,9 +166,53 @@ U7ZYC85
 KNIGXTT
 ```
 
-> Average speed: **6,114,471 seeds/sec** (max depth 1 legendary joker search)
+Speed on a Mac M5 Max (max depth 1 legendary joker search)
+- Average speed: **22,889,988 ops/s**
+- (Vector) Average speed: **98,482,860 ops/s** 
 
-### 4. Perkeo — Cached seed searching (instant lookup)
+### 4. Vector-accelerated seed search (SIMD)
+
+`Balatro.vectorSearch()` uses a two-stage pipeline:
+
+1. **Vector prefilter** (`vectorFilter`) — evaluates many seeds in parallel via SIMD lanes, replaying only the PRNG streams needed for the filter.
+2. **Scalar verifier** (`filter`) — optional full analysis pass on candidates that survive the prefilter.
+
+This is significantly faster than scalar search when a vector-compatible prefilter exists, because most seeds are rejected without running a full `Balatro.analyze()`.
+
+```java
+import com.balatro.api.Balatro;
+import com.balatro.enums.*;
+import com.balatro.vector.VectorFilters;
+
+var negativeLegendaryFilter = LegendaryJoker.Perkeo.inPack(Edition.Negative)
+        .or(LegendaryJoker.Triboulet.inPack(Edition.Negative))
+        .or(LegendaryJoker.Canio.inPack(Edition.Negative))
+        .or(LegendaryJoker.Yorick.inPack(Edition.Negative))
+        .or(LegendaryJoker.Chicot.inPack(Edition.Negative));
+
+var seeds = Balatro.vectorSearch(100_000_000)
+        .vectorFilter(VectorFilters.negativeLegendaryInAnteOnePacks())
+        .configuration(config -> config
+                .maxAnte(1)
+                .disableShopQueue()
+                .disablePack(PackKind.Buffoon))
+        .filter(negativeLegendaryFilter)
+        .find();
+
+System.out.println("Seeds found: " + seeds.size());
+```
+
+**Built-in vector filters** (`VectorFilters`):
+
+| Filter | Description |
+|---|---|
+| `findAll()` | Accept every seed (default; useful for benchmarking throughput) |
+| `negativeTagRange(minAnte, maxAnte)` | Both tags in the given ante range are `Negative_Tag` |
+| `negativeLegendaryInAnteOnePacks()` | A negative-edition legendary soul card can appear in ante 1 Arcana or Spectral packs |
+
+> Vector filters operate on the game's Lua PRNG directly. For filters that cannot be expressed as PRNG stream checks, use `Balatro.search()` instead, or combine a vector prefilter with a scalar `.filter()` verifier as shown above.
+
+### 5. Perkeo — Cached seed searching (instant lookup)
 
 ```java
 import com.balatro.cache.PreProcessedSeeds;
@@ -184,7 +233,7 @@ var result = p.search(List.of(
 ));
 ```
 
-### 5. Render a seed to PNG
+### 6. Render a seed to PNG
 
 ```java
 import com.balatro.api.Balatro;
@@ -199,7 +248,7 @@ var image = new SeedRenderer(run).render();
 ImageIO.write(image, "PNG", new File("rendered.png"));
 ```
 
-### 6. Export a seed to JSON
+### 7. Export a seed to JSON
 
 ```java
 Run run = Balatro.builder("2K9H9HN", 8)
@@ -278,7 +327,7 @@ System.out.println(run.toJson());
 ```
 </details>
 
-### 7. Custom filter with OR / AND logic
+### 8. Custom filter with OR / AND logic
 
 ```java
 var seeds = Balatro.search(1, 1_000_000)
@@ -300,8 +349,10 @@ var seeds = Balatro.search(1, 1_000_000)
 | `Balatro.builder(String seed)` | Create an analyzer for a specific seed (default 8 antes) |
 | `Balatro.builder(String seed, int maxAnte)` | Create an analyzer for a specific seed up to `maxAnte` |
 | `Balatro.random(int maxAnte)` | Create an analyzer with a randomly generated seed |
-| `Balatro.search()` | Create a `SeedFinder` using all CPU cores, 1M seeds/thread |
-| `Balatro.search(int parallelism, int seedsPerThread)` | Create a `SeedFinder` with explicit settings |
+| `Balatro.search()` | Create a scalar `SeedFinder` using all CPU cores, 1M seeds/thread |
+| `Balatro.search(int parallelism, int seedsPerThread)` | Create a scalar `SeedFinder` with explicit settings |
+| `Balatro.vectorSearch()` | Create a SIMD `VectorSeedFinder` using all CPU cores, 1M seeds/thread |
+| `Balatro.vectorSearch(int parallelism, int seedsPerThread)` | Create a `VectorSeedFinder` with explicit settings |
 | `.analyzeAll()` | Enable analysis of all game components |
 | `.analyze()` | Run the analysis and return a `Run` |
 | `.maxAnte(int)` | Limit analysis to a maximum ante |
@@ -309,15 +360,30 @@ var seeds = Balatro.search(1, 1_000_000)
 | `.stake(Stake)` | Set the stake level |
 | `.disablePack(PackKind)` | Skip a specific pack type during analysis |
 
-### `SeedFinder` — Search Builder
+### `SeedFinder` / `VectorSeedFinder` — Search Builder
+
+Both `Balatro.search()` and `Balatro.vectorSearch()` return a fluent search builder implementing `SeedFinder`. `VectorSeedFinder` adds an extra SIMD prefilter stage.
 
 | Method | Description |
 |---|---|
-| `.filter(Filter)` | Set the filter criteria |
+| `.filter(Filter)` | Set the scalar filter (full analysis per candidate; also used as verifier in vector search) |
+| `.vectorFilter(VectorSeedFilter)` | _(Vector only)_ Set the SIMD prefilter that rejects candidates before full analysis |
 | `.configuration(Consumer<Balatro>)` | Configure the analyzer for each candidate seed |
 | `.autoConfigure()` | Let the library infer the optimal configuration from the filter |
 | `.progressListener(BiConsumer<String, Integer>)` | Register a progress callback |
 | `.find()` | Execute the search and return matching seeds |
+
+### `VectorSeedFilter` — SIMD Prefilters
+
+Implement or use built-in filters from `VectorFilters`. Each filter replays specific PRNG streams across all SIMD lanes:
+
+```java
+VectorFilters.findAll()                              // no prefiltering
+VectorFilters.negativeTagRange(1, 3)                 // Negative_Tag on both tags, antes 1–3
+VectorFilters.negativeLegendaryInAnteOnePacks()      // negative soul legendary in ante 1 packs
+```
+
+Custom filters implement `VectorSeedFilter` and return a `VectorMaskBits` lane mask from `filter(VectorSearchContext)`. Filters that also implement `ScalarSeedPrefilter` can fall back to a scalar batch path on hardware with fewer than 4 SIMD lanes.
 
 ### `Filter` — Composable Filters
 
@@ -366,6 +432,7 @@ Balatro4j/
 │       ├── enums/                         # Game element enums (Joker, Deck, Stake, Boss, Tag…)
 │       ├── structs/                       # Data transfer objects (JokerData, Pack, ShopItem…)
 │       ├── cache/                         # Perkeo / Canio caching layer
+│       ├── vector/                        # SIMD seed finder (VectorSeedFinder, VectorFilters, PRNG streams)
 │       └── jackson/                       # Custom Jackson serializers
 │
 ├── ui/                                    # Swing desktop UI module
@@ -381,7 +448,8 @@ Balatro4j/
 │   └── UITest.java
 │
 ├── .github/workflows/
-│   └── compile-native.yaml               # GraalVM native image CI + EC2 deploy
+│   ├── compile-native.yaml               # GraalVM native image CI + EC2 deploy
+│   └── release.yaml                      # Tag-triggered publish to GitHub Packages
 │
 ├── build.gradle.kts                       # Root build (aggregates modules)
 ├── settings.gradle.kts                    # Module declarations
@@ -406,8 +474,9 @@ Run tests for the core library only:
 ```
 
 Tests cover:
-- **RNG correctness** — Lua random number generator fidelity (`RNGTests`)
+- **RNG correctness** — Lua random number generator fidelity (`RNGTests`, `VectorLuaRandomTests`)
 - **Seed analysis** — Pack contents and shop queues verified against known seeds (`BalatroTests`)
+- **Vector filters** — SIMD prefilters match scalar analysis on known seeds (`VectorFiltersTest`)
 - **Cache round-trips** — Serialization/deserialization of `Query` and `QueryResult`
 - **Lock mechanics** — Voucher and joker unlock sequencing (`LockTests`)
 - **Scoring** — Ante-level score calculation (`ScoringTest`)
@@ -426,7 +495,7 @@ Contributions are welcome! Here's how to get started:
 5. Open a Pull Request
 
 **Guidelines:**
-- Target Java 21 source/target compatibility
+- Target Java 26 source/target compatibility
 - Add or update tests for any new functionality
 - Follow existing package structure (`api` for interfaces, `impl` for implementations)
 - Use `@NotNull` / `@Nullable` JetBrains annotations consistently

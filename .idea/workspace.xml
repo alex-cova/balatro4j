@@ -4,24 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a0b0fd-d34c-44ab-820d-a89287e66fd0" name="Changes" comment="SIMD version">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/js/shader.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/js/shader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/privacy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="237" />
-    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -34,194 +24,112 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <task path="$PROJECT_DIR$/perkeo">
-          <activation />
-        </task>
-        <task path="$PROJECT_DIR$/ui">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Balatro4j" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Balatro4j" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="HTML File" />
-        <option value="JavaScript File" />
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="cacheOptimization" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;alex-cova&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:alex-cova/balatro4j.git&quot;,
-    &quot;accountId&quot;: &quot;8adb0927-9260-477f-81f3-7ddda7c9b938&quot;
-  }
-}</component>
-  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3/gradle-9.1.0" javaHome="$USER_HOME$/.gradle/jdks/eclipse_adoptium-21-aarch64-os_x.2/jdk-21.0.8+9/Contents/Home" gradleVersion="9.1.0" />
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.002943003532611" />
+      <entry key="MS500" value="1.6077470196543815" />
+      <entry key="S2" value="2.9796364800813118" />
+      <entry key="S5" value="3.536921380447648" />
+      <entry key="S10" value="3.764886292862668" />
+      <entry key="S30" value="4.402275001205966" />
+      <entry key="S60" value="6.336495109749783" />
+      <entry key="M2" value="9.840078069868323" />
+      <entry key="M5" value="15.092335598407493" />
+      <entry key="M10" value="18.286734629308647" />
+      <entry key="M15" value="19.648580673496696" />
+      <entry key="M30" value="21.20686111769229" />
+      <entry key="H1" value="22.071358114417023" />
+      <entry key="H2" value="22.527290837227724" />
+      <entry key="H4" value="22.761500026163457" />
+      <entry key="D1" value="22.959947830072288" />
+      <entry key="W1" value="22.994270805754468" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="8.496072902569967E-128" />
+      <entry key="MS500" value="3.853396034035909E-26" />
+      <entry key="S2" value="4.4313267904931415E-7" />
+      <entry key="S5" value="0.0029634632437780424" />
+      <entry key="S10" value="0.06304001721075866" />
+      <entry key="S30" value="0.5883046677585678" />
+      <entry key="S60" value="1.0736609076393397" />
+      <entry key="M2" value="1.4615578847586506" />
+      <entry key="M5" value="1.7630770920287242" />
+      <entry key="M10" value="1.8776086659868951" />
+      <entry key="M15" value="1.9175053806648632" />
+      <entry key="M30" value="1.9582955149229704" />
+      <entry key="H1" value="1.979032135704096" />
+      <entry key="H2" value="1.9894869946771632" />
+      <entry key="H4" value="1.9947362079676945" />
+      <entry key="D1" value="1.999121687121221" />
+      <entry key="W1" value="1.9998745018704578" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9554416150374802" />
+      <entry key="MS500" value="1.5922208007862813" />
+      <entry key="S2" value="2.9724169218034526" />
+      <entry key="S5" value="3.5360908831183777" />
+      <entry key="S10" value="3.8211766615411626" />
+      <entry key="S30" value="4.966840712256101" />
+      <entry key="S60" value="7.385764017384803" />
+      <entry key="M2" value="11.283810707613952" />
+      <entry key="M5" value="16.846229695967235" />
+      <entry key="M10" value="20.15927355158507" />
+      <entry key="M15" value="21.562581551734716" />
+      <entry key="M30" value="23.163335924877934" />
+      <entry key="H1" value="24.049461445755142" />
+      <entry key="H2" value="24.516308630946373" />
+      <entry key="H4" value="24.756000409370756" />
+      <entry key="D1" value="24.959030040876275" />
+      <entry key="W1" value="24.99413966390562" />
+    </decayedShown>
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
-  <component name="ProjectId" id="2tLE2BZ3NsorMyOuk1heKbG4cfl" />
   <component name="ProjectViewState">
-    <option name="compactDirectories" value="true" />
-    <option name="flattenPackages" value="true" />
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
-    <option name="showLibraryContents" value="true" />
-    <option name="showModules" value="false" />
-    <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CanioGenerator.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CompressedData.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CompressionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Differentiator.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JokerFile.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Localization.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LuaRandom.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LuaRandom2.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Performance.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PreProcessedSeeds.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Rebuild.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SeedRenderer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.com.balatro.Main.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Gradle.Balatro4j [:com.balatro.Main.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Balatro4j [:perkeo:test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [check].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [nativeCompile].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [nativeRun].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [publishMavenPublicationToGithubRepository].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [publishToMavenLocal].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j:perkeo [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j:ui [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.apiTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.checkCharMaps.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.test33JCJSA.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testComplexQuery.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testCompressedFile.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testFV5S4RBO.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testFilters.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testHVC549OP.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testIGSPUNF.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testJHZ7FPM.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testJokerFile.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testNALDC19B.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testParseSearch.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testRender.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.BalatroTests.testSeed32.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollisionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollisionTest.testCollisions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CollitionTest.testCollitions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.GeneralTests.testRandom.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.testCache2D.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.LockTests.testLegendaryLock.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.RNGTests.testEditions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ScoringTest.testScoring.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Seed32Tests.testGeneration.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UITest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Upgrade Gradle wrapper.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.balatro4j [buildFatJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.balatro4j [publishToMavenLocal].executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.immolate2.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;blueprint&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last.edited.regexp&quot;: &quot;123450&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/alex/Developer/Balatro4j&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LuaRandom.executor": "Run",
+    "Application.Performance.executor": "Run",
+    "Gradle.Balatro4j [test].executor": "Run",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/ui/src/main" />
-      <recent name="$PROJECT_DIR$/perkeo/src/main/java/com/balatro" />
-      <recent name="$PROJECT_DIR$/perkeo/src/main/java" />
-      <recent name="$PROJECT_DIR$/perkeo" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ui/main" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="tests" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.LuaRandom2">
-    <configuration name="LuaRandom2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.LuaRandom2" />
-      <module name="Balatro4j.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Performance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.balatro.Performance" />
+}]]></component>
+  <component name="RunManager" selected="Application.Performance">
+    <configuration name="LuaRandom" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.LuaRandom" />
       <module name="Balatro4j.perkeo.main" />
-      <option name="VM_PARAMETERS" value="--add-modules=jdk.incubator.vector" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.balatro.*" />
@@ -232,12 +140,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PreProcessedSeeds" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.balatro.cache.PreProcessedSeeds" />
+    <configuration name="Performance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.balatro.Performance" />
       <module name="Balatro4j.perkeo.main" />
+      <option name="VM_PARAMETERS" value="--add-modules jdk.incubator.vector" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.balatro.cache.*" />
+          <option name="PATTERN" value="com.balatro.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -245,7 +154,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Balatro4j [:perkeo:test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Balatro4j [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -256,7 +165,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":perkeo:test" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -270,469 +179,20 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="BalatroTests.testCompressedFile" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":perkeo:test" />
-            <option value="--tests" />
-            <option value="&quot;tests.BalatroTests.testCompressedFile&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Application.LuaRandom2" />
+      <item itemvalue="Application.LuaRandom" />
       <item itemvalue="Application.Performance" />
-      <item itemvalue="Application.PreProcessedSeeds" />
-      <item itemvalue="Gradle.Balatro4j [:perkeo:test]" />
-      <item itemvalue="Gradle.BalatroTests.testCompressedFile" />
+      <item itemvalue="Gradle.Balatro4j [test]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LuaRandom2" />
         <item itemvalue="Application.Performance" />
-        <item itemvalue="Application.PreProcessedSeeds" />
-        <item itemvalue="Gradle.Balatro4j [:perkeo:test]" />
-        <item itemvalue="Gradle.BalatroTests.testCompressedFile" />
+        <item itemvalue="Application.LuaRandom" />
+        <item itemvalue="Gradle.Balatro4j [test]" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10968.63" />
-        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10968.63" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="b0a0b0fd-d34c-44ab-820d-a89287e66fd0" name="Changes" comment="" />
-      <created>1740122744450</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1740122744450</updated>
-      <workItem from="1740122745579" duration="65000" />
-      <workItem from="1740201991860" duration="5000" />
-      <workItem from="1740202785456" duration="144000" />
-      <workItem from="1740282510939" duration="765000" />
-      <workItem from="1740283307061" duration="1358000" />
-      <workItem from="1740288436220" duration="4670000" />
-      <workItem from="1740334626269" duration="2219000" />
-      <workItem from="1740499564501" duration="55000" />
-      <workItem from="1740723858649" duration="1934000" />
-      <workItem from="1740769399571" duration="54000" />
-      <workItem from="1740897147485" duration="8601000" />
-      <workItem from="1740968870920" duration="1517000" />
-      <workItem from="1741014996472" duration="4000" />
-      <workItem from="1741015499330" duration="578000" />
-      <workItem from="1741016120505" duration="138000" />
-      <workItem from="1741044769891" duration="2639000" />
-      <workItem from="1741067448828" duration="5843000" />
-      <workItem from="1741132821082" duration="1445000" />
-      <workItem from="1741155320776" duration="902000" />
-      <workItem from="1741188258069" duration="2000" />
-      <workItem from="1741637177178" duration="439000" />
-      <workItem from="1741649566799" duration="2869000" />
-      <workItem from="1741709324063" duration="110000" />
-      <workItem from="1741806295177" duration="31000" />
-      <workItem from="1741806884284" duration="47000" />
-      <workItem from="1741807113869" duration="18000" />
-      <workItem from="1741817852020" duration="191000" />
-      <workItem from="1741989658626" duration="1826000" />
-      <workItem from="1741991498653" duration="692000" />
-      <workItem from="1742189097387" duration="4248000" />
-      <workItem from="1742312654305" duration="26000" />
-      <workItem from="1742346713736" duration="877000" />
-      <workItem from="1742786885552" duration="842000" />
-      <workItem from="1742961154680" duration="1918000" />
-      <workItem from="1743021735446" duration="949000" />
-      <workItem from="1743027704919" duration="358000" />
-      <workItem from="1743029289832" duration="344000" />
-      <workItem from="1743225656456" duration="791000" />
-      <workItem from="1743718525786" duration="3129000" />
-      <workItem from="1743722515170" duration="3148000" />
-      <workItem from="1743780672020" duration="2196000" />
-      <workItem from="1743795084069" duration="1200000" />
-      <workItem from="1743796447520" duration="27000" />
-      <workItem from="1743803753965" duration="1412000" />
-      <workItem from="1743805697598" duration="1331000" />
-      <workItem from="1743807905430" duration="1506000" />
-      <workItem from="1744049650180" duration="119000" />
-      <workItem from="1744605691640" duration="754000" />
-      <workItem from="1744666430983" duration="1179000" />
-      <workItem from="1747934583990" duration="132000" />
-      <workItem from="1747934735072" duration="309000" />
-      <workItem from="1747935389713" duration="1888000" />
-      <workItem from="1748026069714" duration="241000" />
-      <workItem from="1748026900286" duration="306000" />
-      <workItem from="1748289594803" duration="3091000" />
-      <workItem from="1748300248043" duration="3611000" />
-      <workItem from="1748369102551" duration="1000" />
-      <workItem from="1748581044576" duration="1053000" />
-      <workItem from="1748909071895" duration="461000" />
-      <workItem from="1751042923492" duration="6816000" />
-      <workItem from="1751301650353" duration="306000" />
-      <workItem from="1751325133946" duration="1374000" />
-      <workItem from="1751327479783" duration="310000" />
-      <workItem from="1751558122546" duration="2772000" />
-      <workItem from="1751905739300" duration="365000" />
-      <workItem from="1751906526199" duration="1023000" />
-      <workItem from="1751909481648" duration="598000" />
-      <workItem from="1752776779305" duration="5879000" />
-      <workItem from="1752787517861" duration="2000" />
-      <workItem from="1752796747371" duration="8384000" />
-      <workItem from="1753219945194" duration="2000" />
-      <workItem from="1753417399373" duration="3270000" />
-      <workItem from="1753420748494" duration="677000" />
-      <workItem from="1753422430552" duration="2427000" />
-      <workItem from="1753483135068" duration="624000" />
-      <workItem from="1753589195157" duration="6179000" />
-      <workItem from="1753656460623" duration="2792000" />
-      <workItem from="1753660076077" duration="132000" />
-      <workItem from="1753661467459" duration="6000" />
-      <workItem from="1753661485500" duration="89000" />
-      <workItem from="1753662034758" duration="25000" />
-      <workItem from="1753675601256" duration="714000" />
-      <workItem from="1753810450620" duration="2000" />
-      <workItem from="1753832415997" duration="608000" />
-      <workItem from="1753903112374" duration="462000" />
-      <workItem from="1753903660184" duration="6000" />
-      <workItem from="1753903787850" duration="1024000" />
-      <workItem from="1753911272157" duration="2000" />
-      <workItem from="1753911278563" duration="1335000" />
-      <workItem from="1754026114340" duration="2652000" />
-      <workItem from="1755478997087" duration="2774000" />
-      <workItem from="1755539560680" duration="33000" />
-      <workItem from="1755563199590" duration="786000" />
-      <workItem from="1755564192728" duration="293000" />
-      <workItem from="1755564548691" duration="15000" />
-      <workItem from="1755564714324" duration="801000" />
-      <workItem from="1755624728732" duration="5000" />
-      <workItem from="1756007852091" duration="1178000" />
-      <workItem from="1756140762236" duration="5000" />
-      <workItem from="1756164162262" duration="2043000" />
-      <workItem from="1758483545334" duration="91000" />
-      <workItem from="1758483642653" duration="8000" />
-      <workItem from="1758734994030" duration="22000" />
-      <workItem from="1759790087445" duration="6206000" />
-      <workItem from="1759877992123" duration="4693000" />
-      <workItem from="1760479748533" duration="261000" />
-      <workItem from="1760480064968" duration="5268000" />
-      <workItem from="1771644903914" duration="5250000" />
-      <workItem from="1776723048708" duration="2973000" />
-      <workItem from="1777158348384" duration="2000" />
-      <workItem from="1778523744036" duration="721000" />
-      <workItem from="1778525128268" duration="2733000" />
-    </task>
-    <task id="LOCAL-00001" summary="fixed serialization problems">
-      <option name="closed" value="true" />
-      <created>1740122796349</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1740122796349</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Include legendary &amp; specials to PackKind">
-      <option name="closed" value="true" />
-      <created>1740202886997</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1740202886997</updated>
-    </task>
-    <task id="LOCAL-00003" summary="fix spectral pack">
-      <option name="closed" value="true" />
-      <created>1740283260431</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1740283260431</updated>
-    </task>
-    <task id="LOCAL-00004" summary="flags fix">
-      <option name="closed" value="true" />
-      <created>1740288831569</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1740288831569</updated>
-    </task>
-    <task id="LOCAL-00005" summary="process legendary jokers">
-      <option name="closed" value="true" />
-      <created>1740293699966</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1740293699966</updated>
-    </task>
-    <task id="LOCAL-00006" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1740364535689</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1740364535689</updated>
-    </task>
-    <task id="LOCAL-00007" summary="web page">
-      <option name="closed" value="true" />
-      <created>1740499593434</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1740499593434</updated>
-    </task>
-    <task id="LOCAL-00008" summary="edition filters">
-      <option name="closed" value="true" />
-      <created>1740960044855</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1740960044855</updated>
-    </task>
-    <task id="LOCAL-00009" summary="tag bug  fixes">
-      <option name="closed" value="true" />
-      <created>1740969782388</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1740969782388</updated>
-    </task>
-    <task id="LOCAL-00010" summary="bugfixes">
-      <option name="closed" value="true" />
-      <created>1741016070462</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1741016070462</updated>
-    </task>
-    <task id="LOCAL-00011" summary="reduced the size of the db by 4x">
-      <option name="closed" value="true" />
-      <created>1741071427254</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1741071427254</updated>
-    </task>
-    <task id="LOCAL-00012" summary="bug fixes &amp; improved parallelized jobs">
-      <option name="closed" value="true" />
-      <created>1741134262898</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1741134262898</updated>
-    </task>
-    <task id="LOCAL-00013" summary="improved performance &amp; bug fixes">
-      <option name="closed" value="true" />
-      <created>1741991454144</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1741991454144</updated>
-    </task>
-    <task id="LOCAL-00014" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1742787703814</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1742787703814</updated>
-    </task>
-    <task id="LOCAL-00015" summary="performance improvements">
-      <option name="closed" value="true" />
-      <created>1743721653522</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1743721653522</updated>
-    </task>
-    <task id="LOCAL-00016" summary="everything running smooth">
-      <option name="closed" value="true" />
-      <created>1743786975328</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1743786975328</updated>
-    </task>
-    <task id="LOCAL-00017" summary="better randomSeed generation">
-      <option name="closed" value="true" />
-      <created>1743806232299</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1743806232299</updated>
-    </task>
-    <task id="LOCAL-00018" summary="improvements">
-      <option name="closed" value="true" />
-      <created>1743809408910</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1743809408910</updated>
-    </task>
-    <task id="LOCAL-00019" summary="minor changes">
-      <option name="closed" value="true" />
-      <created>1748909104798</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1748909104799</updated>
-    </task>
-    <task id="LOCAL-00020" summary="immolate2">
-      <option name="closed" value="true" />
-      <created>1748909259902</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1748909259902</updated>
-    </task>
-    <task id="LOCAL-00021" summary="improvements">
-      <option name="closed" value="true" />
-      <created>1751326264898</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1751326264898</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Run -&gt; PNG, expose functions">
-      <option name="closed" value="true" />
-      <created>1753659878635</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1753659878635</updated>
-    </task>
-    <task id="LOCAL-00023" summary="version 2.0.1">
-      <option name="closed" value="true" />
-      <created>1753903282704</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1753903282704</updated>
-    </task>
-    <task id="LOCAL-00024" summary="fix Spectral Pack">
-      <option name="closed" value="true" />
-      <created>1755482157210</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1755482157210</updated>
-    </task>
-    <task id="LOCAL-00025" summary="fix Spectral Pack">
-      <option name="closed" value="true" />
-      <created>1755564473671</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1755564473671</updated>
-    </task>
-    <task id="LOCAL-00026" summary="refactor">
-      <option name="closed" value="true" />
-      <created>1771715863435</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1771715863436</updated>
-    </task>
-    <task id="LOCAL-00027" summary="optimizations">
-      <option name="closed" value="true" />
-      <created>1776725971252</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1776725971252</updated>
-    </task>
-    <task id="LOCAL-00028" summary="SIMD version">
-      <option name="closed" value="true" />
-      <created>1778527378038</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1778527378038</updated>
-    </task>
-    <option name="localTasksCounter" value="29" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="fixed serialization problems" />
-    <MESSAGE value="Include legendary &amp; specials to PackKind" />
-    <MESSAGE value="fix spectral pack" />
-    <MESSAGE value="flags fix" />
-    <MESSAGE value="process legendary jokers" />
-    <MESSAGE value="web page" />
-    <MESSAGE value="edition filters" />
-    <MESSAGE value="tag bug  fixes" />
-    <MESSAGE value="bugfixes" />
-    <MESSAGE value="reduced the size of the db by 4x" />
-    <MESSAGE value="bug fixes &amp; improved parallelized jobs" />
-    <MESSAGE value="improved performance &amp; bug fixes" />
-    <MESSAGE value="bug fixes" />
-    <MESSAGE value="performance improvements" />
-    <MESSAGE value="everything running smooth" />
-    <MESSAGE value="better randomSeed generation" />
-    <MESSAGE value="minor changes" />
-    <MESSAGE value="immolate2" />
-    <MESSAGE value="improvements" />
-    <MESSAGE value="Run -&gt; PNG, expose functions" />
-    <MESSAGE value="version 2.0.1" />
-    <MESSAGE value="fix Spectral Pack" />
-    <MESSAGE value="refactor" />
-    <MESSAGE value="optimizations" />
-    <MESSAGE value="SIMD version" />
-    <option name="LAST_COMMIT_MESSAGE" value="SIMD version" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/perkeo/src/main/java/com/balatro/Functions.java</url>
-          <line>234</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/tests/LuaRandom2.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>
