@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="">
+    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="updated README.md">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/compile-native.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,65 +52,82 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "alex-cova"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:alex-cova/balatro4j.git",
+    "accountId": "8adb0927-9260-477f-81f3-7ddda7c9b938"
+  }
+}]]></component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.002943003532611" />
-      <entry key="MS500" value="1.6077470196543815" />
-      <entry key="S2" value="2.9796364800813118" />
-      <entry key="S5" value="3.536921380447648" />
-      <entry key="S10" value="3.764886292862668" />
-      <entry key="S30" value="4.402275001205966" />
-      <entry key="S60" value="6.336495109749783" />
-      <entry key="M2" value="9.840078069868323" />
-      <entry key="M5" value="15.092335598407493" />
-      <entry key="M10" value="18.286734629308647" />
-      <entry key="M15" value="19.648580673496696" />
-      <entry key="M30" value="21.20686111769229" />
-      <entry key="H1" value="22.071358114417023" />
-      <entry key="H2" value="22.527290837227724" />
-      <entry key="H4" value="22.761500026163457" />
-      <entry key="D1" value="22.959947830072288" />
-      <entry key="W1" value="22.994270805754468" />
+      <entry key="MS100" value="1.0000394403120674" />
+      <entry key="MS500" value="1.149968370620529" />
+      <entry key="S2" value="2.4695282892952037" />
+      <entry key="S5" value="4.049997574402614" />
+      <entry key="S10" value="5.154478274531077" />
+      <entry key="S30" value="7.008531951111352" />
+      <entry key="S60" value="9.238775241506152" />
+      <entry key="M2" value="13.142697751912435" />
+      <entry key="M5" value="19.58130612617853" />
+      <entry key="M10" value="23.709591523325763" />
+      <entry key="M15" value="25.504879626988345" />
+      <entry key="M30" value="27.581939514274563" />
+      <entry key="H1" value="28.744115122482153" />
+      <entry key="H2" value="29.35976288374322" />
+      <entry key="H4" value="29.67673158211238" />
+      <entry key="D1" value="29.94567780976557" />
+      <entry key="W1" value="29.992228722908084" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="8.496072902569967E-128" />
-      <entry key="MS500" value="3.853396034035909E-26" />
-      <entry key="S2" value="4.4313267904931415E-7" />
-      <entry key="S5" value="0.0029634632437780424" />
-      <entry key="S10" value="0.06304001721075866" />
-      <entry key="S30" value="0.5883046677585678" />
-      <entry key="S60" value="1.0736609076393397" />
-      <entry key="M2" value="1.4615578847586506" />
-      <entry key="M5" value="1.7630770920287242" />
-      <entry key="M10" value="1.8776086659868951" />
-      <entry key="M15" value="1.9175053806648632" />
-      <entry key="M30" value="1.9582955149229704" />
-      <entry key="H1" value="1.979032135704096" />
-      <entry key="H2" value="1.9894869946771632" />
-      <entry key="H4" value="1.9947362079676945" />
-      <entry key="D1" value="1.999121687121221" />
-      <entry key="W1" value="1.9998745018704578" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="7.657231272440197E-72" />
+      <entry key="S2" value="1.663760495135078E-18" />
+      <entry key="S5" value="7.973010881692254E-8" />
+      <entry key="S10" value="3.2698492359899925E-4" />
+      <entry key="S30" value="0.10183711704570321" />
+      <entry key="S60" value="0.44670317735159626" />
+      <entry key="M2" value="0.9427400788239126" />
+      <entry key="M5" value="1.4794547372504976" />
+      <entry key="M10" value="1.7199676206678545" />
+      <entry key="M15" value="1.8086174554533339" />
+      <entry key="M30" value="1.90188079336415" />
+      <entry key="H1" value="1.9503177712578792" />
+      <entry key="H2" value="1.9750012295710968" />
+      <entry key="H4" value="1.9874609479742518" />
+      <entry key="D1" value="1.9979046271267629" />
+      <entry key="W1" value="1.9997005252858295" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.9554416150374802" />
-      <entry key="MS500" value="1.5922208007862813" />
-      <entry key="S2" value="2.9724169218034526" />
-      <entry key="S5" value="3.5360908831183777" />
-      <entry key="S10" value="3.8211766615411626" />
-      <entry key="S30" value="4.966840712256101" />
-      <entry key="S60" value="7.385764017384803" />
-      <entry key="M2" value="11.283810707613952" />
-      <entry key="M5" value="16.846229695967235" />
-      <entry key="M10" value="20.15927355158507" />
-      <entry key="M15" value="21.562581551734716" />
-      <entry key="M30" value="23.163335924877934" />
-      <entry key="H1" value="24.049461445755142" />
-      <entry key="H2" value="24.516308630946373" />
-      <entry key="H4" value="24.756000409370756" />
-      <entry key="D1" value="24.959030040876275" />
-      <entry key="W1" value="24.99413966390562" />
+      <entry key="MS100" value="0.13030906191965397" />
+      <entry key="MS500" value="0.734375198381556" />
+      <entry key="S2" value="2.181747898907715" />
+      <entry key="S5" value="3.8799211517668226" />
+      <entry key="S10" value="5.056247118266687" />
+      <entry key="S30" value="7.069849602210989" />
+      <entry key="S60" value="9.656636629027634" />
+      <entry key="M2" value="14.06446792617019" />
+      <entry key="M5" value="21.049235661463026" />
+      <entry key="M10" value="25.423000184879104" />
+      <entry key="M15" value="27.308913868144494" />
+      <entry key="M30" value="29.481412618548912" />
+      <entry key="H1" value="30.693197706134477" />
+      <entry key="H2" value="31.334138363065307" />
+      <entry key="H4" value="31.66387757366137" />
+      <entry key="D1" value="31.943529651401057" />
+      <entry key="W1" value="31.991921700191217" />
     </decayedShown>
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3KKjGzwEE6f5l0wCYrUCQoYdQxX" />
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="false" />
   </component>
@@ -119,7 +136,13 @@
     "Application.LuaRandom.executor": "Run",
     "Application.Performance.executor": "Run",
     "Gradle.Balatro4j [test].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -192,7 +215,29 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10968.63" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10968.63" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="updated README.md" />
+      <created>1791313062708</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791313062708</updated>
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated README.md" />
   </component>
 </project>
