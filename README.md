@@ -2,7 +2,7 @@
 
 > A high-performance Balatro seed analyzer and finder, coded in pure Java — based on [Immolate](https://github.com/ImogenBits/immolate).
 
-[![Build](https://github.com/alex-cova/balatro4j/actions/workflows/compile-native.yaml/badge.svg)](https://github.com/alex-cova/balatro4j/actions/workflows/compile-native.yaml)
+[![Release](https://github.com/alex-cova/balatro4j/actions/workflows/release.yaml/badge.svg)](https://github.com/alex-cova/balatro4j/actions/workflows/release.yaml)
 [![Version](https://img.shields.io/badge/version-2.0.1-blue)](https://github.com/alex-cova/balatro4j/releases)
 [![Java](https://img.shields.io/badge/Java-26%2B-orange?logo=openjdk)](https://openjdk.org/)
 [![Gradle](https://img.shields.io/badge/Gradle-9.4-02303A?logo=gradle)](https://gradle.org/)
@@ -20,7 +20,7 @@
 - **⚡ Canio Database** — Ultra-compressed seed store (256 bits/seed) enabling instant search across up to 20 million seeds
 - **🖥️ Swing UI** — Basic graphical interface to search for and visualize seeds
 - **📦 JSON Export** — Serialize any seed run into structured JSON
-- **🔧 GraalVM Ready** — Native image compilation support for standalone deployment
+- **📥 Fat JAR Distribution** — Standalone `balatro4j-ui` JAR published to GitHub Releases on each version tag
 
 ---
 
@@ -37,10 +37,7 @@
 |---|---|
 | Java (JDK) | 26 or higher |
 | Gradle | 9.4 (wrapper included) |
-| GraalVM _(optional, for native build)_ | 23+ |
 
-> **Note:** The JVM version is generally faster than the native image compilation. Native compilation is recommended only for distribution purposes.
->
 > **Vector search** requires JDK 26+ with the `jdk.incubator.vector` module enabled. The Gradle build configures this automatically via `--add-modules jdk.incubator.vector`.
 
 ---
@@ -80,13 +77,16 @@ dependencies {
 }
 ```
 
-### Compile to native image (optional)
+### Run the UI from a fat JAR
+
+Build locally:
 
 ```bash
-./gradlew nativeCompile
+./gradlew :ui:buildFatJar
+java --add-modules jdk.incubator.vector -jar ui/build/libs/balatro4j-ui-2.0.1.jar
 ```
 
-> The compiled binary will be located at `build/native/nativeCompile/`.
+Or download the latest `balatro4j-ui-<version>.jar` from [GitHub Releases](https://github.com/alex-cova/balatro4j/releases).
 
 ---
 
@@ -448,8 +448,7 @@ Balatro4j/
 │   └── UITest.java
 │
 ├── .github/workflows/
-│   ├── compile-native.yaml               # GraalVM native image CI + EC2 deploy
-│   └── release.yaml                      # Tag-triggered publish to GitHub Packages
+│   └── release.yaml                      # Tag-triggered build, GitHub Release (fat JAR), and GitHub Packages publish
 │
 ├── build.gradle.kts                       # Root build (aggregates modules)
 ├── settings.gradle.kts                    # Module declarations

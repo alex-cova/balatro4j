@@ -64,6 +64,6 @@ java {
 
 ktor {
     fatJar {
-        archiveFileName.set("balatro4j-ui.jar")
+        archiveFileName.set("balatro4j-ui-${project.version}.jar")
     }
 }

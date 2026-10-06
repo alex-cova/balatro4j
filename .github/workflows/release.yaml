@@ -6,7 +6,7 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
@@ -23,8 +23,17 @@ jobs:
       - name: Build and test
         run: ./gradlew build -Pversion=${{ github.ref_name }}
 
+      - name: Build fat JAR
+        run: ./gradlew :ui:buildFatJar -Pversion=${{ github.ref_name }}
+
       - name: Publish to GitHub Packages
         run: ./gradlew :perkeo:publishMavenPublicationToGithubRepository -Pversion=${{ github.ref_name }}
         env:
           MAVEN_USER: ${{ github.actor }}
           MAVEN_SECRET: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ui/build/libs/balatro4j-ui-${{ github.ref_name }}.jar
+          generate_release_notes: true

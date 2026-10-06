@@ -4,7 +4,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     id("java")
     id("application")
-    id("org.graalvm.buildtools.native") version "0.11.1"
 }
 
 group = "com.balatro"
@@ -72,9 +71,3 @@ tasks.withType<JavaExec> {
     jvmArgs("--add-modules", "jdk.incubator.vector")
 }
 
-graalvmNative {
-    binaries.all {
-        resources.autodetect()
-        buildArgs.add("-O3")
-    }
-}
