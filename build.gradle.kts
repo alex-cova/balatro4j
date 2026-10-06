@@ -8,7 +8,11 @@ plugins {
 }
 
 group = "com.balatro"
-version = "2.0.1"
+version = findProperty("version")?.toString() ?: "2.0.1"
+
+subprojects {
+    version = rootProject.version
+}
 
 java.sourceCompatibility = JavaVersion.toVersion(26)
 java.targetCompatibility = JavaVersion.toVersion(26)

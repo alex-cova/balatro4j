@@ -11,7 +11,6 @@ java.sourceCompatibility = JavaVersion.toVersion(26)
 java.targetCompatibility = JavaVersion.toVersion(26)
 
 group = "com.balatro"
-version = "2.0.1"
 
 repositories {
     mavenCentral()
@@ -71,7 +70,7 @@ publishing {
     publications.create<MavenPublication>("maven") {
         groupId = "com.balatro"
         artifactId = "balatro4j"
-        version = "2.0.1"
+        version = project.version.toString()
 
         from(components["java"])
     }

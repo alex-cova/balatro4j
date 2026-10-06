@@ -6,7 +6,7 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="temurin-21" />
+        <option name="gradleJvm" value="26" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />

@@ -16,7 +16,6 @@ java.sourceCompatibility = JavaVersion.toVersion(26)
 java.targetCompatibility = JavaVersion.toVersion(26)
 
 group = "com.balatro"
-version = "2.0.1"
 
 dependencies {
     implementation(project(":perkeo"))
