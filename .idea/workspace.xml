@@ -4,11 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="remove native compilation" />
+    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="remove native compilation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AnteScorer.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AnteScorer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteScorerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteScorerImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="244" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -61,63 +70,67 @@
     &quot;accountId&quot;: &quot;8adb0927-9260-477f-81f3-7ddda7c9b938&quot;
   }
 }</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0136102929360402" />
-      <entry key="MS500" value="1.750271018925511" />
-      <entry key="S2" value="4.760025130828757" />
-      <entry key="S5" value="7.708212620544176" />
-      <entry key="S10" value="9.695545177311645" />
-      <entry key="S30" value="12.38115096649769" />
-      <entry key="S60" value="14.851452275543826" />
-      <entry key="M2" value="18.886682580839974" />
-      <entry key="M5" value="25.438057759870386" />
-      <entry key="M10" value="29.624892327520755" />
-      <entry key="M15" value="31.444623671674346" />
-      <entry key="M30" value="33.54961933770355" />
-      <entry key="H1" value="34.72734174545081" />
-      <entry key="H2" value="35.35121375437895" />
-      <entry key="H4" value="35.67241520069895" />
-      <entry key="D1" value="35.944952499307774" />
-      <entry key="W1" value="35.992124960906004" />
+      <entry key="MS100" value="1.0000000086180638" />
+      <entry key="MS500" value="1.0277734031843733" />
+      <entry key="S2" value="2.481256362003843" />
+      <entry key="S5" value="6.494700413315337" />
+      <entry key="S10" value="10.312958983811775" />
+      <entry key="S30" value="15.37690476965567" />
+      <entry key="S60" value="18.651120833343935" />
+      <entry key="M2" value="23.139557168007386" />
+      <entry key="M5" value="30.046358315069458" />
+      <entry key="M10" value="34.39957789371419" />
+      <entry key="M15" value="36.28588924706427" />
+      <entry key="M30" value="38.46532438381169" />
+      <entry key="H1" value="39.6838162408922" />
+      <entry key="H2" value="40.32908606671532" />
+      <entry key="H4" value="40.66125741945583" />
+      <entry key="D1" value="40.94307958540888" />
+      <entry key="W1" value="40.99185707332357" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="1.756557650452078E-73" />
-      <entry key="S2" value="6.474980561455142E-19" />
-      <entry key="S5" value="5.466148438342542E-8" />
-      <entry key="S10" value="2.7074301514215423E-4" />
-      <entry key="S30" value="0.09562745701547362" />
-      <entry key="S60" value="0.43286980943075415" />
-      <entry key="M2" value="0.9280280398223453" />
-      <entry key="M5" value="1.4701760171890816" />
-      <entry key="M10" value="1.7145655630130734" />
-      <entry key="M15" value="1.8048284781911605" />
-      <entry key="M30" value="1.8998875688764063" />
-      <entry key="H1" value="1.949295509447405" />
-      <entry key="H2" value="1.9744835618881629" />
-      <entry key="H4" value="1.987200464154065" />
-      <entry key="D1" value="1.9978609826421918" />
-      <entry key="W1" value="1.9996942846965187" />
+      <entry key="MS500" value="4.43970342338442E-77" />
+      <entry key="S2" value="8.164157171680092E-20" />
+      <entry key="S5" value="2.3875395603967056E-8" />
+      <entry key="S10" value="1.7893357489208914E-4" />
+      <entry key="S30" value="0.08329663670226349" />
+      <entry key="S60" value="0.40399847572677633" />
+      <entry key="M2" value="0.8965454548184063" />
+      <entry key="M5" value="1.4500194235009924" />
+      <entry key="M10" value="1.7027713708185261" />
+      <entry key="M15" value="1.796542230192887" />
+      <entry key="M30" value="1.895521211927539" />
+      <entry key="H1" value="1.947054267392206" />
+      <entry key="H2" value="1.9733481341593024" />
+      <entry key="H4" value="1.9866290116939131" />
+      <entry key="D1" value="1.9977652181555896" />
+      <entry key="W1" value="1.9996805912204694" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.24178671089209702" />
-      <entry key="MS500" value="1.4807689202078964" />
-      <entry key="S2" value="4.570440619094055" />
-      <entry key="S5" value="7.558528843191232" />
-      <entry key="S10" value="9.597235830640008" />
-      <entry key="S30" value="12.432964509432281" />
-      <entry key="S60" value="15.253476716054978" />
-      <entry key="M2" value="19.79261599452088" />
-      <entry key="M5" value="26.896199198509514" />
-      <entry key="M10" value="31.3326285561473" />
-      <entry key="M15" value="33.244684521013305" />
-      <entry key="M30" value="35.44700471647052" />
-      <entry key="H1" value="36.67535419848109" />
-      <entry key="H2" value="37.325047470898745" />
-      <entry key="H4" value="37.65928861988556" />
-      <entry key="D1" value="37.94275867593957" />
-      <entry key="W1" value="37.99181140881221" />
+      <entry key="MS100" value="0.979420297599571" />
+      <entry key="MS500" value="1.0057518861985413" />
+      <entry key="S2" value="2.344442773585589" />
+      <entry key="S5" value="6.3421292852122" />
+      <entry key="S10" value="10.193553982884136" />
+      <entry key="S30" value="15.400980992685476" />
+      <entry key="S60" value="19.015402828627433" />
+      <entry key="M2" value="24.009190310054844" />
+      <entry key="M5" value="31.482256157789358" />
+      <entry key="M10" value="36.09443669058374" />
+      <entry key="M15" value="38.076931319525706" />
+      <entry key="M30" value="40.357971476914074" />
+      <entry key="H1" value="41.62939996972764" />
+      <entry key="H2" value="42.301690221078054" />
+      <entry key="H4" value="42.647512218806106" />
+      <entry key="D1" value="42.94078212225451" />
+      <entry key="W1" value="42.99152870236428" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -128,24 +141,26 @@
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="false" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LuaRandom.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Performance.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Balatro4j [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LuaRandom.executor": "Run",
+    "Application.Performance.executor": "Run",
+    "Gradle.Balatro4j [test].executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.Performance">
     <configuration name="LuaRandom" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.balatro.LuaRandom" />

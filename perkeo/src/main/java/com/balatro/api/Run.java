@@ -52,7 +52,7 @@ public interface Run extends Queryable, Iterable<Ante> {
 
     @JsonIgnore
     default float getScore() {
-        return new AnteScorerImpl().calculate(this);
+        return AnteScorer.getDefault().calculate(this);
     }
 
     @JsonIgnore
