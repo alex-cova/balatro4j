@@ -16,7 +16,7 @@ public class AnteScorerTest {
         AnteScorerImpl scorer = AnteScorerImpl.INSTANCE;
         Assertions.assertEquals(0.0f, scorer.calculate((Run) null));
         Assertions.assertEquals(0.0f, scorer.calculate((Ante) null));
-        Assertions.assertEquals(0.0f, scorer.calculate((Ante) null, true));
+        Assertions.assertEquals(0.0f, scorer.calculate(null, true));
         Assertions.assertEquals(0.0f, scorer.scoreSpectral(null));
         Assertions.assertEquals(0.0f, scorer.scoreTarot(null));
         Assertions.assertEquals(0.0f, scorer.scoreVoucher(null));
