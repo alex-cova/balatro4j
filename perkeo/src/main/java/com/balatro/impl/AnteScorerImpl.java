@@ -64,7 +64,7 @@ public class AnteScorerImpl implements AnteScorer {
     }
 
     @Override
-    public float calculate(@NotNull Ante ante) {
+    public float calculate(@Nullable Ante ante) {
         return calculate(ante, false);
     }
 

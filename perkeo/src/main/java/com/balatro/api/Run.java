@@ -3,7 +3,6 @@ package com.balatro.api;
 
 import com.balatro.enums.Edition;
 import com.balatro.enums.Tag;
-import com.balatro.impl.AnteScorerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public interface Run extends Queryable, Iterable<Ante> {
 
     ObjectMapper mapper = new ObjectMapper()

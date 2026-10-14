@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="remove native compilation">
+    <list default="true" id="168e95ac-4a87-4410-a472-73544e1627fc" name="Changes" comment="Improved Ante scorer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AnteScorer.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/AnteScorer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/api/Run.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteScorerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/perkeo/src/main/java/com/balatro/impl/AnteScorerImpl.java" afterDir="false" />
     </list>
@@ -76,61 +75,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000086180638" />
-      <entry key="MS500" value="1.0277734031843733" />
-      <entry key="S2" value="2.481256362003843" />
-      <entry key="S5" value="6.494700413315337" />
-      <entry key="S10" value="10.312958983811775" />
-      <entry key="S30" value="15.37690476965567" />
-      <entry key="S60" value="18.651120833343935" />
-      <entry key="M2" value="23.139557168007386" />
-      <entry key="M5" value="30.046358315069458" />
-      <entry key="M10" value="34.39957789371419" />
-      <entry key="M15" value="36.28588924706427" />
-      <entry key="M30" value="38.46532438381169" />
-      <entry key="H1" value="39.6838162408922" />
-      <entry key="H2" value="40.32908606671532" />
-      <entry key="H4" value="40.66125741945583" />
-      <entry key="D1" value="40.94307958540888" />
-      <entry key="W1" value="40.99185707332357" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="4.341186222137074E-159" />
+      <entry key="S2" value="6.3255660946292005E-40" />
+      <entry key="S5" value="9.44344003458884E-16" />
+      <entry key="S10" value="1.2435660084565346E-7" />
+      <entry key="S30" value="0.03526122874972455" />
+      <entry key="S60" value="0.8931392891923262" />
+      <entry key="M2" value="5.063632431272318" />
+      <entry key="M5" value="16.361936159593462" />
+      <entry key="M10" value="25.384846369974095" />
+      <entry key="M15" value="29.631392046379776" />
+      <entry key="M30" value="34.75974175389246" />
+      <entry key="H1" value="37.72393613222438" />
+      <entry key="H2" value="39.32060266977384" />
+      <entry key="H4" value="40.14964387743095" />
+      <entry key="D1" value="40.85676604003501" />
+      <entry key="W1" value="40.97950070861155" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="4.43970342338442E-77" />
-      <entry key="S2" value="8.164157171680092E-20" />
-      <entry key="S5" value="2.3875395603967056E-8" />
-      <entry key="S10" value="1.7893357489208914E-4" />
-      <entry key="S30" value="0.08329663670226349" />
-      <entry key="S60" value="0.40399847572677633" />
-      <entry key="M2" value="0.8965454548184063" />
-      <entry key="M5" value="1.4500194235009924" />
-      <entry key="M10" value="1.7027713708185261" />
-      <entry key="M15" value="1.796542230192887" />
-      <entry key="M30" value="1.895521211927539" />
-      <entry key="H1" value="1.947054267392206" />
-      <entry key="H2" value="1.9733481341593024" />
-      <entry key="H4" value="1.9866290116939131" />
-      <entry key="D1" value="1.9977652181555896" />
-      <entry key="W1" value="1.9996805912204694" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0000000105549867" />
+      <entry key="S5" value="1.0006447377153393" />
+      <entry key="S10" value="1.0253916859512897" />
+      <entry key="S30" value="1.2941119396336669" />
+      <entry key="S60" value="1.56149087456273" />
+      <entry key="M2" value="1.932495957449841" />
+      <entry key="M5" value="2.674372382495511" />
+      <entry key="M10" value="3.197158376222901" />
+      <entry key="M15" value="3.4270798566406735" />
+      <entry key="M30" value="3.692714327801232" />
+      <entry key="H1" value="3.8407425160305384" />
+      <entry key="H2" value="3.9189130327146864" />
+      <entry key="H4" value="3.9590849057590933" />
+      <entry key="D1" value="3.993128595097344" />
+      <entry key="W1" value="3.9990170837789147" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.979420297599571" />
-      <entry key="MS500" value="1.0057518861985413" />
-      <entry key="S2" value="2.344442773585589" />
-      <entry key="S5" value="6.3421292852122" />
-      <entry key="S10" value="10.193553982884136" />
-      <entry key="S30" value="15.400980992685476" />
-      <entry key="S60" value="19.015402828627433" />
-      <entry key="M2" value="24.009190310054844" />
-      <entry key="M5" value="31.482256157789358" />
-      <entry key="M10" value="36.09443669058374" />
-      <entry key="M15" value="38.076931319525706" />
-      <entry key="M30" value="40.357971476914074" />
-      <entry key="H1" value="41.62939996972764" />
-      <entry key="H2" value="42.301690221078054" />
-      <entry key="H4" value="42.647512218806106" />
-      <entry key="D1" value="42.94078212225451" />
-      <entry key="W1" value="42.99152870236428" />
+      <entry key="MS100" value="0.005486112795851551" />
+      <entry key="MS500" value="0.35306360109618873" />
+      <entry key="S2" value="0.7708382222614196" />
+      <entry key="S5" value="0.9017033082689588" />
+      <entry key="S10" value="0.9733134317996298" />
+      <entry key="S30" value="1.306712354736624" />
+      <entry key="S60" value="2.439158363209478" />
+      <entry key="M2" value="6.9825541135732765" />
+      <entry key="M5" value="19.025269371337888" />
+      <entry key="M10" value="28.574439383638897" />
+      <entry key="M15" value="33.05281754040361" />
+      <entry key="M30" value="38.449271287288205" />
+      <entry key="H1" value="41.56298540577113" />
+      <entry key="H2" value="43.23864227090719" />
+      <entry key="H4" value="44.108285153179715" />
+      <entry key="D1" value="44.84981971794696" />
+      <entry key="W1" value="44.9785070657178" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -145,6 +144,7 @@
   "keyToString": {
     "Application.LuaRandom.executor": "Run",
     "Application.Performance.executor": "Run",
+    "Gradle.AnteScorerTest.testNullSafety.executor": "Run",
     "Gradle.Balatro4j [test].executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -161,7 +161,7 @@
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Performance">
+  <component name="RunManager" selected="Gradle.AnteScorerTest.testNullSafety">
     <configuration name="LuaRandom" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.balatro.LuaRandom" />
       <module name="Balatro4j.perkeo.main" />
@@ -188,6 +188,33 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="AnteScorerTest.testNullSafety" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":perkeo:test" />
+            <option value="--tests" />
+            <option value="&quot;tests.AnteScorerTest.testNullSafety&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
     </configuration>
     <configuration name="Balatro4j [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -217,10 +244,12 @@
     <list>
       <item itemvalue="Application.LuaRandom" />
       <item itemvalue="Application.Performance" />
+      <item itemvalue="Gradle.AnteScorerTest.testNullSafety" />
       <item itemvalue="Gradle.Balatro4j [test]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.AnteScorerTest.testNullSafety" />
         <item itemvalue="Application.Performance" />
         <item itemvalue="Application.LuaRandom" />
         <item itemvalue="Gradle.Balatro4j [test]" />
@@ -251,6 +280,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated README.md" />
     <MESSAGE value="remove native compilation" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove native compilation" />
+    <MESSAGE value="Improved Ante scorer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved Ante scorer" />
   </component>
 </project>
